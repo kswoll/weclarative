@@ -81,4 +81,27 @@ class MvcApplication {
         await controller.Execute(this, context);
         return context.Response.View;
     }
+
+    private createNavigationContext(path: string, queryString: string): NavigationContext
+    {
+        // Create http context
+        const queryStringDictionary = new Map<string, string>();
+        if (queryString != null) {
+            const parts = queryString.split("&");
+            for (let part of parts)
+            {
+                const pair = part.split("=");
+                const key = decodeURI(pair[0]);
+                const value = decodeURI(pair[1]);
+                queryStringDictionary.set(key, value);
+            }
+        }
+        const routeData = this.routeTree.Apply(path, "GET");
+        const request = new NavigationRequest(path, queryStringDictionary, routeData);
+        const response = new NavigationResponse();
+
+        const navigationContext = new NavigationContext(request, response);
+
+        return navigationContext;
+    }
 }

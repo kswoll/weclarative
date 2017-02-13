@@ -1,3 +1,3 @@
 ﻿class NavigationResponse {
-    constructor(public view: View) {}
+    view: View | null;
 }

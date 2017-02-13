@@ -44,9 +44,17 @@
     <TypeScriptCompile Include="NavigationContext.ts" />
     <TypeScriptCompile Include="NavigationRequest.ts" />
     <TypeScriptCompile Include="NavigationResponse.ts" />
+    <TypeScriptCompile Include="Routes\IRouteNode.ts" />
+    <TypeScriptCompile Include="Routes\IRoutePart.ts" />
     <TypeScriptCompile Include="Routes\RouteData.ts" />
+    <TypeScriptCompile Include="Routes\RouteNode.ts" />
+    <TypeScriptCompile Include="Routes\RoutePath.ts" />
+    <TypeScriptCompile Include="Routes\RouteTree.ts" />
     <TypeScriptCompile Include="Tests\TestApplication.ts" />
+    <TypeScriptCompile Include="Utils\Arrays.ts" />
+    <TypeScriptCompile Include="Utils\Disposable.ts" />
     <TypeScriptCompile Include="Utils\Events.ts" />
+    <TypeScriptCompile Include="Utils\Strings.ts" />
     <TypeScriptCompile Include="Views\Layout.ts" />
     <TypeScriptCompile Include="Views\View.ts" />
     <TypeScriptCompile Include="ViewContext.ts" />

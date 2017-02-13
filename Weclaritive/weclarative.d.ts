@@ -117,6 +117,7 @@ declare class MvcApplication {
     open(url: string, pushState: boolean): Promise<void>;
     openView(view: View): void;
     protected execute(path: string, queryString: string): Promise<View>;
+    private createNavigationContext(path, queryString);
 }
 declare class NavigationContext {
     request: NavigationRequest;
@@ -130,11 +131,14 @@ declare class NavigationRequest {
     /**
      *  Contains the portion of the url after the host/port and before the query string.
      */
-    constructor(path: string);
+    constructor(path: string, queryString: Map<string, string>, routeData: Routes.RouteData);
 }
 declare class NavigationResponse {
-    view: View;
-    constructor(view: View);
+    view: View | null;
+}
+declare namespace Routes {
+}
+declare namespace Routes {
 }
 declare namespace Routes {
     class RouteData {
@@ -149,9 +153,42 @@ declare namespace Routes {
         readonly requiredHttpMethod: string;
     }
 }
+declare namespace Routes {
+}
+import Strings = Utils.Strings;
+declare class RoutePath {
+    private _remaining;
+    private consumed;
+    private pinning;
+    constructor(path: string);
+    pin(): IDisposable;
+    unpin(): void;
+    readonly location: number;
+    resetLocation(location: number): void;
+    any(): boolean;
+    readonly remaining: number;
+    startsWith(routePath: RoutePath): boolean;
+    readonly current: string | null;
+    consume(): string;
+    consumeAll(): string;
+    consumePath(path: RoutePath): void;
+    back(): string;
+    reset(): void;
+    toString(): string;
+    private static Pinned;
+}
+declare namespace Routes {
+}
 declare class TestApplication extends MvcApplication {
     constructor();
 }
+declare class Arrays {
+    static areEqual<T>(array1: T[], array2: T[]): boolean;
+}
+interface IDisposable {
+    dispose(): void;
+}
+declare function using<T extends IDisposable>(resource: T, action: (resource: T) => void): void;
 interface IEventHandler<T> {
     add(handler: {
         (data?: T): void;
@@ -169,6 +206,11 @@ declare class EventHandler<T> implements IEventHandler<T> {
         (data?: T): void;
     }): void;
     trigger(data?: T): void;
+}
+declare namespace Utils {
+    class Strings {
+        static chopStart(s: string, prefix: string): string;
+    }
 }
 declare class ViewContext {
     readonly controllerContext: ControllerContext;
