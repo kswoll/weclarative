@@ -1,12 +1,11 @@
 ﻿/// <reference path="Views/Layout.ts" />
-/// <reference path="Views/View.ts" />
 /// <reference path="Routes/RouteTree.ts" />
 
 import View = Views.View;
 import RouteTree = Routes.RouteTree;
 import Layout = Views.Layout;
 
-class MvcApplication {
+abstract class MvcApplication {
     private currentPath: string;
     private routeTree: RouteTree;
     private _body = new HtmlControl(document.getElementsByTagName("body")[0]);
@@ -16,9 +15,13 @@ class MvcApplication {
     private _scheme: string;
     private _controllerFactory: IControllerFactory;
     private _navigationContext: NavigationContext;
+    private _routeEngine: RouteEngine;
+    private _controllerRegistry = new ControllerRegistry();
 
-    constructor(public dependencyResolver: IDependencyResolver) {
+    protected constructor(public dependencyResolver: IDependencyResolver) {
     }
+
+    abstract registerControllers(registry: ControllerRegistry): void;
 
     get view() {
         return this._view;
@@ -34,7 +37,12 @@ class MvcApplication {
         const path = window.location.pathname;
         console.log(path);
 
+        this.registerControllers(this._controllerRegistry);
+        this._controllerRegistry.registerRoutes(this._routeEngine);
+
         this._controllerFactory = new DefaultControllerFactory(this.dependencyResolver);
+
+        this._routeEngine = new RouteEngine();
     }
 
     private async onPopState(evt: PopStateEvent) {

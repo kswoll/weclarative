@@ -46,7 +46,10 @@ declare class Controller {
     _controllerContext: ControllerContext;
     _navigationContext: NavigationContext;
     _actionInvoker: IActionInvoker;
+    _routeEngine: RouteEngine;
     initialize(application: MvcApplication, context: NavigationContext): void;
+    setUpRoutes(routes: RouteEngine): void;
+    readonly routeEngine: RouteEngine;
     readonly routeData: Routes.RouteData;
     readonly controllerContext: ControllerContext;
     readonly navigationContext: NavigationContext;
@@ -165,6 +168,7 @@ declare class MvcApplication {
     private _scheme;
     private _controllerFactory;
     private _navigationContext;
+    private _routeEngine;
     constructor(dependencyResolver: IDependencyResolver);
     readonly view: View;
     start(): Promise<void>;
@@ -237,6 +241,9 @@ declare namespace Routes {
         readonly requiredHttpMethod: string;
     }
 }
+declare class RouteEngine {
+    add(path: string, func: Function): void;
+}
 declare namespace Routes {
     class RouteNode implements IRouteNode {
         part: IRoutePart;
@@ -269,6 +276,9 @@ declare class RoutePath {
 }
 declare class TestApplication extends MvcApplication {
     constructor();
+}
+declare class TestController extends Controller {
+    setUpRoutes(routes: RouteEngine): void;
 }
 declare class Arrays {
     static areEqual<T>(array1: T[], array2: T[]): boolean;

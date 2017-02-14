@@ -33,6 +33,7 @@
     <TypeScriptCompile Include="Controller.ts" />
     <TypeScriptCompile Include="ControllerActionInvoker.ts" />
     <TypeScriptCompile Include="ControllerContext.ts" />
+    <TypeScriptCompile Include="ControllerRegistry.ts" />
     <TypeScriptCompile Include="Controls\Control.ts" />
     <TypeScriptCompile Include="Controls\HtmlControl.ts" />
     <TypeScriptCompile Include="Controls\InlineControl.ts" />
@@ -51,10 +52,12 @@
     <TypeScriptCompile Include="Routes\IRoutePart.ts" />
     <TypeScriptCompile Include="Routes\RouteBuilder.ts" />
     <TypeScriptCompile Include="Routes\RouteData.ts" />
+    <TypeScriptCompile Include="Routes\RouteEngine.ts" />
     <TypeScriptCompile Include="Routes\RouteNode.ts" />
     <TypeScriptCompile Include="Routes\RoutePath.ts" />
     <TypeScriptCompile Include="Routes\RouteTree.ts" />
     <TypeScriptCompile Include="Tests\TestApplication.ts" />
+    <TypeScriptCompile Include="Tests\TestController.ts" />
     <TypeScriptCompile Include="Utils\Arrays.ts" />
     <TypeScriptCompile Include="Utils\Disposable.ts" />
     <TypeScriptCompile Include="Utils\Events.ts" />
