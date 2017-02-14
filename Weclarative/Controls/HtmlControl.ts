@@ -3,15 +3,13 @@
         super(null, node);
     }
 
-    add(child: Control)
-    {
+    add(child: Control) {
         this.node.appendChild(child.node);
         this.addChild(child);
     }
 
-    public void Remove(Control child)
-    {
-        RemoveChild(child);
-        child.Node.Remove();
+    remove(child: Control) {
+        this.removeChild(child);
+        child.node.remove();
     }
 }

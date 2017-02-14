@@ -9,6 +9,13 @@
         private _content: Control | null;
         private _layout: Layout;
         private _viewContext: ViewContext;
+        private _sections: Map<string, Control>;
+
+        get sections(): Map<string, Control> {
+            if (this._sections == null)
+                this._sections = new Map<string, Control>();
+            return this._sections;
+        }
 
         get content(): Control | null {
             return this._content;

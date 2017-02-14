@@ -1,3 +1,6 @@
+declare abstract class ActionResult {
+    abstract executeResult(context: NavigationContext): void;
+}
 declare namespace Controls {
     class Control {
         tagName: string;
@@ -40,15 +43,36 @@ declare class Greeter {
     stop(): void;
 }
 declare class Controller {
+    _controllerContext: ControllerContext;
+    _navigationContext: NavigationContext;
+    _actionInvoker: IActionInvoker;
+    initialize(application: MvcApplication, context: NavigationContext): void;
+    readonly routeData: Routes.RouteData;
+    readonly controllerContext: ControllerContext;
+    readonly navigationContext: NavigationContext;
+    execute(application: MvcApplication, context: NavigationContext): Promise<void>;
+}
+declare namespace Utils {
+    class Reflection {
+        private static STRIP_COMMENTS;
+        private static ARGUMENT_NAMES;
+        static getParameterNames(func: Function): string[];
+    }
+}
+import Reflection = Utils.Reflection;
+declare class ControllerActionInvoker implements IActionInvoker {
+    invokeAction(context: ControllerContext, action: Function): Promise<ActionResult>;
 }
 declare class ControllerContext {
-    application: MvcApplication;
-    constructor(application: MvcApplication);
+    readonly application: MvcApplication;
+    readonly navigationContext: NavigationContext;
+    readonly controller: Controller;
+    constructor(application: MvcApplication, navigationContext: NavigationContext, controller: Controller);
 }
 declare class HtmlControl extends Control {
     constructor(node: Element);
     add(child: Control): void;
-    void: any;
+    remove(child: Control): void;
 }
 declare namespace Controls {
     class InlineControl extends Control {
@@ -72,6 +96,9 @@ interface Window {
 declare class DefaultDependencyResolver implements IDependencyResolver {
     getService(type: string, parameters?: Map<string, any>): any;
 }
+interface IActionInvoker {
+    invokeAction(context: ControllerContext, action: Function): Promise<ActionResult>;
+}
 interface IControllerFactory {
     createController(context: NavigationContext): Controller;
 }
@@ -88,6 +115,8 @@ declare namespace Views {
         private _content;
         private _layout;
         private _viewContext;
+        private _sections;
+        readonly sections: Map<string, Control>;
         content: Control | null;
         readonly viewContext: ViewContext;
         notifyViewAttached(): void;
@@ -101,15 +130,41 @@ declare namespace Views {
         protected onInitialize(): void;
     }
 }
+declare namespace Views {
+    abstract class Layout extends View {
+        private subviews;
+        constructor();
+        addView(view: View): void;
+        removeView(view: View): void;
+        protected onAddView(view: View): void;
+        findLayout(layoutType: string): Layout | null;
+        loadSections(sections: Map<string, Control>): void;
+    }
+}
+declare namespace Routes {
+    class RouteTree implements IRouteNode {
+        rootPaths: RouteNode[];
+        readonly children: RouteNode[];
+        apply(path: string, method: string): RouteData;
+        private findFirstRoute(path, httpMethod);
+        private calculateRoute(path, httpMethod, route, node);
+        toString(): string;
+    }
+}
 import View = Views.View;
+import RouteTree = Routes.RouteTree;
+import Layout = Views.Layout;
 declare class MvcApplication {
     dependencyResolver: IDependencyResolver;
     private currentPath;
+    private routeTree;
+    private _body;
     private _view;
     private _host;
     private _port;
     private _scheme;
     private _controllerFactory;
+    private _navigationContext;
     constructor(dependencyResolver: IDependencyResolver);
     readonly view: View;
     start(): Promise<void>;
@@ -118,6 +173,8 @@ declare class MvcApplication {
     openView(view: View): void;
     protected execute(path: string, queryString: string): Promise<View>;
     private createNavigationContext(path, queryString);
+    createViewContext(controller: Controller): ViewContext;
+    onOpen(url: string): void;
 }
 declare class NavigationContext {
     request: NavigationRequest;
@@ -137,8 +194,35 @@ declare class NavigationResponse {
     view: View | null;
 }
 declare namespace Routes {
+    interface IRouteNode {
+        children: Array<RouteNode>;
+    }
 }
 declare namespace Routes {
+    interface IRoutePart {
+        acceptPath(path: RoutePath, httpMethod: string): boolean;
+        processData(path: RoutePath, data: RouteData): void;
+        readonly routeData: Map<string, any>;
+    }
+}
+declare namespace Routes {
+    class RouteBuilder {
+        private parts;
+        private pinning;
+        pin(): RouteBuilder.Pinned;
+        unpin(): void;
+        toArray(): IRoutePart[];
+        add(part: IRoutePart): void;
+    }
+    namespace RouteBuilder {
+        class Pinned implements IDisposable {
+            private builder;
+            private accepted;
+            constructor(builder: RouteBuilder);
+            accept(): void;
+            dispose(): void;
+        }
+    }
 }
 declare namespace Routes {
     class RouteData {
@@ -148,12 +232,18 @@ declare namespace Routes {
         private values;
         getValue(key: string): any;
         setValue(key: string, value: any): void;
-        readonly action: string;
+        readonly action: Function;
         readonly controller: string;
         readonly requiredHttpMethod: string;
     }
 }
 declare namespace Routes {
+    class RouteNode implements IRouteNode {
+        part: IRoutePart;
+        children: RouteNode[];
+        constructor(part: IRoutePart);
+        toString(): string;
+    }
 }
 import Strings = Utils.Strings;
 declare class RoutePath {
@@ -177,8 +267,6 @@ declare class RoutePath {
     toString(): string;
     private static Pinned;
 }
-declare namespace Routes {
-}
 declare class TestApplication extends MvcApplication {
     constructor();
 }
@@ -188,7 +276,7 @@ declare class Arrays {
 interface IDisposable {
     dispose(): void;
 }
-declare function using<T extends IDisposable>(resource: T, action: (resource: T) => void): void;
+declare function using<T extends IDisposable, TResult>(resource: T, action: (resource: T) => TResult): TResult;
 interface IEventHandler<T> {
     add(handler: {
         (data?: T): void;
@@ -210,20 +298,15 @@ declare class EventHandler<T> implements IEventHandler<T> {
 declare namespace Utils {
     class Strings {
         static chopStart(s: string, prefix: string): string;
+        static chopEnd(s: string, suffix: string): string;
     }
+}
+declare class ViewResult extends ActionResult {
+    readonly view: View;
+    constructor(view: View);
+    executeResult(context: NavigationContext): void;
 }
 declare class ViewContext {
     readonly controllerContext: ControllerContext;
     constructor(controllerContext: ControllerContext);
-}
-declare abstract class Layout extends View {
-    private subviews;
-    constructor();
-    addView(view: View): void;
-    removeView(view: View): void;
-    protected onAddView(view: View): void;
-    findLayout(layoutType: string): Layout | null;
-    loadSections(sections: {
-        [section: string]: Control;
-    }): void;
 }

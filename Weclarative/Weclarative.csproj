@@ -28,8 +28,10 @@
     <Content Include="weclarative.js" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="ActionResult.ts" />
     <TypeScriptCompile Include="app.ts" />
     <TypeScriptCompile Include="Controller.ts" />
+    <TypeScriptCompile Include="ControllerActionInvoker.ts" />
     <TypeScriptCompile Include="ControllerContext.ts" />
     <TypeScriptCompile Include="Controls\Control.ts" />
     <TypeScriptCompile Include="Controls\HtmlControl.ts" />
@@ -38,6 +40,7 @@
     <TypeScriptCompile Include="DefaultControllerFactory.ts" />
     <TypeScriptCompile Include="DefaultDependencyResolver.ts" />
     <TypeScriptCompile Include="Fixups\WindowFixups.ts" />
+    <TypeScriptCompile Include="IActionInvoker.ts" />
     <TypeScriptCompile Include="IControllerFactory.ts" />
     <TypeScriptCompile Include="IDependencyResolver.ts" />
     <TypeScriptCompile Include="MvcApplication.ts" />
@@ -46,6 +49,7 @@
     <TypeScriptCompile Include="NavigationResponse.ts" />
     <TypeScriptCompile Include="Routes\IRouteNode.ts" />
     <TypeScriptCompile Include="Routes\IRoutePart.ts" />
+    <TypeScriptCompile Include="Routes\RouteBuilder.ts" />
     <TypeScriptCompile Include="Routes\RouteData.ts" />
     <TypeScriptCompile Include="Routes\RouteNode.ts" />
     <TypeScriptCompile Include="Routes\RoutePath.ts" />
@@ -54,7 +58,9 @@
     <TypeScriptCompile Include="Utils\Arrays.ts" />
     <TypeScriptCompile Include="Utils\Disposable.ts" />
     <TypeScriptCompile Include="Utils\Events.ts" />
+    <TypeScriptCompile Include="Utils\Reflection.ts" />
     <TypeScriptCompile Include="Utils\Strings.ts" />
+    <TypeScriptCompile Include="ViewResult.ts" />
     <TypeScriptCompile Include="Views\Layout.ts" />
     <TypeScriptCompile Include="Views\View.ts" />
     <TypeScriptCompile Include="ViewContext.ts" />
@@ -71,7 +77,7 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <RootNamespace>Weclaritive</RootNamespace>
+    <RootNamespace>Weclarative</RootNamespace>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\WebApplications\Microsoft.WebApplication.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\WebApplications\Microsoft.WebApplication.targets')" />

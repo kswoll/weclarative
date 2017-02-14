@@ -5,5 +5,11 @@
                 s = s.substring(0, prefix.length);
             return s;
         }
+
+        static chopEnd(s: string, suffix: string): string {
+            if (s.endsWith(suffix))
+                s = s.substring(0, s.length - suffix.length);
+            return s;
+        }
     }
 }

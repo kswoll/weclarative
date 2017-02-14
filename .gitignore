@@ -2,3 +2,5 @@
 *.map
 Weclaritive/obj/
 .vs/
+Weclarative/obj/
+*.user

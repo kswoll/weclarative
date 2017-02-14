@@ -13,9 +13,9 @@
             this.values.set(key, value);
         }
 
-        get action(): string
+        get action(): Function
         {
-            return this.getValue(RouteData.actionKey) as string;
+            return this.getValue(RouteData.actionKey) as Function;
         }
 
         get controller(): string
