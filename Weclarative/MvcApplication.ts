@@ -15,7 +15,6 @@ abstract class MvcApplication {
     private _scheme: string;
     private _controllerFactory: IControllerFactory;
     private _navigationContext: NavigationContext;
-    private _routeEngine: RouteEngine;
     private _controllerRegistry = new ControllerRegistry();
 
     protected constructor(public dependencyResolver: IDependencyResolver) {
@@ -37,17 +36,22 @@ abstract class MvcApplication {
         const path = window.location.pathname;
         console.log(path);
 
+        // Populate routeTree
+        const routeEngine = new RouteEngine();
         this.registerControllers(this._controllerRegistry);
-        this._controllerRegistry.registerRoutes(this._routeEngine);
+        this._controllerRegistry.registerRoutes(routeEngine);
+        this.routeTree = routeEngine.generateTree();
+
+
+        this._controllerRegistry.initialize(this);
 
         this._controllerFactory = new DefaultControllerFactory(this.dependencyResolver);
 
-        this._routeEngine = new RouteEngine();
     }
 
     private async onPopState(evt: PopStateEvent) {
         // If state is null then it means it's firing on first load, which we never care about
-        const path = <string>evt.state;
+        const path = evt.state as string | null;
         if (path != null && path != this.currentPath)
             await this.open(path, false);
     }
@@ -93,7 +97,7 @@ abstract class MvcApplication {
         const context = this.createNavigationContext(path, queryString);
         this._navigationContext = context;
         const controller = this._controllerFactory.createController(context);
-        await controller.execute(this, context);
+        await controller.execute(context);
         return context.response.view as View;
     }
 
@@ -123,5 +127,27 @@ abstract class MvcApplication {
     }
 
     onOpen(url: string) {
+    }
+
+    invokeAction(controller: Controller, action: Function): Promise<ActionResult> {
+        const parameters = Utils.Reflection.getParameterNames(action);
+        const args = new Array<any>(parameters);
+        for (let i = 0; i < parameters.length; i++) {
+            const key = parameters[i];
+            let value: any;
+            if (context.navigationContext.request.queryString.has(key))
+                value = context.navigationContext.request.queryString.get(key);
+            else
+                value = context.controller.routeData.getValue(key);
+            args[i] = value;
+        }
+
+        // If async
+        const result: any = action.apply(context.controller, args);
+        if (result instanceof Promise) {
+            return result;
+        } else {
+            return Promise.resolve(result);
+        }        
     }
 }

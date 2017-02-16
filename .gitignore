@@ -4,3 +4,5 @@ Weclaritive/obj/
 .vs/
 Weclarative/obj/
 *.user
+Weclarative/bin/
+Weclarative/weclarative.d.ts

@@ -10,7 +10,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <TypeScriptToolsVersion>2.1</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.0</TypeScriptToolsVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -24,15 +24,15 @@
   <ItemGroup>
     <Content Include="app.css" />
     <Content Include="index.html" />
-    <Content Include="web.config" />
+    <Content Include="web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="weclarative.js" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="ActionResult.ts" />
     <TypeScriptCompile Include="app.ts" />
     <TypeScriptCompile Include="Controller.ts" />
-    <TypeScriptCompile Include="ControllerActionInvoker.ts" />
-    <TypeScriptCompile Include="ControllerContext.ts" />
     <TypeScriptCompile Include="ControllerRegistry.ts" />
     <TypeScriptCompile Include="Controls\Control.ts" />
     <TypeScriptCompile Include="Controls\HtmlControl.ts" />
@@ -41,7 +41,6 @@
     <TypeScriptCompile Include="DefaultControllerFactory.ts" />
     <TypeScriptCompile Include="DefaultDependencyResolver.ts" />
     <TypeScriptCompile Include="Fixups\WindowFixups.ts" />
-    <TypeScriptCompile Include="IActionInvoker.ts" />
     <TypeScriptCompile Include="IControllerFactory.ts" />
     <TypeScriptCompile Include="IDependencyResolver.ts" />
     <TypeScriptCompile Include="MvcApplication.ts" />

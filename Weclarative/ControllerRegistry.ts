@@ -7,7 +7,13 @@
 
     registerRoutes(routes: RouteEngine) {
         for (const controller of this.controllers) {
-            controller.
+            controller.registerRoutes(routes);
+        }
+    }
+
+    initialize(application: MvcApplication) {
+        for (const controller of this.controllers) {
+            controller.initialize(application);
         }
     }
 }
