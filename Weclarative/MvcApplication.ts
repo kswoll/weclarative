@@ -4,6 +4,7 @@
 import View = Views.View;
 import RouteTree = Routes.RouteTree;
 import Layout = Views.Layout;
+import RouteEngine = Routes.RouteEngine;
 
 abstract class MvcApplication {
     private currentPath: string;
@@ -97,6 +98,8 @@ abstract class MvcApplication {
         const context = this.createNavigationContext(path, queryString);
         this._navigationContext = context;
         const controller = this._controllerFactory.createController(context);
+        const routeData = this.routeTree.apply(path);
+        const action = routeData.getValue(Routes.RouteData.actionKey);
         await controller.execute(context);
         return context.response.view as View;
     }
@@ -113,7 +116,7 @@ abstract class MvcApplication {
             const value = decodeURI(pair[1]);
             queryStringDictionary.set(key, value);
         }
-        const routeData = this.routeTree.apply(path, "GET");
+        const routeData = this.routeTree.apply(path);
         const request = new NavigationRequest(path, queryStringDictionary, routeData);
         const response = new NavigationResponse();
 

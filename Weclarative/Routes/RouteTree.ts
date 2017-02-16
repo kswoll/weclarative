@@ -6,11 +6,11 @@
             return this.rootPaths;
         }
 
-        apply(path: string, method: string): RouteData {
+        apply(path: string): RouteData {
             path = Strings.chopEnd(path, "/");
-            var route = this.findFirstRoute(path, method);
+            var route = this.findFirstRoute(path);
             if (route == null) {
-                throw new Error("Could not apply the URL path '" + path + "'.  No route supports this path.");
+                throw new Error(`Could not apply the URL path '${path}'.  No route supports this path.`);
             }
 
             var routeData = new RouteData();
@@ -24,13 +24,13 @@
             return routeData;
         }
 
-        private findFirstRoute(path: string, httpMethod: string): IRoutePart[] | null {
+        private findFirstRoute(path: string): IRoutePart[] | null {
             const routePath = new RoutePath(path);
             const route = new RouteBuilder();
 
             for (const node of this.rootPaths)
             {
-                if (this.calculateRoute(routePath, httpMethod, route, node)) {
+                if (this.calculateRoute(routePath, route, node)) {
                     return route.toArray();
                 }
             }
@@ -38,16 +38,16 @@
             return null;
         }
 
-        private calculateRoute(path: RoutePath, httpMethod: string, route: RouteBuilder, node: RouteNode): boolean {
+        private calculateRoute(path: RoutePath, route: RouteBuilder, node: RouteNode): boolean {
             return using(path.pin(), _ => {
                 return using(route.pin(),
                     pin => {
-                        if (node.part.acceptPath(path, httpMethod)) {
+                        if (node.part.acceptPath(path)) {
                             route.add(node.part);
 
                             if (node.children.length > 0) {
                                 for (const child of node.children) {
-                                    if (this.calculateRoute(path, httpMethod, route, child)) {
+                                    if (this.calculateRoute(path, route, child)) {
                                         pin.accept();
                                         return true;
                                     }

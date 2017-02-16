@@ -2,7 +2,6 @@
     export class RouteData {
         static readonly controllerKey = "@controller";
         static readonly actionKey = "@action";
-        static readonly requiredHttpMethodKey = "@requiredHttpMethod";
 
         private values = new Map<string, any>();
 
@@ -21,11 +20,6 @@
         get controller(): string
         {
             return this.getValue(RouteData.controllerKey) as string;
-        }
-
-        get requiredHttpMethod(): string
-        {
-            return this.getValue(RouteData.requiredHttpMethodKey) as string;
         }
     }
 }

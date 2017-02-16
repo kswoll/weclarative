@@ -52,7 +52,9 @@
     <TypeScriptCompile Include="Routes\RouteBuilder.ts" />
     <TypeScriptCompile Include="Routes\RouteData.ts" />
     <TypeScriptCompile Include="Routes\RouteEngine.ts" />
+    <TypeScriptCompile Include="Routes\RouteLiteral.ts" />
     <TypeScriptCompile Include="Routes\RouteNode.ts" />
+    <TypeScriptCompile Include="Routes\RoutePart.ts" />
     <TypeScriptCompile Include="Routes\RoutePath.ts" />
     <TypeScriptCompile Include="Routes\RouteTree.ts" />
     <TypeScriptCompile Include="Tests\TestApplication.ts" />
