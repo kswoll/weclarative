@@ -70,7 +70,7 @@
         }
 
         protected createLayout(): Layout {
-            return this.viewContext.controllerContext.application.dependencyResolver.getService(this.layoutType) as Layout;
+            return this.viewContext.controller.application.dependencyResolver.getService(this.layoutType) as Layout;
         }
 
         initialize(context: ViewContext)

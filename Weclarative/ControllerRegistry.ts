@@ -8,10 +8,6 @@
     registerRoutes(routes: RouteEngine) {
         for (const controller of this.controllers) {
             routes.registerController(controller);
-
-
-
-            controller.registerRoutes(routes);
         }
     }
 

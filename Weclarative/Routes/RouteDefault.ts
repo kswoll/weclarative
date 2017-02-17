@@ -1,4 +1,6 @@
-﻿namespace Routes {
+﻿/// <reference path="RoutePart.ts" />
+
+namespace Routes {
     export class RouteDefault extends RoutePart {
         constructor(routeData: Map<string, any> = new Map<string, any>(), item?: [string, any]) {
             super(routeData, item);

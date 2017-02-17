@@ -1,3 +1,3 @@
 ﻿class ViewContext {
-    constructor(readonly controllerContext: ControllerContext) {}
+    constructor(readonly controller: Controller) {}
 }

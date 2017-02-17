@@ -1,6 +1,10 @@
 ﻿class TestController extends Controller {
-    registerRoutes(routes: RouteEngine) {
-        routes.add("/test/{id:number}", this.getById);
+    get path() {
+        return "test";
+    }
+
+    registerRoutes(registrar: (route: string, action: Function) => void) {
+        registrar("/test/{id:number}", this.getById);
     }
 
     getById(id: number) {

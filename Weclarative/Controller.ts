@@ -17,11 +17,11 @@
         return this.routeEngine;
     }
 
-    async execute(action: Function): Promise<View>
+    async execute(action: Function, navigationContext: NavigationContext): Promise<View>
     {
-        const actionResult = await this.application.invokeAction(this, action);
+        const actionResult = await this.application.invokeAction(this, action, navigationContext);
         const view = (actionResult as ViewResult).view;
-        view.initialize(this.application.createViewContext(this));
+        view.initialize(new ViewContext(this));
         return view;
     }
 }

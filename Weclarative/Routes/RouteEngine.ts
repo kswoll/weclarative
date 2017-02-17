@@ -1,6 +1,4 @@
-﻿import Reflection = Utils.Reflection;
-
-namespace Routes {
+﻿namespace Routes {
     export class RouteEngine {
         routeTree = new RouteTree();
 
@@ -84,21 +82,6 @@ namespace Routes {
             }
         }
 
-/*
-                    }
-                    if (routePath.Current == null)
-                    {
-                        if (actionMethod.IsDefined(typeof(DefaultAttribute), false))
-                            AddNode(currentNode, new RouteNode(new RouteDefault(RouteData.ActionKey, actionMethod)));
-                    }
-
-                    currentNode = nextNode;
-                }
-                while (routePath.Current != null);
-            }
-
-
-        */
         addNode(parent: IRouteNode, child: RouteNode): RouteNode {
             if (child.part instanceof RouteLiteral && !child.part.isTerminal) {
                 const routeLiteral = child.part;

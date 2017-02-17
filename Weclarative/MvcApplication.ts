@@ -99,8 +99,8 @@ abstract class MvcApplication {
         this._navigationContext = context;
         const controller = this._controllerFactory.createController(context);
         const routeData = this.routeTree.apply(path);
-        const action = routeData.getValue(Routes.RouteData.actionKey);
-        await controller.execute(context);
+        const action = routeData.getValue(Routes.RouteData.actionKey) as Function;
+        await controller.execute(action, context);
         return context.response.view as View;
     }
 
@@ -125,28 +125,24 @@ abstract class MvcApplication {
         return navigationContext;
     }
 
-    createViewContext(controller: Controller): ViewContext {
-        return new ViewContext(controller.controllerContext);
-    }
-
     onOpen(url: string) {
     }
 
-    invokeAction(controller: Controller, action: Function): Promise<ActionResult> {
+    invokeAction(controller: Controller, action: Function, navigationContext: NavigationContext): Promise<ActionResult> {
         const parameters = Utils.Reflection.getParameterNames(action);
-        const args = new Array<any>(parameters);
+        const args = new Array<any>(parameters.length);
         for (let i = 0; i < parameters.length; i++) {
             const key = parameters[i];
             let value: any;
-            if (context.navigationContext.request.queryString.has(key))
-                value = context.navigationContext.request.queryString.get(key);
+            if (navigationContext.request.queryString.has(key))
+                value = navigationContext.request.queryString.get(key);
             else
-                value = context.controller.routeData.getValue(key);
+                value = navigationContext.request.routeData.getValue(key);
             args[i] = value;
         }
 
         // If async
-        const result: any = action.apply(context.controller, args);
+        const result: any = action.apply(controller, args);
         if (result instanceof Promise) {
             return result;
         } else {
