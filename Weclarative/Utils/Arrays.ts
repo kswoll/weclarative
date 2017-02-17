@@ -12,4 +12,20 @@
         }
         return true;
     }
+
+    static find<T>(array: Array<T>, predicate: (x: T) => boolean): T | null {
+        for (const item of array) {
+            if (predicate(item))
+                return item;
+        }
+        return null;
+    }
+
+    static toMap<T, TKey, TValue>(array: Array<T>, getKey: (item: T) => TKey, getValue: (item: T) => TValue) {
+        const map = new Map<TKey, TValue>();
+        for (const item of array) {
+            map.set(getKey(item), getValue(item));
+        }
+        return map;
+    }
 }

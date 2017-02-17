@@ -6,7 +6,8 @@
         this._application = application;
     }
 
-    abstract registerRoutes(routes: RouteEngine): void;
+    abstract get path(): string;
+    abstract registerRoutes(registrar: (route: string, action: Function) => void): void;
 
     get application() {
         return this._application;
