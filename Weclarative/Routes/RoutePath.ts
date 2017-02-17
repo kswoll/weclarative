@@ -1,4 +1,6 @@
-﻿import Strings = Utils.Strings;
+﻿/// <reference path="../Utils/Strings.ts" />
+
+import Strings = Utils.Strings;
 
 class RoutePath {
     private _remaining = new Array<string>();

@@ -11,5 +11,9 @@
                 s = s.substring(0, s.length - suffix.length);
             return s;
         }
+
+        static isNullOrEmpty(s: string | null): boolean {
+            return s == null || s == "";
+        }
     }
 }

@@ -38,10 +38,8 @@
     <TypeScriptCompile Include="Controls\HtmlControl.ts" />
     <TypeScriptCompile Include="Controls\InlineControl.ts" />
     <TypeScriptCompile Include="Controls\Text.ts" />
-    <TypeScriptCompile Include="DefaultControllerFactory.ts" />
     <TypeScriptCompile Include="DefaultDependencyResolver.ts" />
     <TypeScriptCompile Include="Fixups\WindowFixups.ts" />
-    <TypeScriptCompile Include="IControllerFactory.ts" />
     <TypeScriptCompile Include="IDependencyResolver.ts" />
     <TypeScriptCompile Include="MvcApplication.ts" />
     <TypeScriptCompile Include="NavigationContext.ts" />

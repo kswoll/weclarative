@@ -4,7 +4,7 @@
     }
 
     registerRoutes(registrar: (route: string, action: Function) => void) {
-        registrar("/test/{id:number}", this.getById);
+        registrar("{id:number}", this.getById);
     }
 
     getById(id: number) {

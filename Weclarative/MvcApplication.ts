@@ -1,5 +1,7 @@
 ﻿/// <reference path="Views/Layout.ts" />
 /// <reference path="Routes/RouteTree.ts" />
+/// <reference path="Routes/RouteEngine.ts" />
+/// <reference path="Utils/Strings.ts" />
 
 import View = Views.View;
 import RouteTree = Routes.RouteTree;
@@ -14,7 +16,6 @@ abstract class MvcApplication {
     private _host: string;
     private _port: string;
     private _scheme: string;
-    private _controllerFactory: IControllerFactory;
     private _navigationContext: NavigationContext;
     private _controllerRegistry = new ControllerRegistry();
 
@@ -25,6 +26,10 @@ abstract class MvcApplication {
 
     get view() {
         return this._view;
+    }
+
+    get currentUrl() {
+        return window.location.pathname + (!Strings.isNullOrEmpty(window.location.search) ? window.location.search : "");
     }
 
     async start() {
@@ -43,11 +48,17 @@ abstract class MvcApplication {
         this._controllerRegistry.registerRoutes(routeEngine);
         this.routeTree = routeEngine.generateTree();
 
-
         this._controllerRegistry.initialize(this);
+        this.onStarting();
+        this.onStarted();
+    }
 
-        this._controllerFactory = new DefaultControllerFactory(this.dependencyResolver);
+    private onStarting(): Promise<void> {
+        return Promise.resolve();
+    }
 
+    private async onStarted(): Promise<void> {
+        await this.open(this.currentUrl, false);
     }
 
     private async onPopState(evt: PopStateEvent) {
@@ -97,8 +108,8 @@ abstract class MvcApplication {
     protected async execute(path: string, queryString: string): Promise<View> {
         const context = this.createNavigationContext(path, queryString);
         this._navigationContext = context;
-        const controller = this._controllerFactory.createController(context);
         const routeData = this.routeTree.apply(path);
+        const controller = routeData.getValue(Routes.RouteData.controllerKey) as Controller;
         const action = routeData.getValue(Routes.RouteData.actionKey) as Function;
         await controller.execute(action, context);
         return context.response.view as View;

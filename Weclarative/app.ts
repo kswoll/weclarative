@@ -1,5 +1,4 @@
 ﻿/// <reference path="Controls/Control.ts" />
-
 import Control = Controls.Control;
 
 class Greeter {
