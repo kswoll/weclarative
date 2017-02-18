@@ -1,7 +1,7 @@
 ﻿namespace Views {
     export class View {
         title: string;
-        layoutType: string;
+        layoutType: LayoutType;
 
         private isInitialized: boolean;
         private attached = new EventHandler<void>();
@@ -70,7 +70,7 @@
         }
 
         protected createLayout(): Layout {
-            return this.viewContext.controller.application.dependencyResolver.getService(this.layoutType) as Layout;
+            return this.layoutType.factory();
         }
 
         initialize(context: ViewContext)

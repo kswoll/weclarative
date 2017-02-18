@@ -37,9 +37,8 @@
     <TypeScriptCompile Include="Controls\HtmlControl.ts" />
     <TypeScriptCompile Include="Controls\InlineControl.ts" />
     <TypeScriptCompile Include="Controls\TextBlock.ts" />
-    <TypeScriptCompile Include="DefaultDependencyResolver.ts" />
     <TypeScriptCompile Include="Fixups\WindowFixups.ts" />
-    <TypeScriptCompile Include="IDependencyResolver.ts" />
+    <TypeScriptCompile Include="LayoutType.ts" />
     <TypeScriptCompile Include="MvcApplication.ts" />
     <TypeScriptCompile Include="ViewRequest.ts" />
     <TypeScriptCompile Include="Routes\IRouteConstraint.ts" />

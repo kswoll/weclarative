@@ -7,7 +7,7 @@ namespace Views {
     export abstract class Layout extends View {
         private subviews: Array<View>;
 
-        constructor() {
+        constructor(readonly layoutType: LayoutType) {
             super();
             this.subviews = new Array<View>();
         }
@@ -26,8 +26,8 @@ namespace Views {
         protected onAddView(view: View) {
         }
 
-        findLayout(layoutType: string): Layout | null {
-            if (layoutType == this.constructor.name)
+        findLayout(layoutType: LayoutType): Layout | null {
+            if (layoutType.type == this.layoutType.type)
                 return this;
             else
                 return null;

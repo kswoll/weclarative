@@ -10,6 +10,12 @@ import Layout = Views.Layout;
 import RouteEngine = Routes.RouteEngine;
 import HtmlControl = Controls.HtmlControl;
 
+/**
+ * The top-level application responsible for driving the rest of the behavior of your entire application.  In
+ * principle, this class could have provided a singleton access to it, but in the interests of keeping
+ * dependencies explicit, and to facilitate potential unit-testig, references to the application is always
+ * explicit and derived from some contextual object.
+ */
 abstract class MvcApplication {
     private currentPath: string;
     private routeTree: RouteTree;
@@ -20,7 +26,7 @@ abstract class MvcApplication {
     private _scheme: string;
     private _controllerRegistry = new ControllerRegistry();
 
-    protected constructor(public dependencyResolver: IDependencyResolver) {
+    protected constructor() {
     }
 
     abstract registerControllers(registry: ControllerRegistry): void;

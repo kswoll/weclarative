@@ -1,6 +1,6 @@
 ﻿class TestApplication extends MvcApplication {
     constructor() {
-        super(new DefaultDependencyResolver());
+        super();
     }
 
     registerControllers(registry: ControllerRegistry): void {
