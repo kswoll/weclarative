@@ -2,11 +2,13 @@
 /// <reference path="Routes/RouteTree.ts" />
 /// <reference path="Routes/RouteEngine.ts" />
 /// <reference path="Utils/Strings.ts" />
+/// <reference path="Controls/HtmlControl.ts" />
 
 import View = Views.View;
 import RouteTree = Routes.RouteTree;
 import Layout = Views.Layout;
 import RouteEngine = Routes.RouteEngine;
+import HtmlControl = Controls.HtmlControl;
 
 abstract class MvcApplication {
     private currentPath: string;

@@ -1,4 +1,7 @@
 ﻿/// <reference path="View.ts" />
+/// <reference path="../Controls/Control.ts" />
+
+import Control = Controls.Control;
 
 namespace Views {
     export abstract class Layout extends View {
