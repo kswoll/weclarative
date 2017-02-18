@@ -19,7 +19,7 @@ class TestController extends Controller {
     home() {
         const view = new View();
         view.title = "Hello!";
-        view.content = new TextBlock("Why hello!");
+        view.content = new TextBlock("Why hello2!");
         return view;
     }
 }
