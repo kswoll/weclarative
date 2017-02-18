@@ -8,13 +8,13 @@
 
         apply(path: string): RouteData {
             path = Strings.chopEnd(path, "/");
-            var route = this.findFirstRoute(path);
+            const route = this.findFirstRoute(path);
             if (route == null) {
                 throw new Error(`Could not apply the URL path '${path}'.  No route supports this path.`);
             }
 
-            var routeData = new RouteData();
-            var routePath = new RoutePath(path);
+            const routeData = new RouteData();
+            const routePath = new RoutePath(path);
 
             for (const part of route)
             {

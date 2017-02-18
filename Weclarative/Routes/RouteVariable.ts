@@ -1,4 +1,6 @@
-﻿import Convert = Utils.Convert;
+﻿/// <reference path="../Utils/Convert.ts" />
+
+import Convert = Utils.Convert;
 
 namespace Routes {
     export class RouteVariable extends RoutePart {

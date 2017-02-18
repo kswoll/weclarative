@@ -11,7 +11,7 @@
 
         processData(path: RoutePath, data: RouteData) {
             this.consumePath(path);
-            for (const key in this.routeData) {
+            for (const key of this.routeData.keys()) {
                 data.setValue(key, this.routeData.get(key));
             }
         }

@@ -1,4 +1,6 @@
-﻿namespace Routes {
+﻿/// <reference path="RouteData.ts" />
+
+namespace Routes {
     export class RouteEngine {
         routeTree = new RouteTree();
 

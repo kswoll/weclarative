@@ -71,7 +71,7 @@ abstract class MvcApplication {
     async open(url: string, pushState: boolean) {
         const parts = url.split("?");
         const path = parts[0];
-        const queryString = url.length > 1 ? parts[1] : "";
+        const queryString = parts.length > 1 ? parts[1] : "";
         this.currentPath = path;
         const view = await this.execute(path, queryString);
         if (pushState)
