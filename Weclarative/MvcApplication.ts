@@ -16,7 +16,6 @@ abstract class MvcApplication {
     private _host: string;
     private _port: string;
     private _scheme: string;
-    private _navigationContext: NavigationContext;
     private _controllerRegistry = new ControllerRegistry();
 
     protected constructor(public dependencyResolver: IDependencyResolver) {
@@ -106,16 +105,15 @@ abstract class MvcApplication {
     }
 
     protected async execute(path: string, queryString: string): Promise<View> {
-        const context = this.createNavigationContext(path, queryString);
-        this._navigationContext = context;
+        const viewRequest = this.createViewRequest(path, queryString);
         const routeData = this.routeTree.apply(path);
         const controller = routeData.getValue(Routes.RouteData.controllerKey) as Controller;
         const action = routeData.getValue(Routes.RouteData.actionKey) as Function;
-        await controller.execute(action, context);
-        return context.response.view as View;
+        const view = await controller.execute(action, viewRequest);
+        return view;
     }
 
-    private createNavigationContext(path: string, queryString: string): NavigationContext
+    private createViewRequest(path: string, queryString: string): ViewRequest
     {
         // Create http context
         const queryStringDictionary = new Map<string, string>();
@@ -128,27 +126,23 @@ abstract class MvcApplication {
             queryStringDictionary.set(key, value);
         }
         const routeData = this.routeTree.apply(path);
-        const request = new NavigationRequest(path, queryStringDictionary, routeData);
-        const response = new NavigationResponse();
-
-        const navigationContext = new NavigationContext(request, response);
-
-        return navigationContext;
+        const request = new ViewRequest(path, queryStringDictionary, routeData);
+        return request;
     }
 
     onOpen(url: string) {
     }
 
-    invokeAction(controller: Controller, action: Function, navigationContext: NavigationContext): Promise<ActionResult> {
+    invokeAction(controller: Controller, action: Function, viewRequest: ViewRequest): Promise<View> {
         const parameters = Utils.Reflection.getParameterNames(action);
         const args = new Array<any>(parameters.length);
         for (let i = 0; i < parameters.length; i++) {
             const key = parameters[i];
             let value: any;
-            if (navigationContext.request.queryString.has(key))
-                value = navigationContext.request.queryString.get(key);
+            if (viewRequest.queryString.has(key))
+                value = viewRequest.queryString.get(key);
             else
-                value = navigationContext.request.routeData.getValue(key);
+                value = viewRequest.routeData.getValue(key);
             args[i] = value;
         }
 

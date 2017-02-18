@@ -12,6 +12,7 @@
         private _detachedFromDom: EventHandler<void> | null;
 
         constructor(tagName: string | null = "div", node: Element | null = null) {
+            this.tagName = tagName as string;
             this.children = new Array<Control>();
             if (node != null)
                 this.node = node;

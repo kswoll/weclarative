@@ -2,11 +2,14 @@
     export abstract class RoutePart implements IRoutePart {
         abstract acceptPath(path: RoutePath): boolean;
 
-        protected constructor(readonly routeData: Map<string, any> = new Map<string, any>(), item?: [string, any]) {
-            if (item) {
-                const [key, value] = item;
-                routeData.set(key, value);
-            }
+        private _routeData: Map<string, any>;
+
+        protected constructor() {
+            this._routeData = new Map<string, any>();
+        }
+
+        get routeData() {
+            return this._routeData;
         }
 
         processData(path: RoutePath, data: RouteData) {

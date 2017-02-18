@@ -1,7 +1,7 @@
 ﻿namespace Routes {
     export class RouteLiteral extends RoutePart {
-        constructor(readonly literal: string, readonly isTerminal: boolean, routeData: Map<string, any> = new Map<string, any>(), item?: [string, any]) {
-            super(routeData, item);
+        constructor(readonly literal: string, readonly isTerminal: boolean) {
+            super();
             this.literal = literal.toLowerCase();
         }
 

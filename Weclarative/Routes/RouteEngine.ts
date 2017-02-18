@@ -26,13 +26,11 @@ namespace Routes {
                 }
 
                 // If defined as a default route, then we don't require the last path part
-/*
-                if (routePath.current == null && isDefault) {
+                if (routePath.current == null && route == "") {
                     const defaultNode = new RouteNode(new RouteDefault());
                     this.addNode(currentNode, defaultNode);
                     leafNodes.push(defaultNode);
                 }
-*/
                 if (nextNode != null) {
                     currentNode = nextNode;
                 }
@@ -75,8 +73,12 @@ namespace Routes {
 
                         nextNode = this.addNode(currentNode as IRouteNode, nextNode as RouteNode);
                     }
-                    if (routePath.current == null) {
-                        
+                    if (routePath.current == null && route == "") {
+                        const defaultRoute = new RouteDefault();
+                        defaultRoute.routeData.set(RouteData.actionKey, action);
+                        defaultRoute.routeData.set(RouteData.controllerKey, controller);
+                        const defaultNode = new RouteNode(defaultRoute);
+                        this.addNode(currentNode as IRouteNode, defaultNode);
                     }
                     currentNode = nextNode;
                 }

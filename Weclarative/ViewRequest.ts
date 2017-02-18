@@ -1,4 +1,4 @@
-﻿class NavigationRequest {
+﻿class ViewRequest {
     /**
      *  Contains the portion of the url after the host/port and before the query string.
      */

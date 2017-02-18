@@ -11,7 +11,7 @@
         unpin() {
             const pin = this.pinning.pop();
             while (this.parts.length > pin) {
-                this.parts.slice(this.parts.length - 1, 1);
+                this.parts.splice(this.parts.length - 1, 1);
             }
         }
 
