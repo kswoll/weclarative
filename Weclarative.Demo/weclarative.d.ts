@@ -182,7 +182,7 @@ import HtmlControl = Controls.HtmlControl;
  * dependencies explicit, and to facilitate potential unit-testig, references to the application is always
  * explicit and derived from some contextual object.
  */
-export declare abstract class MvcApplication {
+declare abstract class MvcApplication {
     private currentPath;
     private routeTree;
     private _body;

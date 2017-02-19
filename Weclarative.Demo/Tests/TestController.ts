@@ -1,6 +1,4 @@
-﻿/// <reference path="../Controls/TextBlock.ts" />
-
-import TextBlock = Controls.TextBlock;
+﻿import TextBlock = Controls.TextBlock;
 
 class TestController extends Controller {
     get path() {
