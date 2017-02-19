@@ -1,4 +1,4 @@
 ﻿window.onload = () => {
-    var application = new TestApplication();
+    var application = new Tests.TestApplication();
     application.start();
 };

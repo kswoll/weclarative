@@ -1,9 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26206.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weclarative", "Weclarative\Weclarative.csproj", "{80807611-69DB-408E-A313-DECBF41ACB3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weclarative.Demo", "Weclarative.Demo\Weclarative.Demo.csproj", "{F467324F-2578-42C5-BD2D-A8AD37B9254E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{80807611-69DB-408E-A313-DECBF41ACB3A} = {80807611-69DB-408E-A313-DECBF41ACB3A}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +20,10 @@ Global
 		{80807611-69DB-408E-A313-DECBF41ACB3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80807611-69DB-408E-A313-DECBF41ACB3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80807611-69DB-408E-A313-DECBF41ACB3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F467324F-2578-42C5-BD2D-A8AD37B9254E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F467324F-2578-42C5-BD2D-A8AD37B9254E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F467324F-2578-42C5-BD2D-A8AD37B9254E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F467324F-2578-42C5-BD2D-A8AD37B9254E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

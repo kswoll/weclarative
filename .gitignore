@@ -6,3 +6,7 @@ Weclarative/obj/
 *.user
 Weclarative/bin/
 Weclarative/weclarative.d.ts
+packages/
+Weclarative.Demo/obj/
+.idea/
+Weclarative.Demo/bin/

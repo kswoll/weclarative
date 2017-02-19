@@ -22,15 +22,12 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="index.html" />
-    <Content Include="reset.css" />
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="weclarative.js" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="app.ts" />
     <TypeScriptCompile Include="Controller.ts" />
     <TypeScriptCompile Include="ControllerRegistry.ts" />
     <TypeScriptCompile Include="Controls\Control.ts" />
@@ -54,8 +51,6 @@
     <TypeScriptCompile Include="Routes\RoutePath.ts" />
     <TypeScriptCompile Include="Routes\RouteTree.ts" />
     <TypeScriptCompile Include="Routes\RouteVariable.ts" />
-    <TypeScriptCompile Include="Tests\TestApplication.ts" />
-    <TypeScriptCompile Include="Tests\TestController.ts" />
     <TypeScriptCompile Include="Utils\Arrays.ts" />
     <TypeScriptCompile Include="Utils\Convert.ts" />
     <TypeScriptCompile Include="Utils\Disposable.ts" />
@@ -107,7 +102,7 @@
     <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>True</TypeScriptNoImplicitAny>
-    <TypeScriptModuleKind>None</TypeScriptModuleKind>
+    <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
     <TypeScriptOutFile>weclarative.js</TypeScriptOutFile>
     <TypeScriptOutDir />
     <TypeScriptGeneratesDeclarations>True</TypeScriptGeneratesDeclarations>
@@ -123,4 +118,8 @@
     <TypeScriptSourceMap>false</TypeScriptSourceMap>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
 </Project>
