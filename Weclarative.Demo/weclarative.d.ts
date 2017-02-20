@@ -71,11 +71,50 @@ declare namespace Controls {
     }
 }
 declare namespace Controls {
+    class AlignmentPanel extends Control {
+        static Top(content: Control): AlignmentPanel;
+        static Bottom(content: Control): AlignmentPanel;
+        static Right(content: Control): AlignmentPanel;
+        static Left(content: Control): AlignmentPanel;
+        static TopLeft(content: Control): AlignmentPanel;
+        static TopRight(content: Control): AlignmentPanel;
+        static BottomLeft(content: Control): AlignmentPanel;
+        static BottomRight(content: Control): AlignmentPanel;
+        static Center(content: Control): AlignmentPanel;
+        private _content;
+        private cell;
+        private cellDiv;
+        constructor(content: Control, horizontalAlignment: HorizontalAlignment, verticalAlignment: VerticalAlignment);
+        content: Control | null;
+        createNode(): HTMLTableElement;
+    }
+}
+declare namespace Controls {
+    class CenteredPanel extends Control {
+        private _content;
+        private contentContainer;
+        constructor(content?: Control);
+        content: Control | null;
+        createNode(): HTMLDivElement;
+    }
+}
+declare namespace Controls {
     enum HorizontalAlignment {
         Left = 0,
         Center = 1,
         Right = 2,
         Fill = 3,
+    }
+}
+declare namespace Utils {
+    class Elements {
+        /**
+         * If offsetHeight is non-zero, will return that. Otherwise will temporarily place the element in a hidden
+         * container in order to get a valid offsetHeight value.
+         */
+        static measureOffsetHeight(element: HTMLElement): number;
+        static insertAfter(parent: Node, child: Node, referenceNode: Node): void;
+        static prepend(parent: Node, child: Node): void;
     }
 }
 declare namespace Controls {
@@ -116,17 +155,6 @@ declare namespace Controls {
         Middle = 1,
         Bottom = 2,
         Fill = 3,
-    }
-}
-declare namespace Utils {
-    class Elements {
-        /**
-         * If offsetHeight is non-zero, will return that. Otherwise will temporarily place the element in a hidden
-         * container in order to get a valid offsetHeight value.
-         */
-        static measureOffsetHeight(element: HTMLElement): number;
-        static insertAfter(parent: Node, child: Node, referenceNode: Node): void;
-        static prepend(parent: Node, child: Node): void;
     }
 }
 import Elements = Utils.Elements;

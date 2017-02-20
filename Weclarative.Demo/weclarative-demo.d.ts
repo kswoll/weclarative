@@ -7,6 +7,7 @@ declare namespace Tests {
 import TextBlock = Controls.TextBlock;
 import VerticalPanel = Controls.VerticalPanel;
 import HorizontalPanel = Controls.HorizontalPanel;
+import CenteredPanel = Controls.CenteredPanel;
 declare class TestController extends Controller {
     readonly path: string;
     registerRoutes(registrar: (route: string, action: Function) => void): void;
@@ -14,4 +15,6 @@ declare class TestController extends Controller {
     home(): View;
     verticalPanel(): View;
     horizontalPanel(): View;
+    centeredPanel(): View;
+    alignmentPanel(): View;
 }

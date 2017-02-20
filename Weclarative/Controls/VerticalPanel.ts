@@ -1,4 +1,5 @@
-﻿/// <reference path="../Utils/Elements.ts" />
+﻿/// <reference path="Control.ts" />
+/// <reference path="../Utils/Elements.ts" />
 
 import Elements = Utils.Elements;
 

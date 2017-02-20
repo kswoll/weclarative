@@ -1,4 +1,7 @@
-﻿namespace Controls {
+﻿/// <reference path="Control.ts" />
+/// <reference path="../Utils/Elements.ts" />
+
+namespace Controls {
     export class HorizontalPanel extends Control {
         defaultAlignment = VerticalAlignment.Fill;
 

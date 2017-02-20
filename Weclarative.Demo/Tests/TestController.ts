@@ -1,6 +1,7 @@
 ﻿import TextBlock = Controls.TextBlock;
 import VerticalPanel = Controls.VerticalPanel;
 import HorizontalPanel = Controls.HorizontalPanel;
+import CenteredPanel = Controls.CenteredPanel;
 
 class TestController extends Controller {
     get path() {
@@ -9,7 +10,9 @@ class TestController extends Controller {
 
     registerRoutes(registrar: (route: string, action: Function) => void) {
         registrar("verticalPanel", this.verticalPanel);
+        registrar("centeredPanel", this.centeredPanel);
         registrar("horizontalPanel", this.horizontalPanel);
+        registrar("alignmentPanel", this.alignmentPanel);
         registrar("{id:number}", this.getById);
         registrar("", this.home);
     }
@@ -43,6 +46,22 @@ class TestController extends Controller {
         panel.add(new TextBlock("Item 1"));
         panel.add(new TextBlock("Item 2"));
         panel.add(new TextBlock("Item 3"));
+        view.content = panel;
+        return view;
+    }
+
+    centeredPanel() {
+        const view = new View();
+        view.title = "Centered Panel";
+        const panel = new CenteredPanel(new TextBlock("Centered Content"));
+        view.content = panel;
+        return view;
+    }
+
+    alignmentPanel() {
+        const view = new View();
+        view.title = "Alignment Panel";
+        const panel = Controls.AlignmentPanel.BottomRight(new TextBlock("Bottom Right Content"));
         view.content = panel;
         return view;
     }

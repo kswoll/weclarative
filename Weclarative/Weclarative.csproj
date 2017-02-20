@@ -27,6 +27,8 @@
   <ItemGroup>
     <TypeScriptCompile Include="Controller.ts" />
     <TypeScriptCompile Include="ControllerRegistry.ts" />
+    <TypeScriptCompile Include="Controls\AlignmentPanel.ts" />
+    <TypeScriptCompile Include="Controls\CenteredPanel.ts" />
     <TypeScriptCompile Include="Controls\Control.ts" />
     <TypeScriptCompile Include="Controls\HorizontalAlignment.ts" />
     <TypeScriptCompile Include="Controls\HorizontalPanel.ts" />
