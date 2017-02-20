@@ -37,6 +37,11 @@
     <TypeScriptCompile Include="Controls\HtmlControl.ts" />
     <TypeScriptCompile Include="Controls\InlineControl.ts" />
     <TypeScriptCompile Include="Controls\SidePanel.ts" />
+    <TypeScriptCompile Include="Controls\TablePanel.ts" />
+    <TypeScriptCompile Include="Controls\TablePanelConstraint.ts" />
+    <TypeScriptCompile Include="Controls\TablePanelPoint.ts" />
+    <TypeScriptCompile Include="Controls\TablePanelWidth.ts" />
+    <TypeScriptCompile Include="Controls\TablePanelWidthStyle.ts" />
     <TypeScriptCompile Include="Controls\TextBlock.ts" />
     <TypeScriptCompile Include="Controls\VerticalAlignment.ts" />
     <TypeScriptCompile Include="Controls\VerticalPanel.ts" />
