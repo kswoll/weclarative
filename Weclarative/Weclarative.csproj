@@ -22,21 +22,23 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="web.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="weclarative.js" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Controller.ts" />
     <TypeScriptCompile Include="ControllerRegistry.ts" />
     <TypeScriptCompile Include="Controls\Control.ts" />
+    <TypeScriptCompile Include="Controls\HorizontalAlignment.ts" />
     <TypeScriptCompile Include="Controls\HtmlControl.ts" />
     <TypeScriptCompile Include="Controls\InlineControl.ts" />
     <TypeScriptCompile Include="Controls\TextBlock.ts" />
+    <TypeScriptCompile Include="Controls\VerticalAlignment.ts" />
+    <TypeScriptCompile Include="Controls\VerticalPanel.ts" />
     <TypeScriptCompile Include="Fixups\WindowFixups.ts" />
     <TypeScriptCompile Include="LayoutType.ts" />
     <TypeScriptCompile Include="MvcApplication.ts" />
+    <TypeScriptCompile Include="Utils\Animator.ts" />
+    <TypeScriptCompile Include="Utils\Elements.ts" />
     <TypeScriptCompile Include="ViewRequest.ts" />
     <TypeScriptCompile Include="Routes\IRouteConstraint.ts" />
     <TypeScriptCompile Include="Routes\IRouteNode.ts" />
@@ -60,14 +62,6 @@
     <TypeScriptCompile Include="Views\Layout.ts" />
     <TypeScriptCompile Include="Views\View.ts" />
     <TypeScriptCompile Include="ViewContext.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="web.Debug.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
-    <None Include="web.Release.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
@@ -110,8 +104,7 @@
     <TypeScriptStrictNullChecks>True</TypeScriptStrictNullChecks>
     <TypeScriptMapRoot>
     </TypeScriptMapRoot>
-    <TypeScriptSourceRoot>
-    </TypeScriptSourceRoot>
+    <TypeScriptSourceRoot>Weclarative</TypeScriptSourceRoot>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>

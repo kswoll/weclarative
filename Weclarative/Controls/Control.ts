@@ -5,19 +5,19 @@
         private children: Array<Control>;
         private isAttachedToDom: boolean;
         private _view: View | null;
-        private _node: Element;
+        private _node: HTMLElement;
         private _style: CSSStyleDeclaration;
         private _parent: Control | null;
         private _attachedToDom: EventHandler<void> | null;
         private _detachedFromDom: EventHandler<void> | null;
 
-        constructor(tagName: string | null = "div", node: Element | null = null) {
+        constructor(tagName: string | null = "div", node: HTMLElement | null = null) {
             this.tagName = tagName as string;
             this.children = new Array<Control>();
             if (node != null)
                 this.node = node;
             else
-                this.createNode();
+                this.node = this.createNode();
         }
 
         get attachedToDom(): EventHandler<void> {
@@ -32,12 +32,13 @@
             return this._detachedFromDom as EventHandler<void>;
         }
 
-        get node(): Element {
+        get node(): HTMLElement {
             return this._node;
         }
-        set node(value: Element) {
+        set node(value: HTMLElement) {
             this._node = value;
             (this.node as any).$control = this;
+            this.node.setAttribute("data-class-name", this.constructor.name);
         }
 
         get view(): View | null {
@@ -74,10 +75,9 @@
             }
         }
 
-        protected createNode(): Element {
-            this.node = document.createElement(this.tagName);
-            this.node.setAttribute("data-class-name", this.constructor.name);
-            return this._node;
+        protected createNode(): HTMLElement {
+            const node = document.createElement(this.tagName);
+            return node;
         }
 
         protected addChild(child: Control)

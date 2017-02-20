@@ -1,6 +1,6 @@
 ﻿namespace Controls {
     export class HtmlControl extends Control {
-        constructor(node: Element) {
+        constructor(node: HTMLElement) {
             super(null, node);
         }
 

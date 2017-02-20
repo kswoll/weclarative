@@ -1,4 +1,5 @@
 ﻿import TextBlock = Controls.TextBlock;
+import VerticalPanel = Controls.VerticalPanel;
 
 class TestController extends Controller {
     get path() {
@@ -6,6 +7,7 @@ class TestController extends Controller {
     }
 
     registerRoutes(registrar: (route: string, action: Function) => void) {
+        registrar("verticalPanel", this.verticalPanel);
         registrar("{id:number}", this.getById);
         registrar("", this.home);
     }
@@ -18,6 +20,17 @@ class TestController extends Controller {
         const view = new View();
         view.title = "Hello!";
         view.content = new TextBlock("Why hello3!");
+        return view;
+    }
+
+    verticalPanel() {
+        const view = new View();
+        view.title = "Vertical Panel";
+        const panel = new VerticalPanel();
+        panel.add(new TextBlock("Item 1"));
+        panel.add(new TextBlock("Item 2"));
+        panel.add(new TextBlock("Item 3"));
+        view.content = panel;
         return view;
     }
 }

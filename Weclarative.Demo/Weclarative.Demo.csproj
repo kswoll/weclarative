@@ -70,6 +70,7 @@
     <Content Include="index.html" />
     <Content Include="packages.config" />
     <Content Include="reset.css" />
+    <Content Include="weclarative-demo.js" />
     <Content Include="weclarative.js" />
   </ItemGroup>
   <ItemGroup>

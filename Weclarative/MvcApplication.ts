@@ -17,6 +17,13 @@ import HtmlControl = Controls.HtmlControl;
  * explicit and derived from some contextual object.
  */
 abstract class MvcApplication {
+    /**
+     * Implement this method to instantiate and register all the controllers in your application.
+     *
+     * @param registry Call the register method passing in a new controller for each controller in your application.
+     */
+    abstract registerControllers(registry: ControllerRegistry): void;
+
     private currentPath: string;
     private routeTree: RouteTree;
     private _body = new HtmlControl(document.getElementsByTagName("body")[0]);
@@ -28,8 +35,6 @@ abstract class MvcApplication {
 
     protected constructor() {
     }
-
-    abstract registerControllers(registry: ControllerRegistry): void;
 
     get view() {
         return this._view;

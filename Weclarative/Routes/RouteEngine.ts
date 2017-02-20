@@ -9,7 +9,7 @@ namespace Routes {
             const routePath = new RoutePath(route);
 
             let currentNode = this.routeTree as IRouteNode;
-            const leafNodes = new Array<RouteNode>();
+            let parentNode = this.routeTree as IRouteNode;
 
             do {
                 let nextNode: RouteNode | null = null;
@@ -21,15 +21,8 @@ namespace Routes {
 
                     if (routePath.current == null) {
                         part.routeData.set(RouteData.controllerKey, controller);
-                        leafNodes.push(nextNode as RouteNode);
+                        parentNode = nextNode as RouteNode;
                     }
-                }
-
-                // If defined as a default route, then we don't require the last path part
-                if (routePath.current == null && route == "") {
-                    const defaultNode = new RouteNode(new RouteDefault());
-                    this.addNode(currentNode, defaultNode);
-                    leafNodes.push(defaultNode);
                 }
                 if (nextNode != null) {
                     currentNode = nextNode;
@@ -37,53 +30,50 @@ namespace Routes {
             }
             while (routePath.current != null);
 
-            controller.registerRoutes((routes, action) => this.add(controller, leafNodes, routes, action));
+            controller.registerRoutes((routes, action) => this.add(controller, parentNode, routes, action));
         }
 
-        add(controller: Controller, parentNodes: Array<RouteNode>, route: string, action: Function, isDefault?: boolean): void {
+        add(controller: Controller, parentNode: IRouteNode, route: string, action: Function, isDefault?: boolean): void {
             let addToRoot = false;
             if (route.startsWith("/")) {
                 addToRoot = true;
             }
-            const effectiveNodes = addToRoot ? [this.routeTree as IRouteNode] : parentNodes;
-            for (const node of effectiveNodes) {
-                const routePath = new RoutePath(route);
-                let currentNode: IRouteNode | null = node;
-                do {
-                    let nextNode: RouteNode | null = null;
-                    if (routePath.current != null) {
-                        const part = routePath.consume();
+            const routePath = new RoutePath(route);
+            let currentNode: IRouteNode | null = parentNode;
+            do {
+                let nextNode: RouteNode | null = null;
+                if (routePath.current != null) {
+                    const part = routePath.consume();
 
-                        let routePart: RoutePart;
-                        if (part.startsWith("{") && part.endsWith("}")) {
-                            const pieces = Strings.chopEnd(Strings.chopStart(part, "{"), "}").trim().split(":");
-                            const [name, type] = pieces;
-                            const variable = new RouteVariable(routePath.current == null, name, type);
-                            routePart = variable;
-                        } else {
-                            routePart = new RouteLiteral(part, routePath.current == null);
-                        }
-
-                        nextNode = new RouteNode(routePart);
-
-                        if (routePath.current == null) {
-                            routePart.routeData.set(RouteData.actionKey, action);
-                            routePart.routeData.set(RouteData.controllerKey, controller);
-                        }
-
-                        nextNode = this.addNode(currentNode as IRouteNode, nextNode as RouteNode);
+                    let routePart: RoutePart;
+                    if (part.startsWith("{") && part.endsWith("}")) {
+                        const pieces = Strings.chopEnd(Strings.chopStart(part, "{"), "}").trim().split(":");
+                        const [name, type] = pieces;
+                        const variable = new RouteVariable(routePath.current == null, name, type);
+                        routePart = variable;
+                    } else {
+                        routePart = new RouteLiteral(part, routePath.current == null);
                     }
-                    if (routePath.current == null && route == "") {
-                        const defaultRoute = new RouteDefault();
-                        defaultRoute.routeData.set(RouteData.actionKey, action);
-                        defaultRoute.routeData.set(RouteData.controllerKey, controller);
-                        const defaultNode = new RouteNode(defaultRoute);
-                        this.addNode(currentNode as IRouteNode, defaultNode);
+
+                    nextNode = new RouteNode(routePart);
+
+                    if (routePath.current == null) {
+                        routePart.routeData.set(RouteData.actionKey, action);
+                        routePart.routeData.set(RouteData.controllerKey, controller);
                     }
-                    currentNode = nextNode;
+
+                    nextNode = this.addNode(currentNode as IRouteNode, nextNode as RouteNode);
                 }
-                while (routePath.current != null);
+                if (routePath.current == null && route == "") {
+                    const defaultRoute = new RouteDefault();
+                    defaultRoute.routeData.set(RouteData.actionKey, action);
+                    defaultRoute.routeData.set(RouteData.controllerKey, controller);
+                    const defaultNode = new RouteNode(defaultRoute);
+                    this.addNode(currentNode as IRouteNode, defaultNode);
+                }
+                currentNode = nextNode;
             }
+            while (routePath.current != null);
         }
 
         addNode(parent: IRouteNode, child: RouteNode): RouteNode {

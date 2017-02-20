@@ -49,15 +49,15 @@ declare namespace Controls {
         private _parent;
         private _attachedToDom;
         private _detachedFromDom;
-        constructor(tagName?: string | null, node?: Element | null);
+        constructor(tagName?: string | null, node?: HTMLElement | null);
         readonly attachedToDom: EventHandler<void>;
         readonly detachedFromDom: EventHandler<void>;
-        node: Element;
+        node: HTMLElement;
         view: View | null;
         readonly parent: Control | null;
         onAddedToView(): void;
         onRemovedFromView(): void;
-        protected createNode(): Element;
+        protected createNode(): HTMLElement;
         protected addChild(child: Control): void;
         protected removeChild(child: Control): void;
         protected onRemove(child: Control): void;
@@ -71,21 +71,70 @@ declare namespace Controls {
     }
 }
 declare namespace Controls {
+    enum HorizontalAlignment {
+        Left = 0,
+        Center = 1,
+        Right = 2,
+        Fill = 3,
+    }
+}
+declare namespace Controls {
     class HtmlControl extends Control {
-        constructor(node: Element);
+        constructor(node: HTMLElement);
         add(child: Control): void;
         remove(child: Control): void;
     }
 }
 declare namespace Controls {
     class InlineControl extends Control {
-        constructor(tagName?: string | null, node?: Element | null);
+        constructor(tagName?: string | null, node?: HTMLElement | null);
     }
 }
 declare namespace Controls {
     class TextBlock extends InlineControl {
         constructor(value?: string);
         value: string;
+    }
+}
+declare namespace Controls {
+    enum VerticalAlignment {
+        Top = 0,
+        Middle = 1,
+        Bottom = 2,
+        Fill = 3,
+    }
+}
+declare namespace Utils {
+    class Elements {
+        /**
+         * If offsetHeight is non-zero, will return that. Otherwise will temporarily place the element in a hidden
+         * container in order to get a valid offsetHeight value.
+         */
+        static measureOffsetHeight(element: HTMLElement): number;
+        static insertAfter(parent: Node, child: Node, referenceNode: Node): void;
+    }
+}
+import Elements = Utils.Elements;
+declare namespace Controls {
+    class VerticalPanel extends Control {
+        defaultAlignment: HorizontalAlignment;
+        private static readonly animationSpeed;
+        private table;
+        private firstSpacer;
+        private lastSpacer;
+        private _spacing;
+        private _verticalAlignment;
+        constructor(defaultAlignment?: HorizontalAlignment);
+        verticalAlignment: VerticalAlignment;
+        spacing: number;
+        createNode(): HTMLElement;
+        add(child: Control, alignment?: HorizontalAlignment, spaceAbove?: number, animate?: boolean): void;
+        internalAdd(child: Control, alignment: HorizontalAlignment, spaceAbove: number, animate: boolean): HTMLElement;
+        insertBefore(child: Control, insertBefore: Control, alignment?: HorizontalAlignment, spaceAbove?: number, animate?: boolean): void;
+        insertAfter(child: Control, insertAfter: Control, alignment?: HorizontalAlignment, spaceAbove?: number, animate?: boolean): void;
+        replace(oldChild: Control, newChild: Control): void;
+        remove(child: Control, animate?: boolean): void;
+        removeChild(child: Control): void;
     }
 }
 interface Window {
@@ -159,7 +208,7 @@ declare namespace Routes {
     class RouteEngine {
         routeTree: RouteTree;
         registerController(controller: Controller): void;
-        add(controller: Controller, parentNodes: Array<RouteNode>, route: string, action: Function, isDefault?: boolean): void;
+        add(controller: Controller, parentNode: IRouteNode, route: string, action: Function, isDefault?: boolean): void;
         addNode(parent: IRouteNode, child: RouteNode): RouteNode;
         generateTree(): RouteTree;
     }
@@ -183,6 +232,12 @@ import HtmlControl = Controls.HtmlControl;
  * explicit and derived from some contextual object.
  */
 declare abstract class MvcApplication {
+    /**
+     * Implement this method to instantiate and register all the controllers in your application.
+     *
+     * @param registry Call the register method passing in a new controller for each controller in your application.
+     */
+    abstract registerControllers(registry: ControllerRegistry): void;
     private currentPath;
     private routeTree;
     private _body;
@@ -192,7 +247,6 @@ declare abstract class MvcApplication {
     private _scheme;
     private _controllerRegistry;
     protected constructor();
-    abstract registerControllers(registry: ControllerRegistry): void;
     readonly view: View;
     readonly currentUrl: string;
     start(): Promise<void>;
@@ -205,6 +259,12 @@ declare abstract class MvcApplication {
     private createViewRequest(path, queryString);
     onOpen(url: string): void;
     invokeAction(controller: Controller, action: Function, viewRequest: ViewRequest): Promise<View>;
+}
+declare namespace Utils {
+    type FrameHandler = (progress: number) => void;
+    class Animator {
+        static animate(frame: FrameHandler, duration: number, onDone?: () => void): void;
+    }
 }
 declare class ViewRequest {
     path: string;
