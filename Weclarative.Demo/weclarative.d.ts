@@ -100,6 +100,17 @@ declare namespace Controls {
     }
 }
 declare namespace Controls {
+    /**
+     * Renders the content by setting width/height at 100% so that it fills inside the parent element
+     */
+    class FillPanel extends Control {
+        private _content;
+        constructor(content?: Control);
+        createNode(): HTMLElement;
+        content: Control | null;
+    }
+}
+declare namespace Controls {
     class FixedPanel extends Control {
         private _content;
         constructor(content: Control, width: string, height: string);
@@ -149,6 +160,54 @@ declare namespace Controls {
 declare namespace Controls {
     class InlineControl extends Control {
         constructor(tagName?: string | null, node?: HTMLElement | null);
+    }
+}
+declare namespace Controls {
+    class SidePanel extends Control {
+        private _top;
+        private _bottom;
+        private _left;
+        private _right;
+        private _center;
+        private _spacing;
+        private topRow;
+        private bottomRow;
+        private middleRow;
+        private topCell;
+        private bottomCell;
+        private leftCell;
+        private rightCell;
+        private centerCell;
+        private topCellContent;
+        private bottomCellContent;
+        private leftCellContent;
+        private rightCellContent;
+        private centerCellContent;
+        constructor(spacing?: number);
+        private getTopRow();
+        private getMiddleRow();
+        private getBottomRow();
+        private getTopCell();
+        private getBottomCell();
+        private adjustColSpan();
+        private getLeftCell();
+        private getCenterCell();
+        private getRightCell();
+        private removeTopRow();
+        private removeMiddleRow();
+        private removeBottomRow();
+        private removeMiddleRowIfEmpty();
+        private removeTopCell();
+        private removeBottomCell();
+        private removeLeftCell();
+        private removeCenterCell();
+        private removeRightCell();
+        top: Control | null;
+        bottom: Control | null;
+        left: Control | null;
+        center: Control | null;
+        right: Control | null;
+        spacing: number;
     }
 }
 declare namespace Controls {

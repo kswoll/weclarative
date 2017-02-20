@@ -30,11 +30,13 @@
     <TypeScriptCompile Include="Controls\AlignmentPanel.ts" />
     <TypeScriptCompile Include="Controls\CenteredPanel.ts" />
     <TypeScriptCompile Include="Controls\Control.ts" />
+    <TypeScriptCompile Include="Controls\FillPanel.ts" />
     <TypeScriptCompile Include="Controls\FixedPanel.ts" />
     <TypeScriptCompile Include="Controls\HorizontalAlignment.ts" />
     <TypeScriptCompile Include="Controls\HorizontalPanel.ts" />
     <TypeScriptCompile Include="Controls\HtmlControl.ts" />
     <TypeScriptCompile Include="Controls\InlineControl.ts" />
+    <TypeScriptCompile Include="Controls\SidePanel.ts" />
     <TypeScriptCompile Include="Controls\TextBlock.ts" />
     <TypeScriptCompile Include="Controls\VerticalAlignment.ts" />
     <TypeScriptCompile Include="Controls\VerticalPanel.ts" />

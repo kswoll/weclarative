@@ -14,6 +14,7 @@ class TestController extends Controller {
         registrar("horizontalPanel", this.horizontalPanel);
         registrar("alignmentPanel", this.alignmentPanel);
         registrar("fixedPanel", this.fixedPanel);
+        registrar("sidePanel", this.sidePanel);
         registrar("{id:number}", this.getById);
         registrar("", this.home);
     }
@@ -73,6 +74,19 @@ class TestController extends Controller {
         const panel = new Controls.FixedPanel(new TextBlock("Fixed Panel"), "200px", "200px");
         panel.style.backgroundColor = "#FFDDDD";
         view.content = panel;
+        return view;
+    }
+
+    sidePanel() {
+        const view = new View();
+        view.title = "Side Panel";
+        const panel = new Controls.SidePanel();
+        panel.top = new CenteredPanel(new TextBlock("Top"));
+        panel.left = new CenteredPanel(new TextBlock("Left"));
+        panel.center = new CenteredPanel(new TextBlock("Center"));
+        panel.right = new CenteredPanel(new TextBlock("Right"));
+        panel.bottom = new CenteredPanel(new TextBlock("Bottom"));
+        view.content = new Controls.FillPanel(panel);
         return view;
     }
 }
