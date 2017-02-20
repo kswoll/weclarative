@@ -28,5 +28,9 @@
             else
                 parent.insertBefore(child, nextReferenceNode);
         }
+
+        static prepend(parent: Node, child: Node) {
+            parent.insertBefore(child, parent.firstChild);
+        }
     }
 }

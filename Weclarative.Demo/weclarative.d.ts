@@ -79,6 +79,20 @@ declare namespace Controls {
     }
 }
 declare namespace Controls {
+    class HorizontalPanel extends Control {
+        spacing: number;
+        defaultAlignment: VerticalAlignment;
+        private row;
+        private firstSpacer;
+        private lastSpacer;
+        private _horizontalAlignment;
+        constructor(spacing?: number);
+        horizontalAlignment: HorizontalAlignment;
+        createNode(): HTMLTableElement;
+        add(child: Control, alignment?: VerticalAlignment, spaceBefore?: number): void;
+    }
+}
+declare namespace Controls {
     class HtmlControl extends Control {
         constructor(node: HTMLElement);
         add(child: Control): void;
@@ -112,6 +126,7 @@ declare namespace Utils {
          */
         static measureOffsetHeight(element: HTMLElement): number;
         static insertAfter(parent: Node, child: Node, referenceNode: Node): void;
+        static prepend(parent: Node, child: Node): void;
     }
 }
 import Elements = Utils.Elements;
