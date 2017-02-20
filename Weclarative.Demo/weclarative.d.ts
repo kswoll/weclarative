@@ -50,6 +50,7 @@ declare namespace Controls {
         private _attachedToDom;
         private _detachedFromDom;
         constructor(tagName?: string | null, node?: HTMLElement | null);
+        readonly style: CSSStyleDeclaration;
         readonly attachedToDom: EventHandler<void>;
         readonly detachedFromDom: EventHandler<void>;
         node: HTMLElement;
@@ -96,6 +97,13 @@ declare namespace Controls {
         constructor(content?: Control);
         content: Control | null;
         createNode(): HTMLDivElement;
+    }
+}
+declare namespace Controls {
+    class FixedPanel extends Control {
+        private _content;
+        constructor(content: Control, width: string, height: string);
+        content: Control | null;
     }
 }
 declare namespace Controls {

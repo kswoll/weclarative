@@ -13,6 +13,7 @@ class TestController extends Controller {
         registrar("centeredPanel", this.centeredPanel);
         registrar("horizontalPanel", this.horizontalPanel);
         registrar("alignmentPanel", this.alignmentPanel);
+        registrar("fixedPanel", this.fixedPanel);
         registrar("{id:number}", this.getById);
         registrar("", this.home);
     }
@@ -62,6 +63,15 @@ class TestController extends Controller {
         const view = new View();
         view.title = "Alignment Panel";
         const panel = Controls.AlignmentPanel.BottomRight(new TextBlock("Bottom Right Content"));
+        view.content = panel;
+        return view;
+    }
+
+    fixedPanel() {
+        const view = new View();
+        view.title = "Fixed Panel";
+        const panel = new Controls.FixedPanel(new TextBlock("Fixed Panel"), "200px", "200px");
+        panel.style.backgroundColor = "#FFDDDD";
         view.content = panel;
         return view;
     }

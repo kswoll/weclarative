@@ -17,4 +17,5 @@ declare class TestController extends Controller {
     horizontalPanel(): View;
     centeredPanel(): View;
     alignmentPanel(): View;
+    fixedPanel(): View;
 }

@@ -20,6 +20,10 @@
                 this.node = this.createNode();
         }
 
+        get style() {
+            return this.node.style;
+        }
+
         get attachedToDom(): EventHandler<void> {
             if (this._attachedToDom == null)
                 this._attachedToDom = new EventHandler<void>();
