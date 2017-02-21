@@ -11,6 +11,11 @@
         private _attachedToDom: EventHandler<void> | null;
         private _detachedFromDom: EventHandler<void> | null;
         private _onClick: EventHandler<MouseEvent> | null;
+        private _onMouseEntered: EventHandler<MouseEvent> | null;
+        private _onMouseExited: EventHandler<MouseEvent> | null;
+        private _onMouseUp: EventHandler<MouseEvent> | null;
+        private _onMouseDown: EventHandler<MouseEvent> | null;
+        private _onWheel: EventHandler<MouseEvent> | null;
 
         constructor(tagName: string | null = "div", node: HTMLElement | null = null) {
             this.tagName = tagName as string;
@@ -64,14 +69,38 @@
 
         get onClick(): IEventHandler<MouseEvent> {
             if (this._onClick == null) {
-                this._onClick = new EventHandler<Event>();
+                this._onClick = new EventHandler<MouseEvent>();
                 this.node.addEventListener("click", this.onJsClick);
             }
             return this._onClick;
         }
 
         onJsClick(evt: MouseEvent) {
-            (this._onClick as EventHandler<Event>).trigger(evt);
+            (this._onClick as EventHandler<MouseEvent>).trigger(evt);
+        }
+
+        get onMouseEntered(): IEventHandler<MouseEvent> {
+            if (this._onMouseEntered == null) {
+                this._onMouseEntered = new EventHandler<MouseEvent>();
+                this.node.addEventListener("mouseentered", this.onJsMouseEntered);
+            }
+            return this._onMouseEntered;
+        }
+
+        onJsMouseEntered(evt: MouseEvent) {
+            (this._onMouseEntered as EventHandler<MouseEvent>).trigger(evt);
+        }
+
+        get onMouseExited(): IEventHandler<MouseEvent> {
+            if (this._onMouseExited == null) {
+                this._onMouseExited = new EventHandler<MouseEvent>();
+                this.node.addEventListener("mouseexited", this.onJsMouseExited);
+            }
+            return this._onMouseExited;
+        }
+
+        onJsMouseExited(evt: MouseEvent) {
+            (this._onMouseExited as EventHandler<MouseEvent>).trigger(evt);
         }
 
         onAddedToView()
