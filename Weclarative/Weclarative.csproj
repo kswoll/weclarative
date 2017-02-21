@@ -37,6 +37,7 @@
     <TypeScriptCompile Include="Controls\HorizontalPanel.ts" />
     <TypeScriptCompile Include="Controls\HtmlControl.ts" />
     <TypeScriptCompile Include="Controls\InlineControl.ts" />
+    <TypeScriptCompile Include="Controls\ListView.ts" />
     <TypeScriptCompile Include="Controls\MouseTrackingEngine.ts" />
     <TypeScriptCompile Include="Controls\SidePanel.ts" />
     <TypeScriptCompile Include="Controls\TablePanel.ts" />

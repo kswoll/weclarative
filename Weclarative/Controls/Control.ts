@@ -103,6 +103,42 @@
             (this._onMouseExited as EventHandler<MouseEvent>).trigger(evt);
         }
 
+        get onMouseDown() {
+            if (this._onMouseDown == null) {
+                this._onMouseDown = new EventHandler<MouseEvent>();
+                this.node.addEventListener("mousedown", this.onJsMouseDown);
+            }
+            return this._onMouseDown;
+        }
+
+        onJsMouseDown(evt: MouseEvent) {
+            (this._onMouseDown as EventHandler<MouseEvent>).trigger(evt);
+        }
+
+        get onMouseUp() {
+            if (this._onMouseUp == null) {
+                this._onMouseUp = new EventHandler<MouseEvent>();
+                this.node.addEventListener("mousedown", this.onJsMouseUp);
+            }
+            return this._onMouseUp;
+        }
+
+        onJsMouseUp(evt: MouseEvent) {
+            (this.onMouseUp as EventHandler<MouseEvent>).trigger(evt);
+        }
+
+        get onWheel() {
+            if (this._onWheel == null) {
+                this._onWheel = new EventHandler<MouseEvent>();
+                this.node.addEventListener("wheel", this.onJsWheel);
+            }
+            return this._onWheel;
+        }
+
+        onJsWheel(evt: MouseEvent) {
+            (this.onWheel as EventHandler<MouseEvent>).trigger(evt);
+        }
+
         onAddedToView()
         {
             for (let child of this.children)

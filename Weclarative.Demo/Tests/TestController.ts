@@ -18,6 +18,7 @@ class TestController extends Controller {
         registrar("sidePanel", this.sidePanel);
         registrar("tablePanel", this.tablePanel);
         registrar("checkBox", this.checkBox);
+        registrar("listView", this.listView);
         registrar("{id:number}", this.getById);
         registrar("", this.home);
     }
@@ -109,6 +110,19 @@ class TestController extends Controller {
         const view = new View();
         view.title = "CheckBox";
         const panel = new CenteredPanel(new Controls.CheckBox("Label"));
+
+        view.content = panel;
+        return view;
+    }
+
+    listView() {
+        const view = new View();
+        view.title = "ListView";
+        const listView = new Controls.ListView<string>();
+        listView.add("Item 1");
+        listView.add("Item 2");
+        listView.add("Item 3");
+        const panel = new CenteredPanel(listView);
 
         view.content = panel;
         return view;

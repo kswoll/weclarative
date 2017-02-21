@@ -49,6 +49,12 @@ declare namespace Controls {
         private _parent;
         private _attachedToDom;
         private _detachedFromDom;
+        private _onClick;
+        private _onMouseEntered;
+        private _onMouseExited;
+        private _onMouseUp;
+        private _onMouseDown;
+        private _onWheel;
         constructor(tagName?: string | null, node?: HTMLElement | null);
         readonly style: CSSStyleDeclaration;
         readonly attachedToDom: EventHandler<void>;
@@ -56,6 +62,18 @@ declare namespace Controls {
         node: HTMLElement;
         view: View | null;
         readonly parent: Control | null;
+        readonly onClick: IEventHandler<MouseEvent>;
+        onJsClick(evt: MouseEvent): void;
+        readonly onMouseEntered: IEventHandler<MouseEvent>;
+        onJsMouseEntered(evt: MouseEvent): void;
+        readonly onMouseExited: IEventHandler<MouseEvent>;
+        onJsMouseExited(evt: MouseEvent): void;
+        readonly onMouseDown: EventHandler<MouseEvent>;
+        onJsMouseDown(evt: MouseEvent): void;
+        readonly onMouseUp: EventHandler<MouseEvent>;
+        onJsMouseUp(evt: MouseEvent): void;
+        readonly onWheel: EventHandler<MouseEvent>;
+        onJsWheel(evt: MouseEvent): void;
         onAddedToView(): void;
         onRemovedFromView(): void;
         protected createNode(): HTMLElement;
@@ -172,6 +190,50 @@ declare namespace Controls {
 declare namespace Controls {
     class InlineControl extends Control {
         constructor(tagName?: string | null, node?: HTMLElement | null);
+    }
+}
+declare namespace Controls {
+    class ListView<T> extends Control {
+        highlightColor: string;
+        highlightTextColor: string;
+        selectedColor: string;
+        selectedTextColor: string;
+        private readonly _items;
+        private readonly childControls;
+        private readonly textProvider;
+        private readonly list;
+        private _onChanged;
+        private _selectedIndex;
+        constructor(textProvider?: (item: T) => string);
+        createNode(): HTMLElement;
+        add(item: T): void;
+        remove(item: T): void;
+        clear(): void;
+        readonly items: T[];
+        selectedIndex: number;
+        readonly onChanged: IEventHandler<void>;
+        selectedItem: T | undefined;
+        private createRow(item);
+        selectNextItem(): void;
+        selectPreviousItem(): void;
+    }
+}
+declare namespace Controls {
+    class MouseTrackingEngine {
+        private lastElement;
+        private _isMouseDown;
+        private mouseDownTarget;
+        private wasAtBottom;
+        initialize(): void;
+        onMouseMove(evt: Event): void;
+        private fireMouseEntered(element);
+        private fireMouseExited(element);
+        private fireMouseUp(element);
+        private onMouseOut(evt);
+        private onMouseDown(evt);
+        private onMouseUp(evt);
+        private onWheel(evt);
+        readonly isMouseDown: boolean;
     }
 }
 declare namespace Controls {
@@ -431,6 +493,8 @@ declare abstract class MvcApplication {
      * @param registry Call the register method passing in a new controller for each controller in your application.
      */
     abstract registerControllers(registry: ControllerRegistry): void;
+    static instance: MvcApplication;
+    onBottomBounced: EventHandler<void>;
     private currentPath;
     private routeTree;
     private _body;
@@ -452,11 +516,17 @@ declare abstract class MvcApplication {
     private createViewRequest(path, queryString);
     onOpen(url: string): void;
     invokeAction(controller: Controller, action: Function, viewRequest: ViewRequest): Promise<View>;
+    notifyOnBottomBounced(): void;
 }
 declare namespace Utils {
     type FrameHandler = (progress: number) => void;
     class Animator {
         static animate(frame: FrameHandler, duration: number, onDone?: () => void): void;
+    }
+}
+declare namespace Utils {
+    class Promises {
+        static delay(timeout: number): Promise<{}>;
     }
 }
 declare class ViewRequest {
@@ -584,6 +654,7 @@ declare class Arrays {
     static areEqual<T>(array1: T[], array2: T[]): boolean;
     static find<T>(array: Array<T>, predicate: (x: T) => boolean): T | null;
     static toMap<T, TKey, TValue>(array: Array<T>, getKey: (item: T) => TKey, getValue: (item: T) => TValue): Map<TKey, TValue>;
+    static remove<T>(array: Array<T>, element: T): void;
 }
 interface IDisposable {
     dispose(): void;
@@ -606,6 +677,13 @@ declare class EventHandler<T> implements IEventHandler<T> {
         (data?: T): void;
     }): void;
     trigger(data?: T): void;
+}
+declare class ProxyEventHandler<T> implements IEventHandler<T> {
+    addHandler: (handler: (data?: T) => void) => void;
+    removeHandler: (handler: (data?: T) => void) => void;
+    constructor(addHandler: (handler: (data?: T) => void) => void, removeHandler: (handler: (data?: T) => void) => void);
+    add(handler: (data?: T) => void): void;
+    remove(handler: (data?: T) => void): void;
 }
 declare namespace Utils {
     class Reflection {
