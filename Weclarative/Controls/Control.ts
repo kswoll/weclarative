@@ -10,6 +10,7 @@
         private _parent: Control | null;
         private _attachedToDom: EventHandler<void> | null;
         private _detachedFromDom: EventHandler<void> | null;
+        private _onClick: EventHandler<MouseEvent> | null;
 
         constructor(tagName: string | null = "div", node: HTMLElement | null = null) {
             this.tagName = tagName as string;
@@ -59,6 +60,18 @@
 
         get parent(): Control | null {
             return this._parent;
+        }
+
+        get onClick(): IEventHandler<MouseEvent> {
+            if (this._onClick == null) {
+                this._onClick = new EventHandler<Event>();
+                this.node.addEventListener("click", this.onJsClick);
+            }
+            return this._onClick;
+        }
+
+        onJsClick(evt: MouseEvent) {
+            (this._onClick as EventHandler<Event>).trigger(evt);
         }
 
         onAddedToView()

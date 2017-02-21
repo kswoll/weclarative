@@ -24,6 +24,10 @@ abstract class MvcApplication {
      */
     abstract registerControllers(registry: ControllerRegistry): void;
 
+    static instance: MvcApplication;
+
+    onBottomBounced = new EventHandler<void>();
+
     private currentPath: string;
     private routeTree: RouteTree;
     private _body = new HtmlControl(document.getElementsByTagName("body")[0]);
@@ -34,6 +38,7 @@ abstract class MvcApplication {
     private _controllerRegistry = new ControllerRegistry();
 
     protected constructor() {
+        MvcApplication.instance = this;
     }
 
     get view() {
@@ -166,5 +171,9 @@ abstract class MvcApplication {
         } else {
             return Promise.resolve(result);
         }        
+    }
+
+    notifyOnBottomBounced() {
+        this.onBottomBounced.trigger();
     }
 }
