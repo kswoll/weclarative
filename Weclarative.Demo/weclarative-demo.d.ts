@@ -8,6 +8,7 @@ import TextBlock = Controls.TextBlock;
 import VerticalPanel = Controls.VerticalPanel;
 import HorizontalPanel = Controls.HorizontalPanel;
 import CenteredPanel = Controls.CenteredPanel;
+import TablePanelWidth = Controls.TablePanelWidth;
 declare class TestController extends Controller {
     readonly path: string;
     registerRoutes(registrar: (route: string, action: Function) => void): void;
@@ -19,4 +20,5 @@ declare class TestController extends Controller {
     alignmentPanel(): View;
     fixedPanel(): View;
     sidePanel(): View;
+    tablePanel(): View;
 }

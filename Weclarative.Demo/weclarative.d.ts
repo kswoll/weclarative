@@ -211,6 +211,77 @@ declare namespace Controls {
     }
 }
 declare namespace Controls {
+    class TablePanel extends Control {
+        defaultConstraint: TablePanelConstraint;
+        private table;
+        private columnWidths;
+        private rows;
+        private cells;
+        private _verticalCellSpacing;
+        private _horizontalCellSpacing;
+        constructor(...columnWidths: TablePanelWidth[]);
+        verticalCellSpacing: number;
+        horizontalCellSpacing: number;
+        cellSpacing: number;
+        resetCellSpacing(): void;
+        createNode(): HTMLElement;
+        getNextEmptyCell(): TablePanelPoint;
+        add(cell: Control, constraint?: TablePanelConstraint): HTMLDivElement;
+    }
+}
+declare namespace Controls {
+    class TablePanelConstraint {
+        readonly horizontalAlignment: HorizontalAlignment;
+        readonly verticalAlignment: VerticalAlignment;
+        readonly columnSpan: number;
+        readonly rowSpan: number;
+        static horizontalAlignment(alignment: HorizontalAlignment): TablePanelConstraint;
+        static verticalAlignment(alignment: VerticalAlignment): TablePanelConstraint;
+        static spanCols(span: number): TablePanelConstraint;
+        static spanRows(span: number): TablePanelConstraint;
+        static centered(): TablePanelConstraint;
+        static left(): TablePanelConstraint;
+        static right(): TablePanelConstraint;
+        static topLeft(): TablePanelConstraint;
+        static topCenter(): TablePanelConstraint;
+        static topRight(): TablePanelConstraint;
+        static middleLeft(): TablePanelConstraint;
+        static middleRight(): TablePanelConstraint;
+        static bottomLeft(): TablePanelConstraint;
+        static bottomCenter(): TablePanelConstraint;
+        static bottomRight(): TablePanelConstraint;
+        constructor(horizontalAlignment?: HorizontalAlignment, verticalAlignment?: VerticalAlignment, columnSpan?: number, rowSpan?: number);
+    }
+}
+declare namespace Controls {
+    class TablePanelPoint {
+        x: number;
+        y: number;
+        constructor(x: number, y: number);
+    }
+}
+declare namespace Controls {
+    class TablePanelWidth {
+        readonly value: number;
+        readonly style: TablePanelWidthStyle;
+        static percent(value: number): TablePanelWidth;
+        static exact(value: number): TablePanelWidth;
+        static weight(value?: number): TablePanelWidth;
+        static preferred(value?: number): TablePanelWidth;
+        static allPreferred(numberOfColumns: number): TablePanelWidth[];
+        static allWeight(numberOfColumns: number): TablePanelWidth[];
+        constructor(value: number, style?: TablePanelWidthStyle);
+    }
+}
+declare namespace Controls {
+    enum TablePanelWidthStyle {
+        Pixels = 0,
+        Percent = 1,
+        Weight = 2,
+        MaxPreferredWidth = 3,
+    }
+}
+declare namespace Controls {
     class TextBlock extends InlineControl {
         constructor(value?: string);
         value: string;

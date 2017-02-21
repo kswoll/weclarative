@@ -2,6 +2,7 @@
 import VerticalPanel = Controls.VerticalPanel;
 import HorizontalPanel = Controls.HorizontalPanel;
 import CenteredPanel = Controls.CenteredPanel;
+import TablePanelWidth = Controls.TablePanelWidth;
 
 class TestController extends Controller {
     get path() {
@@ -15,6 +16,7 @@ class TestController extends Controller {
         registrar("alignmentPanel", this.alignmentPanel);
         registrar("fixedPanel", this.fixedPanel);
         registrar("sidePanel", this.sidePanel);
+        registrar("tablePanel", this.tablePanel);
         registrar("{id:number}", this.getById);
         registrar("", this.home);
     }
@@ -87,6 +89,18 @@ class TestController extends Controller {
         panel.right = new CenteredPanel(new TextBlock("Right"));
         panel.bottom = new CenteredPanel(new TextBlock("Bottom"));
         view.content = new Controls.FillPanel(panel);
+        return view;
+    }
+
+    tablePanel() {
+        const view = new View();
+        view.title = "Table Panel";
+        const panel = new Controls.TablePanel(TablePanelWidth.percent(50), TablePanelWidth.percent(50));
+
+        panel.add(new TextBlock("Cell 1"));
+        panel.add(new TextBlock("Cell 2"));
+
+        view.content = panel;
         return view;
     }
 }

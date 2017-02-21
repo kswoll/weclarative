@@ -13,50 +13,6 @@
             super();
             this.columnWidths = columnWidths;
             this.defaultConstraint = new TablePanelConstraint();
-        }
-
-        get verticalCellSpacing() {
-            return this._verticalCellSpacing;
-        }
-        set verticalCellSpacing(value: number) {
-            this._verticalCellSpacing = value;
-            this.resetCellSpacing();
-        }
-
-        get horizontalCellSpacing() {
-            return this.horizontalCellSpacing;
-        }
-        set horizontalCellSpacing(value: number) {
-            this._horizontalCellSpacing = value;
-            this.resetCellSpacing();
-        }
-
-        get cellSpacing() {
-            return this.horizontalCellSpacing;
-        }
-        set cellSpacing(value: number) {
-            this._verticalCellSpacing = value;
-            this._horizontalCellSpacing = value;
-            this.resetCellSpacing();
-        }
-
-        resetCellSpacing() {
-            for (let i = 0; i < this.rows.length; i++) {
-                const row = this.rows[i];
-                for (let j = 0; j < row.children.length; j++) {
-                    const cell = row.children[j] as HTMLElement;
-                    const isLastCellInRow = j == row.children.length - 1;
-                    const isLastRowInTable = i == this.rows.length - 1;
-                    if (!isLastCellInRow)
-                        cell.style.paddingRight = this.horizontalCellSpacing + "px";
-                    if (!isLastRowInTable)
-                        cell.style.paddingBottom = this.verticalCellSpacing + "px";
-                }
-            }
-        }
-
-        createNode() {
-            this.table = document.createElement("table");
 
             const totalNumberOfWeights = this.columnWidths.filter(x => x.style == TablePanelWidthStyle.Weight).map(x => x.value).reduce((a, b) => a + b, 0);
             const totalPercent = this.columnWidths.filter(x => x.style == TablePanelWidthStyle.Percent).map(x => x.value).reduce((a, b) => a + b, 0);
@@ -87,7 +43,50 @@
                 colGroup.appendChild(col);
             }
             this.table.appendChild(colGroup);
+        }
 
+        get verticalCellSpacing() {
+            return this._verticalCellSpacing;
+        }
+        set verticalCellSpacing(value: number) {
+            this._verticalCellSpacing = value;
+            this.resetCellSpacing();
+        }
+
+        get horizontalCellSpacing() {
+            return this._horizontalCellSpacing;
+        }
+        set horizontalCellSpacing(value: number) {
+            this._horizontalCellSpacing = value;
+            this.resetCellSpacing();
+        }
+
+        get cellSpacing() {
+            return this.horizontalCellSpacing;
+        }
+        set cellSpacing(value: number) {
+            this.verticalCellSpacing = value;
+            this.horizontalCellSpacing = value;
+            this.resetCellSpacing();
+        }
+
+        resetCellSpacing() {
+            for (let i = 0; i < this.rows.length; i++) {
+                const row = this.rows[i];
+                for (let j = 0; j < row.children.length; j++) {
+                    const cell = row.children[j] as HTMLElement;
+                    const isLastCellInRow = j == row.children.length - 1;
+                    const isLastRowInTable = i == this.rows.length - 1;
+                    if (!isLastCellInRow)
+                        cell.style.paddingRight = this.horizontalCellSpacing + "px";
+                    if (!isLastRowInTable)
+                        cell.style.paddingBottom = this.verticalCellSpacing + "px";
+                }
+            }
+        }
+
+        createNode() {
+            this.table = document.createElement("table");
             return this.table;
         }
 
@@ -95,7 +94,7 @@
             let x = 0;
             let y = 0;
             for (const row of this.cells) {
-                for (let cell in row) {
+                for (let cell of row) {
                     if (!cell)
                         return new TablePanelPoint(x, y);
                     x++;
@@ -111,6 +110,7 @@
 
             const nextEmptyCell = this.getNextEmptyCell();
             constraint = constraint || this.defaultConstraint;
+            const jsCellDiv = document.createElement("div");
             if (constraint != null) {
                 if (nextEmptyCell.x + constraint.columnSpan > this.columnWidths.length)
                     throw new Error(`Added a cell at position (${nextEmptyCell.x},${nextEmptyCell.y}), but the column (${constraint.columnSpan}) exceeds the available remaining space in the row (${this.columnWidths.length - nextEmptyCell.x}).`);
@@ -119,7 +119,6 @@
                     jsCell.setAttribute("colspan", constraint.columnSpan.toString());
                 if (constraint.rowSpan != 1)
                     jsCell.setAttribute("rowspan", constraint.rowSpan.toString());
-                const jsCellDiv = document.createElement("div");
                 jsCell.appendChild(jsCellDiv);
                 switch (constraint.horizontalAlignment) {
                     case HorizontalAlignment.Left:
@@ -161,71 +160,23 @@
                             this.table.appendChild(newRow);
                             this.rows.push(newRow);
                         }
+                        if (this.cells[row][col] != null)
+                            throw new Error("Illegal layout: cannot add a control at row " + row + ", column " + col + " as another control is already present: " + this.cells[row][col]);
+                        this.cells[row][col] = cell;
                     }
                 }
+
+                const isFirstRowInTable = nextEmptyCell.y == 0;
+                const isLastCellInRow = nextEmptyCell.x + constraint.columnSpan == this.columnWidths.length;
+                if (!isLastCellInRow && this.horizontalCellSpacing != 0)
+                    jsCell.style.paddingRight = this.horizontalCellSpacing + "px";
+                if (!isFirstRowInTable)
+                    jsCell.style.paddingTop = this.verticalCellSpacing + "px";
+
+                const jsRow = this.rows[nextEmptyCell.y];
+                jsRow.appendChild(jsCell);
             }
-        }
-    }
-}
-
-/*
-            for (var row = nextEmptyCell.Y; row < nextEmptyCell.Y + constraint.RowSpan; row++)
-            {
-                for (var col = nextEmptyCell.X; col < nextEmptyCell.X + constraint.ColumnSpan; col++)
-                {
-                    while (cells.Count <= row)
-                    {
-                        cells.Add(new Control[columnWidths.Length]);
-                        var newRow = Browser.Document.CreateElement("tr");
-                        table.AppendChild(newRow);
-                        rows.Add(newRow);
-                    }
-                    if (cells[row][col] != null)
-                        throw new InvalidOperationException("Illegal layout: cannot add a view at row " + row + ", column " + col + " as another view is already present: " + cells[row][col]);
-                    cells[row][col] = cell;
-                }
-            }
-
-            var isFirstRowInTable = nextEmptyCell.Y == 0;
-            var isLastCellInRow = nextEmptyCell.X + constraint.ColumnSpan == columnWidths.Length;
-            if (!isLastCellInRow && horizontalCellSpacing != 0)
-                jsCell.Style.PaddingRight = horizontalCellSpacing + "px";
-            if (!isFirstRowInTable)
-                jsCell.Style.PaddingTop = verticalCellSpacing + "px";
-
-            var jsRow = rows[nextEmptyCell.Y];
-            jsRow.AppendChild(jsCell);
-
             return jsCellDiv;
         }
-
-        class Point
-        {
-            internal int X;
-            internal int Y;
-
-            public Point(int x, int y)
-            {
-                X = x;
-                Y = y;
-            }
-        }
-    }
-
-    public class TableConstraint
-    {
-    }
-
-    public class TableWidth
-    {
-    }
-
-    public enum TableWidthStyle
-    {
-        Pixels,
-        Percent,
-        Weight,
-        MaxPreferredWidth
     }
 }
-*/
