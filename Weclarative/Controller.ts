@@ -45,6 +45,8 @@ abstract class Controller {
     async execute(action: Function, viewRequest: ViewRequest): Promise<View>
     {
         const view = await this.application.invokeAction(this, action, viewRequest);
+        if (view == null)
+            throw new Error("Controller action did not return a view.");
         view.initialize(new ViewContext(this));
         return view;
     }

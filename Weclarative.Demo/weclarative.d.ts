@@ -100,6 +100,18 @@ declare namespace Controls {
     }
 }
 declare namespace Controls {
+    class CheckBox extends Control {
+        readonly onChanged: EventHandler<void>;
+        private label;
+        private checkbox;
+        constructor(text?: string);
+        text: string;
+        createNode(): HTMLSpanElement;
+        onJsChanged(evt: Event): void;
+        isChecked: boolean;
+    }
+}
+declare namespace Controls {
     /**
      * Renders the content by setting width/height at 100% so that it fills inside the parent element
      */

@@ -21,4 +21,5 @@ declare class TestController extends Controller {
     fixedPanel(): View;
     sidePanel(): View;
     tablePanel(): View;
+    checkBox(): View;
 }

@@ -17,6 +17,7 @@ class TestController extends Controller {
         registrar("fixedPanel", this.fixedPanel);
         registrar("sidePanel", this.sidePanel);
         registrar("tablePanel", this.tablePanel);
+        registrar("checkBox", this.checkBox);
         registrar("{id:number}", this.getById);
         registrar("", this.home);
     }
@@ -99,6 +100,15 @@ class TestController extends Controller {
 
         panel.add(new TextBlock("Cell 1"));
         panel.add(new TextBlock("Cell 2"));
+
+        view.content = panel;
+        return view;
+    }
+
+    checkBox() {
+        const view = new View();
+        view.title = "CheckBox";
+        const panel = new CenteredPanel(new Controls.CheckBox("Label"));
 
         view.content = panel;
         return view;
