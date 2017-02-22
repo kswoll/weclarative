@@ -20,6 +20,7 @@ class TestController extends Controller {
         registrar("checkBox", this.checkBox);
         registrar("listView", this.listView);
         registrar("titledPanel", this.titledPanel);
+        registrar("textBox", this.textBox);
         registrar("{id:number}", this.getById);
         registrar("", this.home);
     }
@@ -135,6 +136,17 @@ class TestController extends Controller {
         const titledPanel = new Controls.TitledPanel("Title");
         titledPanel.content = new TextBlock("Test Content");
         const panel = new CenteredPanel(titledPanel);
+
+        view.content = panel;
+        return view;
+    }
+
+    textBox() {
+        const view = new View();
+        view.title = "TextBox";
+        const textBox = new Controls.TextBox();
+        textBox.type = Controls.TextBoxType.Password;
+        const panel = new CenteredPanel(textBox);
 
         view.content = panel;
         return view;

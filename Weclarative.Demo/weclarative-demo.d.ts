@@ -24,4 +24,5 @@ declare class TestController extends Controller {
     checkBox(): View;
     listView(): View;
     titledPanel(): View;
+    textBox(): View;
 }

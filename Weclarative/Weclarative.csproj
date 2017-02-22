@@ -46,6 +46,8 @@
     <TypeScriptCompile Include="Controls\TablePanelWidth.ts" />
     <TypeScriptCompile Include="Controls\TablePanelWidthStyle.ts" />
     <TypeScriptCompile Include="Controls\TextBlock.ts" />
+    <TypeScriptCompile Include="Controls\TextBox.ts" />
+    <TypeScriptCompile Include="Controls\TextBoxType.ts" />
     <TypeScriptCompile Include="Controls\TitledPanel.ts" />
     <TypeScriptCompile Include="Controls\VerticalAlignment.ts" />
     <TypeScriptCompile Include="Controls\VerticalPanel.ts" />
