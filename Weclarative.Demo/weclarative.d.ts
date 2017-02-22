@@ -363,6 +363,17 @@ declare namespace Controls {
     }
 }
 declare namespace Controls {
+    class TitledPanel extends Control {
+        private legend;
+        private contentDiv;
+        private _content;
+        constructor(title?: string);
+        createNode(): HTMLFieldSetElement;
+        title: string;
+        content: Control | null;
+    }
+}
+declare namespace Controls {
     enum VerticalAlignment {
         Top = 0,
         Middle = 1,
@@ -519,26 +530,6 @@ declare abstract class MvcApplication {
     invokeAction(controller: Controller, action: Function, viewRequest: ViewRequest): Promise<View>;
     notifyOnBottomBounced(): void;
 }
-declare namespace Utils {
-    type FrameHandler = (progress: number) => void;
-    class Animator {
-        static animate(frame: FrameHandler, duration: number, onDone?: () => void): void;
-    }
-}
-declare namespace Utils {
-    class Promises {
-        static delay(timeout: number): Promise<{}>;
-    }
-}
-declare class ViewRequest {
-    path: string;
-    queryString: Map<string, string>;
-    routeData: Routes.RouteData;
-    /**
-     *  Contains the portion of the url after the host/port and before the query string.
-     */
-    constructor(path: string, queryString: Map<string, string>, routeData: Routes.RouteData);
-}
 declare namespace Routes {
     interface IRouteConstraint {
         accept(path: RoutePath): boolean;
@@ -651,6 +642,12 @@ declare namespace Routes {
         toString(): string;
     }
 }
+declare namespace Utils {
+    type FrameHandler = (progress: number) => void;
+    class Animator {
+        static animate(frame: FrameHandler, duration: number, onDone?: () => void): void;
+    }
+}
 declare class Arrays {
     static areEqual<T>(array1: T[], array2: T[]): boolean;
     static find<T>(array: Array<T>, predicate: (x: T) => boolean): T | null;
@@ -687,6 +684,11 @@ declare class ProxyEventHandler<T> implements IEventHandler<T> {
     remove(handler: (data?: T) => void): void;
 }
 declare namespace Utils {
+    class Promises {
+        static delay(timeout: number): Promise<{}>;
+    }
+}
+declare namespace Utils {
     class Reflection {
         private static STRIP_COMMENTS;
         private static ARGUMENT_NAMES;
@@ -696,4 +698,13 @@ declare namespace Utils {
 declare class ViewContext {
     readonly controller: Controller;
     constructor(controller: Controller);
+}
+declare class ViewRequest {
+    path: string;
+    queryString: Map<string, string>;
+    routeData: Routes.RouteData;
+    /**
+     *  Contains the portion of the url after the host/port and before the query string.
+     */
+    constructor(path: string, queryString: Map<string, string>, routeData: Routes.RouteData);
 }
