@@ -1,5 +1,9 @@
-﻿namespace Controls {
+﻿/// <reference path="MouseTrackingEngine.ts" />
+
+namespace Controls {
     export class Control {
+        private static mouseTrackingEngine = new MouseTrackingEngine();
+
         public tagName: string;
 
         private children: Array<Control>;
@@ -11,8 +15,8 @@
         private _attachedToDom: EventHandler<void> | null;
         private _detachedFromDom: EventHandler<void> | null;
         private _onClick: EventHandler<MouseEvent> | null;
-        private _onMouseEntered: EventHandler<MouseEvent> | null;
-        private _onMouseExited: EventHandler<MouseEvent> | null;
+        private _onMouseEntered: EventHandler<Event> | null;
+        private _onMouseExited: EventHandler<Event> | null;
         private _onMouseUp: EventHandler<MouseEvent> | null;
         private _onMouseDown: EventHandler<MouseEvent> | null;
         private _onWheel: EventHandler<MouseEvent> | null;
@@ -70,7 +74,7 @@
         get onClick(): IEventHandler<MouseEvent> {
             if (this._onClick == null) {
                 this._onClick = new EventHandler<MouseEvent>();
-                this.node.addEventListener("click", this.onJsClick);
+                this.node.addEventListener("click", (evt) => this.onJsClick(evt));
             }
             return this._onClick;
         }
@@ -82,31 +86,31 @@
         get onMouseEntered(): IEventHandler<MouseEvent> {
             if (this._onMouseEntered == null) {
                 this._onMouseEntered = new EventHandler<MouseEvent>();
-                this.node.addEventListener("mouseentered", this.onJsMouseEntered);
+                this.node.addEventListener("mouseentered", (evt) => this.onJsMouseEntered(evt));
             }
             return this._onMouseEntered;
         }
 
-        onJsMouseEntered(evt: MouseEvent) {
-            (this._onMouseEntered as EventHandler<MouseEvent>).trigger(evt);
+        onJsMouseEntered(evt: Event) {
+            (this._onMouseEntered as EventHandler<Event>).trigger(evt);
         }
 
         get onMouseExited(): IEventHandler<MouseEvent> {
             if (this._onMouseExited == null) {
-                this._onMouseExited = new EventHandler<MouseEvent>();
-                this.node.addEventListener("mouseexited", this.onJsMouseExited);
+                this._onMouseExited = new EventHandler<Event>();
+                this.node.addEventListener("mouseexited", evt => this.onJsMouseExited(evt));
             }
             return this._onMouseExited;
         }
 
-        onJsMouseExited(evt: MouseEvent) {
-            (this._onMouseExited as EventHandler<MouseEvent>).trigger(evt);
+        onJsMouseExited(evt: Event) {
+            (this._onMouseExited as EventHandler<Event>).trigger(evt);
         }
 
         get onMouseDown() {
             if (this._onMouseDown == null) {
                 this._onMouseDown = new EventHandler<MouseEvent>();
-                this.node.addEventListener("mousedown", this.onJsMouseDown);
+                this.node.addEventListener("mousedown", evt => this.onJsMouseDown(evt));
             }
             return this._onMouseDown;
         }
@@ -118,7 +122,7 @@
         get onMouseUp() {
             if (this._onMouseUp == null) {
                 this._onMouseUp = new EventHandler<MouseEvent>();
-                this.node.addEventListener("mousedown", this.onJsMouseUp);
+                this.node.addEventListener("mousedown", evt => this.onJsMouseUp(evt));
             }
             return this._onMouseUp;
         }
@@ -130,7 +134,7 @@
         get onWheel() {
             if (this._onWheel == null) {
                 this._onWheel = new EventHandler<MouseEvent>();
-                this.node.addEventListener("wheel", this.onJsWheel);
+                this.node.addEventListener("wheel", evt => this.onJsWheel(evt));
             }
             return this._onWheel;
         }
@@ -238,6 +242,11 @@
                     child.onDetachedFromDom();
                 }
             }
+        }
+
+        static get isMouseDown(): boolean
+        {
+            return Control.mouseTrackingEngine.isMouseDown;
         }
     }
 }

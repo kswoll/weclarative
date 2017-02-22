@@ -21,12 +21,7 @@
             this.style.border = "1px solid black";
 
             this.addChild(this.list);
-        }
-
-        createNode() {
-            const container = super.createNode();
-            container.appendChild(this.list.node);
-            return container;
+            this.node.appendChild(this.list.node);
         }
 
         add(item: T) {

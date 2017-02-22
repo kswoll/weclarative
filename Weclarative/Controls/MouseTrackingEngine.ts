@@ -5,12 +5,12 @@
         private mouseDownTarget: HTMLElement;
         private wasAtBottom: boolean;
 
-        initialize() {
-            window.addEventListener("mousemove", this.onMouseMove);
-            window.addEventListener("mouseout", this.onMouseOut);
-            window.addEventListener("mousedown", this.onMouseDown);
-            window.addEventListener("mouseup", this.onMouseUp);
-            window.addEventListener("wheel", this.onWheel);
+        constructor() {
+            window.addEventListener("mousemove", evt => this.onMouseMove(evt));
+            window.addEventListener("mouseout", evt => this.onMouseOut(evt));
+            window.addEventListener("mousedown", evt => this.onMouseDown(evt));
+            window.addEventListener("mouseup", evt => this.onMouseUp(evt));
+            window.addEventListener("wheel", evt => this.onWheel(evt));
         }
 
         onMouseMove(evt: Event) {

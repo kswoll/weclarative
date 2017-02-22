@@ -39,7 +39,26 @@ declare class ControllerRegistry {
     initialize(application: MvcApplication): void;
 }
 declare namespace Controls {
+    class MouseTrackingEngine {
+        private lastElement;
+        private _isMouseDown;
+        private mouseDownTarget;
+        private wasAtBottom;
+        constructor();
+        onMouseMove(evt: Event): void;
+        private fireMouseEntered(element);
+        private fireMouseExited(element);
+        private fireMouseUp(element);
+        private onMouseOut(evt);
+        private onMouseDown(evt);
+        private onMouseUp(evt);
+        private onWheel(evt);
+        readonly isMouseDown: boolean;
+    }
+}
+declare namespace Controls {
     class Control {
+        private static mouseTrackingEngine;
         tagName: string;
         private children;
         private isAttachedToDom;
@@ -65,9 +84,9 @@ declare namespace Controls {
         readonly onClick: IEventHandler<MouseEvent>;
         onJsClick(evt: MouseEvent): void;
         readonly onMouseEntered: IEventHandler<MouseEvent>;
-        onJsMouseEntered(evt: MouseEvent): void;
+        onJsMouseEntered(evt: Event): void;
         readonly onMouseExited: IEventHandler<MouseEvent>;
-        onJsMouseExited(evt: MouseEvent): void;
+        onJsMouseExited(evt: Event): void;
         readonly onMouseDown: EventHandler<MouseEvent>;
         onJsMouseDown(evt: MouseEvent): void;
         readonly onMouseUp: EventHandler<MouseEvent>;
@@ -87,6 +106,7 @@ declare namespace Controls {
         protected onRemoved(): void;
         protected onAttachedToDom(): void;
         protected onDetachedFromDom(): void;
+        static readonly isMouseDown: boolean;
     }
 }
 declare namespace Controls {
@@ -205,7 +225,6 @@ declare namespace Controls {
         private _onChanged;
         private _selectedIndex;
         constructor(textProvider?: (item: T) => string);
-        createNode(): HTMLElement;
         add(item: T): void;
         remove(item: T): void;
         clear(): void;
@@ -216,24 +235,6 @@ declare namespace Controls {
         private createRow(item);
         selectNextItem(): void;
         selectPreviousItem(): void;
-    }
-}
-declare namespace Controls {
-    class MouseTrackingEngine {
-        private lastElement;
-        private _isMouseDown;
-        private mouseDownTarget;
-        private wasAtBottom;
-        initialize(): void;
-        onMouseMove(evt: Event): void;
-        private fireMouseEntered(element);
-        private fireMouseExited(element);
-        private fireMouseUp(element);
-        private onMouseOut(evt);
-        private onMouseDown(evt);
-        private onMouseUp(evt);
-        private onWheel(evt);
-        readonly isMouseDown: boolean;
     }
 }
 declare namespace Controls {
