@@ -45,6 +45,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="coffee-highlight.jpg" />
+    <Content Include="coffee.jpg" />
     <Content Include="index.html" />
     <Content Include="packages.config" />
     <Content Include="reset.css" />

@@ -22,6 +22,7 @@ class TestController extends Controller {
         registrar("titledPanel", this.titledPanel);
         registrar("textBox", this.textBox);
         registrar("listBox", this.listBox);
+        registrar("image", this.image);
         registrar("{id:number}", this.getById);
         registrar("", this.home);
     }
@@ -162,6 +163,16 @@ class TestController extends Controller {
         listBox.add("Item 3");
 
         const panel = new CenteredPanel(new Controls.FixedPanel(listBox, 200, 200));
+        view.content = panel;
+        return view;
+    }
+
+    image() {
+        const view = new View();
+        view.title = "Image";
+        const image = new Controls.Image("/coffee.jpg", 73, 73, "/coffee-highlight.jpg", "#00FF00");
+
+        const panel = new CenteredPanel(image);
         view.content = panel;
         return view;
     }

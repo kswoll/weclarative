@@ -36,6 +36,7 @@
     <TypeScriptCompile Include="Controls\HorizontalAlignment.ts" />
     <TypeScriptCompile Include="Controls\HorizontalPanel.ts" />
     <TypeScriptCompile Include="Controls\HtmlControl.ts" />
+    <TypeScriptCompile Include="Controls\Image.ts" />
     <TypeScriptCompile Include="Controls\InlineControl.ts" />
     <TypeScriptCompile Include="Controls\ListBox.ts" />
     <TypeScriptCompile Include="Controls\ListView.ts" />

@@ -208,6 +208,15 @@ declare namespace Controls {
     }
 }
 declare namespace Controls {
+    class Image extends Control {
+        constructor(source?: string, width?: number, height?: number, highlightedSource?: string, highlightColor?: string);
+        width: number | null;
+        height: number | null;
+        source: string | undefined;
+        createNode(): HTMLImageElement;
+    }
+}
+declare namespace Controls {
     class InlineControl extends Control {
         constructor(tagName?: string | null, node?: HTMLElement | null);
     }
