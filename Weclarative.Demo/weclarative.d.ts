@@ -163,7 +163,7 @@ declare namespace Controls {
 declare namespace Controls {
     class FixedPanel extends Control {
         private _content;
-        constructor(content: Control, width: string, height: string);
+        constructor(content: Control, width: number, height: number);
         content: Control | null;
     }
 }
@@ -210,6 +210,26 @@ declare namespace Controls {
 declare namespace Controls {
     class InlineControl extends Control {
         constructor(tagName?: string | null, node?: HTMLElement | null);
+    }
+}
+declare namespace Controls {
+    class ListBox<T> extends Control {
+        private readonly items;
+        private readonly textProvider;
+        private readonly valueProvider;
+        private readonly selectElement;
+        private onChanged;
+        constructor(textProvider?: (item: T) => string, valueProvider?: (item: T) => string);
+        isDropDown: boolean;
+        createNode(): HTMLSelectElement;
+        add(item: T): void;
+        remove(item: T): void;
+        createOption(item: T): HTMLOptionElement;
+        formatValue(item: T): string;
+        onJsChanged(evt: Event): void;
+        isMultiselect: boolean;
+        selectedItem: T | null;
+        selectedItems: Array<T>;
     }
 }
 declare namespace Controls {

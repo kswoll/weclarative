@@ -21,6 +21,7 @@ class TestController extends Controller {
         registrar("listView", this.listView);
         registrar("titledPanel", this.titledPanel);
         registrar("textBox", this.textBox);
+        registrar("listBox", this.listBox);
         registrar("{id:number}", this.getById);
         registrar("", this.home);
     }
@@ -77,7 +78,7 @@ class TestController extends Controller {
     fixedPanel() {
         const view = new View();
         view.title = "Fixed Panel";
-        const panel = new Controls.FixedPanel(new TextBlock("Fixed Panel"), "200px", "200px");
+        const panel = new Controls.FixedPanel(new TextBlock("Fixed Panel"), 200, 200);
         panel.style.backgroundColor = "#FFDDDD";
         view.content = panel;
         return view;
@@ -148,6 +149,19 @@ class TestController extends Controller {
         textBox.type = Controls.TextBoxType.Password;
         const panel = new CenteredPanel(textBox);
 
+        view.content = panel;
+        return view;
+    }
+
+    listBox() {
+        const view = new View();
+        view.title = "ListBox";
+        const listBox = new Controls.ListBox<string>();
+        listBox.add("Item 1");
+        listBox.add("Item 2");
+        listBox.add("Item 3");
+
+        const panel = new CenteredPanel(new Controls.FixedPanel(listBox, 200, 200));
         view.content = panel;
         return view;
     }

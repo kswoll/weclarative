@@ -1,5 +1,5 @@
 ﻿namespace Controls {
-    class ListBox<T> extends Control {
+    export class ListBox<T> extends Control {
         private readonly items = new Array<T>();
         private readonly textProvider: (item: T) => string;
         private readonly valueProvider: (item: T) => string;
@@ -18,119 +18,89 @@
             return this.node.getAttribute("size") != "1";
         }
         set isDropDown(value: boolean) {
-            this.node.setAttribute(value ? )
-        }
-    }
-}
-
-/*
-        public bool IsDropDown
-        {
-            get { return Node.GetAttribute("size") != "1"; }
-            set { Node.SetAttribute("size", value ? "1" : "2"); }
+            this.node.setAttribute("size", value ? "1" : "2");
         }
 
-        protected override Element CreateNode()
-        {
-            var listbox = Browser.Document.CreateElement("select");
-            listbox.AddEventListener("change", OnJsChanged);
-            listbox.SetAttribute("size", "2");
+        createNode() {
+            const listbox = document.createElement("select");
+            listbox.addEventListener("change", evt => this.onJsChanged(evt));
+            listbox.setAttribute("size", "2");
             return listbox;
         }
 
-        public void Add(T item)
-        {
-            items.Add(item);
-            Node.AppendChild(CreateOption(item));
+        add(item: T) {
+            this.items.push(item);
+            this.node.appendChild(this.createOption(item));
         }
 
-        public void Remove(T item)
-        {
-            var index = items.IndexOf(item);
-            var child = Node.Children[index];
-            Node.RemoveChild(child);
-            items.Remove(item);
+        remove(item: T) {
+            const index = this.items.indexOf(item);
+            const child = this.node.children[index];
+            this.node.removeChild(child);
+            this.items.splice(index, 1);
         }
 
-        private Element CreateOption(T item)
-        {
-            var option = Browser.Document.CreateElement("option");
-            option.SetAttribute("value", FormatValue(item));
-            option.AppendChild(Browser.Document.CreateTextNode(textProvider(item)));
+        createOption(item: T) {
+            const option = document.createElement("option");
+            option.setAttribute("value", this.formatValue(item));
+            option.appendChild(document.createTextNode(this.textProvider(item)));
             return option;
         }
 
-        private string FormatValue(T item)
-        {
-            if (valueFormatter != null)
-                return valueFormatter(item);
+        formatValue(item: T) {
+            if (this.valueProvider)
+                return this.valueProvider(item);
             else
-                return (string)Convert.ChangeType(item, typeof(string));
+                return item.toString();
         }
 
-        private void OnJsChanged(Event evt)
-        {
-            var changed = Changed;
-            if (changed != null)
-                changed();
+        onJsChanged(evt: Event) {
+            if (this.onChanged)
+                (this.onChanged as EventHandler<void>).trigger();
         }
 
-        public bool IsMultiselect
-        {
-            get
-            {
-                return Node.HasAttribute("multiple") && Node.GetAttribute("multiple") == "true";
-            }
-            set
-            {
-                if (value)
-                    Node.SetAttribute("multiple", "true");
-                else
-                    Node.RemoveAttribute("multiple");
-            }
+        get isMultiselect() {
+            return this.node.hasAttribute("multiple") && this.node.getAttribute("multiple") == "true";
+        }
+        set isMultiselect(value: boolean) {
+            if (value)
+                this.node.setAttribute("multiple", "true");
+            else
+                this.node.removeAttribute("multiple");
         }
 
-        public T SelectedItem
-        {
-            get
-            {
-                var selectedIndex = Node.SelectedIndex;
-                if (selectedIndex >= 0)
-                    return items[(int)selectedIndex];
-                else
-                    return default(T);
-            }
-            set
-            {
-                var index = items.IndexOf(value);
-                Node.SelectedIndex = index;
+        get selectedItem() {
+            const selectedIndex = this.selectElement.selectedIndex;
+            if (selectedIndex >= 0)
+                return this.items[selectedIndex];
+            else
+                return null;
+        }
+        set selectedItem(value: T | null) {
+            if (value != null) {
+                const index = this.items.indexOf(value);
+                this.selectElement.selectedIndex = index;
+            } else {
+                this.selectElement.selectedIndex = -1;
             }
         }
 
-        public T[] SelectedItems
-        {
-            get
-            {
-                var selectedItems = new List<T>();
-                for (var i = 0; i < Node.SelectedOptions.Length; i++)
-                {
-                    var option = Node.SelectedOptions[i];
-                    var item = items[option.Index];
-                    selectedItems.Add(item);
-                }
-                return selectedItems.ToArray();
+        get selectedItems() {
+            const selectedItems = new Array<T>();
+            for (let i = 0; i < this.selectElement.selectedOptions.length; i++) {
+                const option = this.selectElement.selectedOptions[i];
+                const item = this.items[option.index];
+                selectedItems.push(item);
             }
-            set
-            {
-                var valueSet = new HashSet<T>(value);
-                for (var i = 0; i < Node.Options.Length; i++)
-                {
-                    var option = Node.Options[i];
-                    var item = items[option.Index];
-                    option.Selected = valueSet.Contains(item);
-                }
+            return selectedItems;
+        }
+        set selectedItems(value: Array<T>) {
+            const valueSet = new Set<T>(value);
+            for (var i = 0; i < this.selectElement.options.length; i++) {
+                const option = this.selectElement.options[i];
+                const item = this.items[option.index];
+                option.selected = valueSet.has(item);
             }
         }
     }
-
-*/
+}

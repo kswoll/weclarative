@@ -2,10 +2,10 @@
     export class FixedPanel extends Control {
         private _content: Control | null;
 
-        constructor(content: Control, width: string, height: string) {
+        constructor(content: Control, width: number, height: number) {
             super();
-            this.style.width = width;
-            this.style.height = height;
+            this.style.width = width + "px";
+            this.style.height = height + "px";
             this.content = content;
         }
 

@@ -54,7 +54,7 @@
         }
 
         private onJsChanged(evt: Event) {
-            if (this.onChanged != null)
+            if (this.onChanged)
                 (this.onChanged as EventHandler<void>).trigger();
         }
 
