@@ -358,7 +358,7 @@ declare namespace Controls {
 }
 declare namespace Controls {
     class TextBlock extends InlineControl {
-        constructor(value?: string);
+        constructor(value?: string, tagName?: string);
         value: string;
     }
 }
