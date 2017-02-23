@@ -1,7 +1,7 @@
 ﻿/// <reference path="MouseTrackingEngine.ts" />
 
 namespace Controls {
-    export class Control {
+    export abstract class Control {
         private static mouseTrackingEngine = new MouseTrackingEngine();
 
         public tagName: string;
@@ -22,7 +22,7 @@ namespace Controls {
         private _onMouseDown: EventHandler<MouseEvent> | null;
         private _onWheel: EventHandler<MouseEvent> | null;
 
-        constructor(tagName: string | null = "div", node: HTMLElement | null = null) {
+        protected constructor(tagName: string | null = "div", node: HTMLElement | null = null) {
             this.tagName = tagName as string;
             this.children = new Array<Control>();
             if (node != null)

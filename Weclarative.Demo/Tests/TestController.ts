@@ -24,6 +24,7 @@ class TestController extends Controller {
         registrar("image", this.image);
         registrar("link", this.link);
         registrar("nameValuePanel", this.nameValuePanel);
+        registrar("layeredPanel", this.layeredPanel);
         registrar("slideDownHeaderPanel", this.slideDownHeaderPanel);
         registrar("button", this.button);
         registrar("{id:number}", this.getById);
@@ -240,6 +241,18 @@ class TestController extends Controller {
 
         const panel = new CenteredPanel(button);
         view.content = panel;
+        return view;
+    }
+
+    layeredPanel() {
+        const view = new View();
+        view.title = "LayeredPanel";
+
+        const panel = new Controls.LayeredPanel();
+        panel.addLayer(Controls.AlignmentPanel.Left(new Controls.TextBlock("Left")));
+        panel.addLayer(Controls.AlignmentPanel.Right(new Controls.TextBlock("Right")));
+
+        view.content = new Controls.FillPanel(panel);
         return view;
     }
 }

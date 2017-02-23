@@ -40,6 +40,7 @@
     <TypeScriptCompile Include="Controls\Image.ts" />
     <TypeScriptCompile Include="Controls\InlineControl.ts" />
     <TypeScriptCompile Include="Controls\InlineText.ts" />
+    <TypeScriptCompile Include="Controls\LayeredPanel.ts" />
     <TypeScriptCompile Include="Controls\Link.ts" />
     <TypeScriptCompile Include="Controls\ListBox.ts" />
     <TypeScriptCompile Include="Controls\ListView.ts" />

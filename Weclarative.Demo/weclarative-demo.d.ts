@@ -30,4 +30,5 @@ declare class TestController extends Controller {
     nameValuePanel(): View;
     slideDownHeaderPanel(): View;
     button(): View;
+    layeredPanel(): View;
 }

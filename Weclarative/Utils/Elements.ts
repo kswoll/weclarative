@@ -32,5 +32,9 @@
         static prepend(parent: Node, child: Node) {
             parent.insertBefore(child, parent.firstChild);
         }
+
+        static insertBefore(child: Node, referenceNode: Node) {
+            referenceNode.parentElement.insertBefore(child, referenceNode);
+        }
     }
 }
