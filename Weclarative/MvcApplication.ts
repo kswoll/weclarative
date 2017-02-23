@@ -85,7 +85,7 @@ abstract class MvcApplication {
             await this.open(path, false);
     }
 
-    async open(url: string, pushState: boolean) {
+    async open(url: string, pushState = true) {
         const parts = url.split("?");
         const path = parts[0];
         const queryString = parts.length > 1 ? parts[1] : "";

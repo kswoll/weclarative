@@ -23,6 +23,7 @@ class TestController extends Controller {
         registrar("textBox", this.textBox);
         registrar("listBox", this.listBox);
         registrar("image", this.image);
+        registrar("link", this.link);
         registrar("{id:number}", this.getById);
         registrar("", this.home);
     }
@@ -174,6 +175,19 @@ class TestController extends Controller {
 
         const panel = new CenteredPanel(image);
         view.content = panel;
+        return view;
+    }
+
+    link() {
+        const view = new View();
+        view.title = "Link";
+        const link1 = new Controls.Link("Link 1");
+        link1.onClick.add(evt => alert("Hello"));
+
+        const panel = new VerticalPanel();
+        panel.add(link1);
+
+        view.content = new CenteredPanel(panel);
         return view;
     }
 }

@@ -55,15 +55,15 @@ namespace Controls {
             this.node.setAttribute("data-class-name", this.constructor.name);
         }
 
-        get view(): View | null {
+        get view(): View {
             if (this._view != null)
                 return this._view;
             else if (this._parent != null)
                 return this._parent.view;
             else
-                return null;
+                throw new Error("View not found for control");
         }
-        set view(value: View | null) {
+        set view(value: View) {
             this._view = value;
         }
 

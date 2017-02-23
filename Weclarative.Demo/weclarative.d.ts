@@ -79,7 +79,7 @@ declare namespace Controls {
         readonly attachedToDom: EventHandler<void>;
         readonly detachedFromDom: EventHandler<void>;
         node: HTMLElement;
-        view: View | null;
+        view: View;
         readonly parent: Control | null;
         readonly onClick: IEventHandler<MouseEvent>;
         onJsClick(evt: MouseEvent): void;
@@ -219,6 +219,24 @@ declare namespace Controls {
 declare namespace Controls {
     class InlineControl extends Control {
         constructor(tagName?: string | null, node?: HTMLElement | null);
+    }
+}
+declare namespace Controls {
+    class Link extends Control {
+        private useTextMode;
+        private _localHref;
+        constructor(content?: string | Control);
+        fireClick(): void;
+        localHref: string | null;
+        private localHrefClick(evt);
+        createNode(): HTMLAnchorElement;
+        /**
+         * Using this propery will remove any existing children added via Add.
+         */
+        text: string | null;
+        add(child: Control): void;
+        onRemove(child: Control): void;
+        remove(child: Control): void;
     }
 }
 declare namespace Controls {
@@ -581,7 +599,7 @@ declare abstract class MvcApplication {
     private onStarting();
     private onStarted();
     private onPopState(evt);
-    open(url: string, pushState: boolean): Promise<void>;
+    open(url: string, pushState?: boolean): Promise<void>;
     openView(view: View): void;
     protected execute(path: string, queryString: string): Promise<View>;
     private createViewRequest(path, queryString);
