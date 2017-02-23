@@ -24,6 +24,7 @@ class TestController extends Controller {
         registrar("image", this.image);
         registrar("link", this.link);
         registrar("nameValuePanel", this.nameValuePanel);
+        registrar("slideDownHeaderPanel", this.slideDownHeaderPanel);
         registrar("{id:number}", this.getById);
         registrar("", this.home);
     }
@@ -206,6 +207,26 @@ class TestController extends Controller {
         panel.addPair(new Controls.InlineText("Label 2"), new Controls.InlineText("Value 2"));
 
         view.content = new CenteredPanel(panel);
+        return view;
+    }
+
+    slideDownHeaderPanel() {
+        const view = new View();
+        view.title = "SlideDownHeaderPanel";
+
+        const link = new Controls.Link("Toggle Header");
+        link.onClick.add(evt => {
+            if (panel.header == null) {
+                panel.header = new Controls.TextBlock("Header");
+            } else {
+                panel.header = null;
+            }
+        });
+
+        const panel = new Controls.SlideDownHeaderPanel();
+        panel.content = new CenteredPanel(link);
+
+        view.content = panel;
         return view;
     }
 }

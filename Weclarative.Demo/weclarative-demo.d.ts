@@ -28,4 +28,5 @@ declare class TestController extends Controller {
     image(): View;
     link(): View;
     nameValuePanel(): View;
+    slideDownHeaderPanel(): View;
 }

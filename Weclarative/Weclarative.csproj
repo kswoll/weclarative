@@ -45,6 +45,7 @@
     <TypeScriptCompile Include="Controls\MouseTrackingEngine.ts" />
     <TypeScriptCompile Include="Controls\NameValuePanel.ts" />
     <TypeScriptCompile Include="Controls\SidePanel.ts" />
+    <TypeScriptCompile Include="Controls\SlideDownHeaderPanel.ts" />
     <TypeScriptCompile Include="Controls\TablePanel.ts" />
     <TypeScriptCompile Include="Controls\TablePanelConstraint.ts" />
     <TypeScriptCompile Include="Controls\TablePanelPoint.ts" />

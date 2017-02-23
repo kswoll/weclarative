@@ -84,7 +84,7 @@ namespace Controls {
             return this._onClick;
         }
 
-        onJsClick(evt: MouseEvent) {
+        private onJsClick(evt: MouseEvent) {
             (this._onClick as EventHandler<MouseEvent>).trigger(evt);
         }
 
@@ -96,7 +96,7 @@ namespace Controls {
             return this._onMouseEntered;
         }
 
-        onJsMouseEntered(evt: Event) {
+        private onJsMouseEntered(evt: Event) {
             (this._onMouseEntered as EventHandler<Event>).trigger(evt);
         }
 
@@ -108,7 +108,7 @@ namespace Controls {
             return this._onMouseExited;
         }
 
-        onJsMouseExited(evt: Event) {
+        private onJsMouseExited(evt: Event) {
             (this._onMouseExited as EventHandler<Event>).trigger(evt);
         }
 
@@ -120,7 +120,7 @@ namespace Controls {
             return this._onMouseDown;
         }
 
-        onJsMouseDown(evt: MouseEvent) {
+        private onJsMouseDown(evt: MouseEvent) {
             (this._onMouseDown as EventHandler<MouseEvent>).trigger(evt);
         }
 
@@ -132,7 +132,7 @@ namespace Controls {
             return this._onMouseUp;
         }
 
-        onJsMouseUp(evt: MouseEvent) {
+        private onJsMouseUp(evt: MouseEvent) {
             (this.onMouseUp as EventHandler<MouseEvent>).trigger(evt);
         }
 
@@ -144,7 +144,7 @@ namespace Controls {
             return this._onWheel;
         }
 
-        onJsWheel(evt: MouseEvent) {
+        private onJsWheel(evt: MouseEvent) {
             (this.onWheel as EventHandler<MouseEvent>).trigger(evt);
         }
 
