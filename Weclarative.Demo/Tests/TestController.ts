@@ -25,6 +25,7 @@ class TestController extends Controller {
         registrar("link", this.link);
         registrar("nameValuePanel", this.nameValuePanel);
         registrar("slideDownHeaderPanel", this.slideDownHeaderPanel);
+        registrar("button", this.button);
         registrar("{id:number}", this.getById);
         registrar("", this.home);
     }
@@ -226,6 +227,18 @@ class TestController extends Controller {
         const panel = new Controls.SlideDownHeaderPanel();
         panel.content = new CenteredPanel(link);
 
+        view.content = panel;
+        return view;
+    }
+
+    button() {
+        const view = new View();
+        view.title = "Button";
+
+        const button = new Controls.Button("Button");
+        button.onClick.add(() => alert("Click"));
+
+        const panel = new CenteredPanel(button);
         view.content = panel;
         return view;
     }
