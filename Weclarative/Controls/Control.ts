@@ -5,6 +5,7 @@ namespace Controls {
         private static mouseTrackingEngine = new MouseTrackingEngine();
 
         public tagName: string;
+        public associatedLabel: Control;
 
         private children: Array<Control>;
         private isAttachedToDom: boolean;
@@ -28,6 +29,10 @@ namespace Controls {
                 this.node = node;
             else
                 this.node = this.createNode();
+        }
+
+        getChild(index: number) {
+            return this.children[index];
         }
 
         get style() {

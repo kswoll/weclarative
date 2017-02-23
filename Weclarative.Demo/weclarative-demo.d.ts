@@ -27,4 +27,5 @@ declare class TestController extends Controller {
     listBox(): View;
     image(): View;
     link(): View;
+    nameValuePanel(): View;
 }
