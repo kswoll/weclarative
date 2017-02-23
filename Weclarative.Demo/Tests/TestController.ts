@@ -27,6 +27,7 @@ class TestController extends Controller {
         registrar("layeredPanel", this.layeredPanel);
         registrar("slideDownHeaderPanel", this.slideDownHeaderPanel);
         registrar("button", this.button);
+        registrar("textArea", this.textArea);
         registrar("{id:number}", this.getById);
         registrar("", this.home);
     }
@@ -253,6 +254,18 @@ class TestController extends Controller {
         panel.addLayer(Controls.AlignmentPanel.Right(new Controls.TextBlock("Right")));
 
         view.content = new Controls.FillPanel(panel);
+        return view;
+    }
+
+    textArea() {
+        const view = new View();
+        view.title = "TextArea";
+
+        const textArea = new Controls.TextArea();
+        textArea.text = "Text Area";
+        textArea.isWrappingEnabled = true;
+
+        view.content = new CenteredPanel(textArea);
         return view;
     }
 }
