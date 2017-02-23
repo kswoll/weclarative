@@ -84,7 +84,7 @@
         }
 
         private createRow(item: T) {
-            const text = new TextBlock(this.textProvider(item), "div");
+            const text = new TextBlock(this.textProvider(item));
             text.style.paddingLeft = "5px";
             text.style.paddingRight = "5px";
             text.onMouseEntered.add(() => {

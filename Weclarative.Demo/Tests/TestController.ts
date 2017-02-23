@@ -1,5 +1,4 @@
-﻿import TextBlock = Controls.TextBlock;
-import VerticalPanel = Controls.VerticalPanel;
+﻿import VerticalPanel = Controls.VerticalPanel;
 import HorizontalPanel = Controls.HorizontalPanel;
 import CenteredPanel = Controls.CenteredPanel;
 import TablePanelWidth = Controls.TablePanelWidth;
@@ -35,7 +34,7 @@ class TestController extends Controller {
     home() {
         const view = new View();
         view.title = "Hello!";
-        view.content = new TextBlock("Why hello3!");
+        view.content = new Controls.InlineText("Why hello3!");
         return view;
     }
 
@@ -43,9 +42,9 @@ class TestController extends Controller {
         const view = new View();
         view.title = "Vertical Panel";
         const panel = new VerticalPanel();
-        panel.add(new TextBlock("Item 1"));
-        panel.add(new TextBlock("Item 2"));
-        panel.add(new TextBlock("Item 3"));
+        panel.add(new Controls.InlineText("Item 1"));
+        panel.add(new Controls.InlineText("Item 2"));
+        panel.add(new Controls.InlineText("Item 3"));
         view.content = panel;
         return view;
     }
@@ -54,9 +53,9 @@ class TestController extends Controller {
         const view = new View();
         view.title = "Horizontal Panel";
         const panel = new HorizontalPanel();
-        panel.add(new TextBlock("Item 1"));
-        panel.add(new TextBlock("Item 2"));
-        panel.add(new TextBlock("Item 3"));
+        panel.add(new Controls.InlineText("Item 1"));
+        panel.add(new Controls.InlineText("Item 2"));
+        panel.add(new Controls.InlineText("Item 3"));
         view.content = panel;
         return view;
     }
@@ -64,7 +63,7 @@ class TestController extends Controller {
     centeredPanel() {
         const view = new View();
         view.title = "Centered Panel";
-        const panel = new CenteredPanel(new TextBlock("Centered Content"));
+        const panel = new CenteredPanel(new Controls.InlineText("Centered Content"));
         view.content = panel;
         return view;
     }
@@ -72,7 +71,7 @@ class TestController extends Controller {
     alignmentPanel() {
         const view = new View();
         view.title = "Alignment Panel";
-        const panel = Controls.AlignmentPanel.BottomRight(new TextBlock("Bottom Right Content"));
+        const panel = Controls.AlignmentPanel.BottomRight(new Controls.InlineText("Bottom Right Content"));
         view.content = panel;
         return view;
     }
@@ -80,7 +79,7 @@ class TestController extends Controller {
     fixedPanel() {
         const view = new View();
         view.title = "Fixed Panel";
-        const panel = new Controls.FixedPanel(new TextBlock("Fixed Panel"), 200, 200);
+        const panel = new Controls.FixedPanel(new Controls.InlineText("Fixed Panel"), 200, 200);
         panel.style.backgroundColor = "#FFDDDD";
         view.content = panel;
         return view;
@@ -90,11 +89,11 @@ class TestController extends Controller {
         const view = new View();
         view.title = "Side Panel";
         const panel = new Controls.SidePanel();
-        panel.top = new CenteredPanel(new TextBlock("Top"));
-        panel.left = new CenteredPanel(new TextBlock("Left"));
-        panel.center = new CenteredPanel(new TextBlock("Center"));
-        panel.right = new CenteredPanel(new TextBlock("Right"));
-        panel.bottom = new CenteredPanel(new TextBlock("Bottom"));
+        panel.top = new CenteredPanel(new Controls.InlineText("Top"));
+        panel.left = new CenteredPanel(new Controls.InlineText("Left"));
+        panel.center = new CenteredPanel(new Controls.InlineText("Center"));
+        panel.right = new CenteredPanel(new Controls.InlineText("Right"));
+        panel.bottom = new CenteredPanel(new Controls.InlineText("Bottom"));
         view.content = new Controls.FillPanel(panel);
         return view;
     }
@@ -104,8 +103,8 @@ class TestController extends Controller {
         view.title = "Table Panel";
         const panel = new Controls.TablePanel(TablePanelWidth.percent(50), TablePanelWidth.percent(50));
 
-        panel.add(new TextBlock("Cell 1"));
-        panel.add(new TextBlock("Cell 2"));
+        panel.add(new Controls.InlineText("Cell 1"));
+        panel.add(new Controls.InlineText("Cell 2"));
 
         view.content = panel;
         return view;
@@ -137,7 +136,7 @@ class TestController extends Controller {
         const view = new View();
         view.title = "TitledPanel";
         const titledPanel = new Controls.TitledPanel("Title");
-        titledPanel.content = new TextBlock("Test Content");
+        titledPanel.content = new Controls.InlineText("Test Content");
         const panel = new CenteredPanel(titledPanel);
 
         view.content = panel;

@@ -4,7 +4,6 @@ declare namespace Tests {
         registerControllers(registry: ControllerRegistry): void;
     }
 }
-import TextBlock = Controls.TextBlock;
 import VerticalPanel = Controls.VerticalPanel;
 import HorizontalPanel = Controls.HorizontalPanel;
 import CenteredPanel = Controls.CenteredPanel;
