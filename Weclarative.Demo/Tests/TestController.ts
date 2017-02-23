@@ -181,11 +181,16 @@ class TestController extends Controller {
     link() {
         const view = new View();
         view.title = "Link";
+
         const link1 = new Controls.Link("Link 1");
         link1.onClick.add(evt => alert("Hello"));
 
+        const link2 = new Controls.Link("To ListView");
+        link2.localHref = "/listView";
+
         const panel = new VerticalPanel();
         panel.add(link1);
+        panel.add(link2);
 
         view.content = new CenteredPanel(panel);
         return view;

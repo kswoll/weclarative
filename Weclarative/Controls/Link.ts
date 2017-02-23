@@ -1,7 +1,7 @@
 ﻿namespace Controls {
     export class Link extends Control {
         private useTextMode: boolean;
-        private _localHref: string;
+        private _localHref: string | null;
 
         constructor(content?: string | Control) {
             super();
@@ -18,19 +18,21 @@
         }
 
         get localHref() {
-            return this.localHref;
+            return this._localHref;
         }
         set localHref(value: string | null) {
             if (this.localHref != null) {
                 this.node.setAttribute("href", "javascript:void(0);");
-                this.onClick.remove(this.localHrefClick);
+                this.onClick.remove(this.localHrefClickHandler);
             }
-            this.localHref = value;
+            this._localHref = value;
             if (value != null) {
                 this.node.setAttribute("href", value);
-                this.onClick.add(this.localHrefClick);
+                this.onClick.add(this.localHrefClickHandler);
             }
         }
+
+        private localHrefClickHandler = () => this.localHrefClick;
 
         private localHrefClick(evt: MouseEvent) {
             evt.preventDefault();
