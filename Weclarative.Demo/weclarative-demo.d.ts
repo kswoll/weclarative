@@ -34,4 +34,5 @@ declare class TestController extends Controller {
     textArea(): View;
     horizontalRule(): View;
     html(): View;
+    flowPanel(): void;
 }

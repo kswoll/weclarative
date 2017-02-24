@@ -34,6 +34,7 @@
     <TypeScriptCompile Include="Controls\Control.ts" />
     <TypeScriptCompile Include="Controls\FillPanel.ts" />
     <TypeScriptCompile Include="Controls\FixedPanel.ts" />
+    <TypeScriptCompile Include="Controls\FlowPanel.ts" />
     <TypeScriptCompile Include="Controls\HorizontalAlignment.ts" />
     <TypeScriptCompile Include="Controls\HorizontalPanel.ts" />
     <TypeScriptCompile Include="Controls\HorizontalRue.ts" />

@@ -291,4 +291,11 @@ class TestController extends Controller {
         view.content = new CenteredPanel(html);
         return view;
     }
+
+    flowPanel() {
+        const view = new View();
+        view.title = "FlowPanel";
+
+        const flowPanel = new Controls.FlowPanel();
+    }
 }
