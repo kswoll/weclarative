@@ -23,6 +23,10 @@ time, mark, audio, video {
 	font: inherit;
 }
 
+i, em {
+    font-style: italic;
+}
+
 textarea, input[type="text"], input[type="date"], input[type="date"], input[type="datetime"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="time"], input[type="week"] {
     margin: 0px;
     border: 1px solid #999;

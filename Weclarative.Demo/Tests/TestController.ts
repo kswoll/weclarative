@@ -28,6 +28,8 @@ class TestController extends Controller {
         registrar("slideDownHeaderPanel", this.slideDownHeaderPanel);
         registrar("button", this.button);
         registrar("textArea", this.textArea);
+        registrar("horizontalRule", this.horizontalRule);
+        registrar("html", this.html);
         registrar("{id:number}", this.getById);
         registrar("", this.home);
     }
@@ -266,6 +268,27 @@ class TestController extends Controller {
         textArea.isWrappingEnabled = true;
 
         view.content = new CenteredPanel(textArea);
+        return view;
+    }
+
+    horizontalRule() {
+        const view = new View();
+        view.title = "HorizontalRule";
+
+        const horizontalRule = new Controls.HorizontalRule();
+        horizontalRule.size = 5;
+
+        view.content = new Controls.FillPanel(new CenteredPanel(horizontalRule));
+        return view;
+    }
+
+    html() {
+        const view = new View();
+        view.title = "Html";
+
+        const html = new Controls.Html("Some <b>bold</b> and <i>italicized</i> raw html");
+
+        view.content = new CenteredPanel(html);
         return view;
     }
 }

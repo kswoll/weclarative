@@ -32,4 +32,6 @@ declare class TestController extends Controller {
     button(): View;
     layeredPanel(): View;
     textArea(): View;
+    horizontalRule(): View;
+    html(): View;
 }
