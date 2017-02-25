@@ -31,6 +31,7 @@ class TestController extends Controller {
         registrar("horizontalRule", this.horizontalRule);
         registrar("html", this.html);
         registrar("flowPanel", this.flowPanel);
+        registrar("autoCompleteTextBox", this.autoCompleteTextBox);
         registrar("{id:number}", this.getById);
         registrar("", this.home);
     }
@@ -303,6 +304,20 @@ class TestController extends Controller {
         flowPanel.add(new Controls.InlineText("lasdaer aer asr ae re r aesr ar as rasr asdrasdr asdr asdr asd rasd rasdr sadraewqwrq era wra r a ar aras er aeer re  esra"));
 
         view.content = new CenteredPanel(new Controls.FixedPanel(flowPanel, 200, 200));
+        return view;
+    }
+
+    autoCompleteTextBox() {
+        const view = new View();
+        view.title = "AutoCompleteTextBox";
+
+        const textBox = new Controls.AutoCompleteTextBox<string>(item => item.toString());
+        textBox.onSearch = (text: string, setItems: (items: string[]) => void) => {
+            setItems(["1"]);
+            return Promise.resolve(undefined);
+        };
+
+        view.content = new CenteredPanel(textBox);
         return view;
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace Controls {
-    class AutoCompleteTextBox<T> extends Control
+    export class AutoCompleteTextBox<T> extends Control
     {
-        _onSearch: (text: string, setItems: (items: T[]) => void) => Promise<void>;
+        onSearch: (text: string, setItems: (items: T[]) => void) => Promise<void>;
         multiselect: boolean;
         readonly loadingIcon: Icon;
         readonly selectedItems = new Array<T>();
@@ -12,6 +12,7 @@
         private contentContainerRow: HTMLElement;
         private contentNodeCell: HTMLElement;
         private selectedWidgets = new Map<T, HTMLElement>();
+        private keyPressEvent: KeyboardEvent;
 
         constructor(private readonly textProvider: (item: T) => string) {
             super();
@@ -20,6 +21,7 @@
             this.loadingIcon = new Icon(IconType.Spinner);
             this.loadingIcon.isSpinning = true;
             this.loadingIcon.style.fontSize = "75%";
+            this.loadingIcon.style.display = "none";
 
             this.overlay.style.minWidth = "300px";
             this.overlay.style.minHeight = "200px";
@@ -27,8 +29,65 @@
             this.overlay.onChanged.add(evt => this.overlayChanged());
             this.addChild(this.overlay);
 
-            this.loadingIcon.style.display = "none";
             this.addChild(this.loadingIcon);
+
+            const contentContainer = document.createElement("table");
+            contentContainer.style.width = "100%";
+
+            this.contentContainerRow = document.createElement("tr");
+            contentContainer.appendChild(this.contentContainerRow);
+
+            this.contentNodeCell = document.createElement("td");
+            this.contentNodeCell.style.width = "100%";
+            this.contentContainerRow.appendChild(this.contentNodeCell);
+
+            const contentNodeCellDiv = document.createElement("div");
+            contentNodeCellDiv.style.height = "100%";
+            contentNodeCellDiv.style.width = "100%";
+            this.contentNodeCell.appendChild(contentNodeCellDiv);
+
+            const loadingIconCell = document.createElement("td");
+            loadingIconCell.appendChild(this.loadingIcon.node);
+            loadingIconCell.setAttribute("align", "center");
+            loadingIconCell.style.verticalAlign = "middle";
+            loadingIconCell.style.lineHeight = ".1";
+            loadingIconCell.style.paddingRight = "2px";
+            this.contentContainerRow.appendChild(loadingIconCell);
+
+            this.contentNode = document.createElement("input");
+            this.contentNode.setAttribute("type", "text");
+            this.contentNode.style.border = "0px black solid";
+            this.contentNode.style.height = "100%";
+            this.contentNode.style.width = "100%";
+            this.contentNode.style.paddingLeft = "5px";
+            this.contentNode.style.outline = "none";
+            this.contentNode.addEventListener("keydown", evt => this.onKeyDown(evt));
+            this.contentNode.addEventListener("keypress", evt => this.onKeyPress(evt));
+            this.contentNode.addEventListener("blur", evt => this.onBlur(evt));
+            contentNodeCellDiv.appendChild(this.contentNode);
+
+            this.overlayContainer = document.createElement("div");
+            this.overlayContainer.style.position = "absolute";
+            this.overlayContainer.style.display = "none";
+            this.overlayContainer.appendChild(this.overlay.node);
+
+            // This prevents mouse events from forcing an onblur on the input control.  Basically,
+            // we prevent the mousedown from propagating to the input control and so it cannot
+            // recognize the loss of focus.
+            this.overlayContainer.addEventListener(
+                "mousedown",
+                evt => {
+                    evt.stopImmediatePropagation();
+                    evt.preventDefault();
+                });
+
+            const overlayAnchor = document.createElement("div");
+            overlayAnchor.style.position = "relative";
+            overlayAnchor.appendChild(this.overlayContainer);
+
+            this.node.style.border = "1px solid #999";
+            this.node.appendChild(contentContainer);
+            this.node.appendChild(overlayAnchor);
         }
 
         get text() {
@@ -96,68 +155,6 @@
             this.contentContainerRow.removeChild(itemWidget.parentElement as HTMLElement);
         }
 
-        createNode() {
-            const contentContainer = document.createElement("table");
-            contentContainer.style.width = "100%";
-
-            this.contentContainerRow = document.createElement("tr");
-            contentContainer.appendChild(this.contentContainerRow);
-
-            this.contentNodeCell = document.createElement("td");
-            this.contentNodeCell.style.width = "100%";
-            this.contentContainerRow.appendChild(this.contentNodeCell);
-
-            const contentNodeCellDiv = document.createElement("div");
-            contentNodeCellDiv.style.height = "100%";
-            contentNodeCellDiv.style.width = "100%";
-            this.contentNodeCell.appendChild(contentNodeCellDiv);
-
-            const loadingIconCell = document.createElement("td");
-            loadingIconCell.appendChild(this.loadingIcon.node);
-            loadingIconCell.setAttribute("align", "center");
-            loadingIconCell.style.verticalAlign = "middle";
-            loadingIconCell.style.lineHeight = ".1";
-            loadingIconCell.style.paddingRight = "2px";
-            this.contentContainerRow.appendChild(loadingIconCell);
-
-            this.contentNode = document.createElement("input");
-            this.contentNode.setAttribute("type", "text");
-            this.contentNode.style.border = "0px black solid";
-            this.contentNode.style.height = "100%";
-            this.contentNode.style.width = "100%";
-            this.contentNode.style.paddingLeft = "5px";
-            this.contentNode.style.outline = "none";
-            this.contentNode.addEventListener("keydown", evt => this.onKeyDown(evt));
-            this.contentNode.addEventListener("keypress", evt => this.onKeyPress(evt));
-            this.contentNode.addEventListener("blur", evt => this.onBlur(evt));
-            contentNodeCellDiv.appendChild(this.contentNode);
-
-            this.overlayContainer = document.createElement("div");
-            this.overlayContainer.style.position = "absolute";
-            this.overlayContainer.style.display = "none";
-            this.overlayContainer.appendChild(this.overlay.node);
-
-            // This prevents mouse events from forcing an onblur on the input control.  Basically,
-            // we prevent the mousedown from propagating to the input control and so it cannot
-            // recognize the loss of focus.
-            this.overlayContainer.addEventListener(
-                "mousedown",
-                evt => {
-                    evt.stopImmediatePropagation();
-                    evt.preventDefault();
-                });
-
-            const overlayAnchor = document.createElement("div");
-            overlayAnchor.style.position = "relative";
-            overlayAnchor.appendChild(this.overlayContainer);
-
-            const result = document.createElement("div");
-            result.style.border = "1px solid #999";
-            result.appendChild(contentContainer);
-            result.appendChild(overlayAnchor);
-            return result;
-        }
-
         dropDown() {
             if (this.overlay != null)
                 this.overlayContainer.style.display = "";
@@ -194,19 +191,19 @@
             }
         }
 
-        private onKeyPress(event: KeyboardEvent) {
-            
+        private async onKeyPress(event: KeyboardEvent) {
+            this.keyPressEvent = event;
+            await Utils.Promises.delay(1000);
+            if (this.keyPressEvent == event) {
+                this.loadingIcon.style.display = "inherit";
+                if (this.onSearch != null)
+                    this.onSearch(this.contentNode.value, items => this.populateItems(items));
+                this.loadingIcon.style.display = "none";
+            }
         }
 
         private onBlur(event: Event) {
             this.closeUp();
-        }
-
-        private async onSearch(text: string, populateItems: (items: Array<T>) => void) {
-            this.loadingIcon.style.display = "inherit";
-            if (this._onSearch != null)
-                this._onSearch(text, populateItems);
-            this.loadingIcon.style.display = "none";
         }
 
         private populateItems(items: Array<T>) {
@@ -231,20 +228,3 @@
         }
     }
 }
-/*
-        private async void OnKeyPress(Event @event)
-        {
-            canceller?.Cancel();
-
-            canceller = new CancellationTokenSource();
-            try
-            {
-                await Task.Delay(1000, canceller.Token);
-                await OnSearch(contentNode.Value, PopulateItems);
-            }
-            catch (TaskCanceledException)
-            {
-                // We don't care if the task has been cancelled -- that's the point
-            }
-        }
-*/

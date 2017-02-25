@@ -35,4 +35,5 @@ declare class TestController extends Controller {
     horizontalRule(): View;
     html(): View;
     flowPanel(): View;
+    autoCompleteTextBox(): View;
 }
