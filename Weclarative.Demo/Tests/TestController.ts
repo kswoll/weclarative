@@ -30,6 +30,7 @@ class TestController extends Controller {
         registrar("textArea", this.textArea);
         registrar("horizontalRule", this.horizontalRule);
         registrar("html", this.html);
+        registrar("flowPanel", this.flowPanel);
         registrar("{id:number}", this.getById);
         registrar("", this.home);
     }
@@ -297,5 +298,11 @@ class TestController extends Controller {
         view.title = "FlowPanel";
 
         const flowPanel = new Controls.FlowPanel();
+        const image = new Controls.Image("/coffee.jpg", 73, 73, "/coffee-highlight.jpg", "#00FF00");
+        flowPanel.add(Controls.FloatPanel.right(image));
+        flowPanel.add(new Controls.InlineText("lasdaer aer asr ae re r aesr ar as rasr asdrasdr asdr asdr asd rasd rasdr sadraewqwrq era wra r a ar aras er aeer re  esra"));
+
+        view.content = new CenteredPanel(new Controls.FixedPanel(flowPanel, 200, 200));
+        return view;
     }
 }
