@@ -3,215 +3,235 @@
     {
         _onSearch: (text: string, setItems: (items: T[]) => void) => Promise<void>;
         multiselect: boolean;
+        readonly loadingIcon: Icon;
+        readonly selectedItems = new Array<T>();
 
         private overlay: ListView<T>;
         private contentNode: HTMLInputElement;
         private overlayContainer: HTMLElement;
         private contentContainerRow: HTMLElement;
-        private selectedItems = new Array<T>();
         private contentNodeCell: HTMLElement;
         private selectedWidgets = new Map<T, HTMLElement>();
-//        private loadingIcon: Icon;
 
         constructor(private readonly textProvider: (item: T) => string) {
             super();
 
             this.overlay = new ListView<T>(textProvider);
-        }
-    }
-}
-/*
-            overlay = new ListView<T>(textProvider);
-            loadingIcon = new Icon { Source = IconType.Spinner, IsSpinning = true };
-            loadingIcon.Style.Font.Size = new CssNumericValue(75, CssUnit.Percent);
+            this.loadingIcon = new Icon(IconType.Spinner);
+            this.loadingIcon.isSpinning = true;
+            this.loadingIcon.style.fontSize = "75%";
 
-            overlay.Style.MinWidth = new CssNumericValue(300, CssUnit.Pixels);
-            overlay.Style.MinHeight = new CssNumericValue(200, CssUnit.Pixels);
-            overlay.Style.Cursor = CssCursor.Default;
-            overlay.Changed += OverlayChanged;
-            AddChild(overlay);
+            this.overlay.style.minWidth = "300px";
+            this.overlay.style.minHeight = "200px";
+            this.overlay.style.cursor = "default";
+            this.overlay.onChanged.add(evt => this.overlayChanged());
+            this.addChild(this.overlay);
 
-            loadingIcon.Style.Display = CssDisplay.None;
-            AddChild(loadingIcon);
+            this.loadingIcon.style.display = "none";
+            this.addChild(this.loadingIcon);
         }
 
-        public string Text
-        {
-            get { return contentNode.Value; }
-            set { contentNode.Value = value; }
+        get text() {
+            return this.contentNode.value;
+        }
+        set text(value: string) {
+            this.contentNode.value = value;
         }
 
-        public string Placeholder
-        {
-            get { return contentNode.GetAttribute("placeholder"); }
-            set { contentNode.SetAttribute("placeholder", value); }
+        get placeholder() {
+            return this.contentNode.getAttribute("placeholder") || "";
+        }
+        set placeholder(value: string) {
+            this.contentNode.setAttribute("placeholder", value);
         }
 
-        public Icon LoadingIcon => loadingIcon;
+        get selectedItem() {
+            return this.selectedItems.length > 0 ? this.selectedItems[0] : null;
+        }
+        set selectedItem(value: T | null) {
+            this.clearSelectedItems();
+            if (value) {
+                this.selectedItems.push(value);                
+            }
+            this.text = value == null ? "" : this.textProvider(value);
+        }
 
-        public T SelectedItem
-        {
-            get { return selectedItems.FirstOrDefault(); }
-            set
-            {
-                ClearSelectedItems();
-                selectedItems.Add(value);
-                Text = value == null ? "" : textProvider(value);
+        clearSelectedItems() {
+            while (this.selectedItems.length > 0) {
+                this.removeSelectedItem(this.selectedItems[0]);
             }
         }
 
-        public IEnumerable<T> SelectedItems => selectedItems;
+        addSelectedItem(item: T) {
+            const itemWidget = document.createElement("div");
+            itemWidget.style.whiteSpace = "nowrap";
+            itemWidget.style.fontSize = "60%";
+            itemWidget.style.border = "1px black solid";
+            itemWidget.style.borderRadius = "5px";
+            itemWidget.style.paddingLeft = "3px";
+            itemWidget.style.paddingRight = "3px";
+            itemWidget.style.cursor = "default";
+            itemWidget.title = "Click to remove";
+            itemWidget.addEventListener(
+                "click",
+                evt => {
+                    this.removeSelectedItem(item);
+                    this.contentNode.focus();
+                });
+            itemWidget.appendChild(document.createTextNode(this.textProvider(item)));
 
-        public void ClearSelectedItems()
-        {
-            while (selectedItems.Any())
-            {
-                RemoveSelectedItem(selectedItems.First());
-            }
+            const itemCell = document.createElement("td");
+            itemCell.style.paddingLeft = "2px";
+            itemCell.appendChild(itemWidget);
+            Elements.insertBefore(itemCell, this.contentNodeCell);
+
+            this.selectedWidgets.set(item, itemWidget);
+            this.selectedItems.push(item);
         }
 
-        public void AddSelectedItem(T item)
-        {
-            var itemWidget = Browser.Document.CreateElement("div");
-            itemWidget.Style.WhiteSpace = "nowrap";
-            itemWidget.Style.FontSize = "60%";
-            itemWidget.Style.Border = "1px black solid";
-            itemWidget.Style.BorderRadius = "5px";
-            itemWidget.Style.PaddingLeft = "3px";
-            itemWidget.Style.PaddingRight = "3px";
-            itemWidget.Style.Cursor = "default";
-            itemWidget.Title = "Click to remove";
-            itemWidget.AddEventListener("click", evt =>
-            {
-                RemoveSelectedItem(item);
-                contentNode.Focus();
-            });
-            itemWidget.AppendChild(Browser.Document.CreateTextNode(textProvider(item)));
-
-            var itemCell = Browser.Document.CreateElement("td");
-            itemCell.Style.PaddingLeft = "2px";
-            itemCell.AppendChild(itemWidget);
-
-            itemCell.InsertBefore(contentNodeCell);
-
-            selectedWidgets[item] = itemWidget;
-            selectedItems.Add(item);
+        removeSelectedItem(item: T) {
+            const itemWidget = this.selectedWidgets.get(item) as HTMLElement;
+            this.selectedWidgets.delete(item);
+            Arrays.remove(this.selectedItems, item);
+            this.contentContainerRow.removeChild(itemWidget.parentElement as HTMLElement);
         }
 
-        public void RemoveSelectedItem(T item)
-        {
-            var itemWidget = selectedWidgets[item];
-            selectedWidgets.Remove(item);
-            selectedItems.Remove(item);
-            contentContainerRow.RemoveChild(itemWidget.ParentElement);
-        }
+        createNode() {
+            const contentContainer = document.createElement("table");
+            contentContainer.style.width = "100%";
 
-        protected override Element CreateNode()
-        {
-            var contentContainer = Browser.Document.CreateElement("table");
-            contentContainer.Style.Width = "100%";
+            this.contentContainerRow = document.createElement("tr");
+            contentContainer.appendChild(this.contentContainerRow);
 
-            contentContainerRow = Browser.Document.CreateElement("tr");
-            contentContainer.AppendChild(contentContainerRow);
+            this.contentNodeCell = document.createElement("td");
+            this.contentNodeCell.style.width = "100%";
+            this.contentContainerRow.appendChild(this.contentNodeCell);
 
-//            contentContainer.Style.Height = "100%";
+            const contentNodeCellDiv = document.createElement("div");
+            contentNodeCellDiv.style.height = "100%";
+            contentNodeCellDiv.style.width = "100%";
+            this.contentNodeCell.appendChild(contentNodeCellDiv);
 
-            contentNodeCell = Browser.Document.CreateElement("td");
-            contentNodeCell.Style.Width = "100%";
-            contentContainerRow.AppendChild(contentNodeCell);
+            const loadingIconCell = document.createElement("td");
+            loadingIconCell.appendChild(this.loadingIcon.node);
+            loadingIconCell.setAttribute("align", "center");
+            loadingIconCell.style.verticalAlign = "middle";
+            loadingIconCell.style.lineHeight = ".1";
+            loadingIconCell.style.paddingRight = "2px";
+            this.contentContainerRow.appendChild(loadingIconCell);
 
-            var contentNodeCellDiv = Browser.Document.CreateElement("div");
-            contentNodeCellDiv.Style.Height = "100%";
-            contentNodeCellDiv.Style.Width = "100%";
-            contentNodeCell.AppendChild(contentNodeCellDiv);
+            this.contentNode = document.createElement("input");
+            this.contentNode.setAttribute("type", "text");
+            this.contentNode.style.border = "0px black solid";
+            this.contentNode.style.height = "100%";
+            this.contentNode.style.width = "100%";
+            this.contentNode.style.paddingLeft = "5px";
+            this.contentNode.style.outline = "none";
+            this.contentNode.addEventListener("keydown", evt => this.onKeyDown(evt));
+            this.contentNode.addEventListener("keypress", evt => this.onKeyPress(evt));
+            this.contentNode.addEventListener("blur", evt => this.onBlur(evt));
+            contentNodeCellDiv.appendChild(this.contentNode);
 
-            var loadingIconCell = Browser.Document.CreateElement("td");
-            loadingIconCell.AppendChild(loadingIcon.Node);
-            loadingIconCell.SetAttribute("align", "center");
-            loadingIconCell.Style.VerticalAlign = "middle";
-            loadingIconCell.Style.LineHeight = ".1";
-            loadingIconCell.Style.PaddingRight = "2px";
-            contentContainerRow.AppendChild(loadingIconCell);
-
-            contentNode = Browser.Document.CreateElement("input").As<InputElement>();
-            contentNode.SetAttribute("type", "text");
-            contentNode.Style.Border = "0px black solid";
-            contentNode.Style.Height = "100%";
-            contentNode.Style.Width = "100%";
-            contentNode.Style.PaddingLeft = "5px";
-            contentNode.Style.Outline = "none";
-            contentNode.AddEventListener("keydown", OnKeyDown);
-            contentNode.AddEventListener("keypress", OnKeyPress);
-            contentNode.AddEventListener("blur", OnBlur);
-            contentNodeCellDiv.AppendChild(contentNode);
-
-            overlayContainer = Browser.Document.CreateElement("div");
-            overlayContainer.Style.Position = "absolute";
-            overlayContainer.Style.Display = "none";
-            overlayContainer.AppendChild(overlay.Node);
+            this.overlayContainer = document.createElement("div");
+            this.overlayContainer.style.position = "absolute";
+            this.overlayContainer.style.display = "none";
+            this.overlayContainer.appendChild(this.overlay.node);
 
             // This prevents mouse events from forcing an onblur on the input control.  Basically,
             // we prevent the mousedown from propagating to the input control and so it cannot
             // recognize the loss of focus.
-            overlayContainer.AddEventListener("mousedown", e =>
-            {
-                e.StopImmediatePropagation();
-                e.PreventDefault();
-            });
-            overlayContainer.AddEventListener("focus", e => Console.WriteLine("focus"));
+            this.overlayContainer.addEventListener(
+                "mousedown",
+                evt => {
+                    evt.stopImmediatePropagation();
+                    evt.preventDefault();
+                });
 
-            var overlayAnchor = Browser.Document.CreateElement("div");
-            overlayAnchor.Style.Position = "relative";
-            overlayAnchor.AppendChild(overlayContainer);
+            const overlayAnchor = document.createElement("div");
+            overlayAnchor.style.position = "relative";
+            overlayAnchor.appendChild(this.overlayContainer);
 
-            var result = Browser.Document.CreateElement("div");
-            result.Style.Border = "1px solid #999";
-            result.AppendChild(contentContainer);
-            result.AppendChild(overlayAnchor);
+            const result = document.createElement("div");
+            result.style.border = "1px solid #999";
+            result.appendChild(contentContainer);
+            result.appendChild(overlayAnchor);
             return result;
         }
 
-        public void DropDown()
-        {
-            if (overlay != null)
-                overlayContainer.Style.Display = "";
+        dropDown() {
+            if (this.overlay != null)
+                this.overlayContainer.style.display = "";
         }
 
-        public void CloseUp()
-        {
-            if (overlay != null)
-                overlayContainer.Style.Display = "none";
+        closeUp() {
+            if (this.overlay != null)
+                this.overlayContainer.style.display = "none";
         }
 
-        private void OnKeyDown(Event @event)
-        {
-            if (@event.KeyCode == KeyCode.DownArrow)
-            {
-                overlay.SelectNextItem();
-                @event.StopImmediatePropagation();
-                @event.PreventDefault();
-            }
-            else if (@event.KeyCode == KeyCode.UpArrow)
-            {
-                overlay.SelectPreviousItem();
-                @event.StopImmediatePropagation();
-                @event.PreventDefault();
-            }
-            else if (@event.KeyCode == KeyCode.Escape)
-            {
-                CloseUp();
-                @event.StopImmediatePropagation();
-                @event.PreventDefault();
-            }
-            else if (@event.KeyCode == KeyCode.Enter)
-            {
-                Commit();
-                CloseUp();
-                @event.StopImmediatePropagation();
-                @event.PreventDefault();
+        private onKeyDown(event: KeyboardEvent) {
+            switch (event.keyCode) {
+                case KeyCode.DownArrow:
+                    this.overlay.selectNextItem();
+                    event.stopImmediatePropagation();
+                    event.preventDefault();
+                    break;
+                case KeyCode.UpArrow:
+                    this.overlay.selectPreviousItem();
+                    event.stopImmediatePropagation();
+                    event.preventDefault();
+                    break;
+                case KeyCode.Escape:
+                    this.closeUp();
+                    event.stopImmediatePropagation();
+                    event.preventDefault();
+                    break;
+                case KeyCode.Enter:
+                    this.commit();
+                    this.closeUp();
+                    event.stopImmediatePropagation();
+                    event.preventDefault();
+                    break;
             }
         }
 
+        private onKeyPress(event: KeyboardEvent) {
+            
+        }
+
+        private onBlur(event: Event) {
+            this.closeUp();
+        }
+
+        private async onSearch(text: string, populateItems: (items: Array<T>) => void) {
+            this.loadingIcon.style.display = "inherit";
+            if (this._onSearch != null)
+                this._onSearch(text, populateItems);
+            this.loadingIcon.style.display = "none";
+        }
+
+        private populateItems(items: Array<T>) {
+            this.overlay.clear();
+            for (const item of items) {
+                this.overlay.add(item);
+            }
+            this.dropDown();
+        }
+
+        private overlayChanged() {
+            if (!this.multiselect) {
+                this.selectedItem = this.overlay.selectedItem || null;
+            }
+        }
+
+        private commit() {
+            if (this.multiselect) {
+                this.addSelectedItem(this.overlay.selectedItem as T);
+                this.text = "";
+            }
+        }
+    }
+}
+/*
         private async void OnKeyPress(Event @event)
         {
             canceller?.Cancel();
@@ -227,45 +247,4 @@
                 // We don't care if the task has been cancelled -- that's the point
             }
         }
-
-        private void OnBlur(Event @event)
-        {
-            CloseUp();
-        }
-
-        private async Task OnSearch(string text, Action<T[]> populateItems)
-        {
-            loadingIcon.Style.Display = CssDisplay.Inherit;
-            if (Search != null)
-                await Search(text, populateItems);
-            loadingIcon.Style.Display = CssDisplay.None;
-        }
-
-        private void PopulateItems(T[] items)
-        {
-            overlay.Clear();
-            foreach (var item in items)
-            {
-                overlay.Add(item);
-            }
-            DropDown();
-        }
-
-        private void OverlayChanged()
-        {
-            if (!Multiselect)
-            {
-                SelectedItem = overlay.SelectedItem;
-            }
-        }
-
-        private void Commit()
-        {
-            if (Multiselect)
-            {
-                AddSelectedItem(overlay.SelectedItem);
-                Text = "";
-            }
-        }
-    }
 */

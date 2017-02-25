@@ -47,6 +47,7 @@
     <TypeScriptCompile Include="Controls\IconType.ts" />
     <TypeScriptCompile Include="Controls\Image.ts" />
     <TypeScriptCompile Include="Controls\InlineText.ts" />
+    <TypeScriptCompile Include="Controls\KeyCode.ts" />
     <TypeScriptCompile Include="Controls\LayeredPanel.ts" />
     <TypeScriptCompile Include="Controls\Link.ts" />
     <TypeScriptCompile Include="Controls\ListBox.ts" />

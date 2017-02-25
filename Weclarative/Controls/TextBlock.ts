@@ -1,5 +1,5 @@
 ﻿namespace Controls {
-    export class TextBlock extends InlineControl {
+    export class TextBlock extends Control {
         constructor(value: string = "") {
             super("div");
             this.value = value;

@@ -1,6 +1,7 @@
 ﻿namespace Controls {
     export class Icon extends Control {
         constructor(source: IconType) {
+            super("i");
             this.source = source;
         }
 
@@ -33,24 +34,9 @@
             const slug = Strings.slugToCamelCase(part);
             return (IconType as any)[slug] as IconType;
         }
-        set iconType(value: IconType) {
+        set source(value: IconType) {
             const slug = Strings.camelCaseToSlug(Strings.decapitalize(value.toString()), "-");
+            this.node.className = `fa fa-${slug}`;
         }
     }
 }
-/*
-            set
-            {
-                var slug = value.ToString().Decapitalize().CamelcaseToSlug('-');
-                Node.ClassName = "fa fa-" + slug;
-            }
-        }
-
-        protected override Element CreateNode()
-        {
-            var node = Browser.Document.CreateElement("i");
-
-
-            return node;
-        }
-*/

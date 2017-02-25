@@ -34,6 +34,20 @@
             return result;
         }
 
+        static camelCaseToSlug(s: string, slug = "_") {
+            let result = "";
+            for (let i = 0; i < s.length; i++) {
+                const c = s[i];
+                if (Strings.isUpperCase(c)) {
+                    result += slug;
+                    result += c.toLowerCase();
+                } else {
+                    result += c;
+                }
+            }
+            return result;
+        }
+
         static decapitalize(s: string) {
             return s[0].toLowerCase() + s.slice(1);
         }
@@ -47,8 +61,11 @@
                 const c = s[i];
                 const cUpper = c.toUpperCase();
                 const cLower = c.toLowerCase();
-                return c == cUpper && cUpper != cLower;
+                const result = c == cUpper && cUpper != cLower;
+                if (!result)
+                    return false;
             }
+            return true;
         }
 
         static isLowerCase(s: string) {
@@ -56,35 +73,11 @@
                 const c = s[i];
                 const cUpper = c.toUpperCase();
                 const cLower = c.toLowerCase();
-                return c == cLower && cUpper != cLower;
+                const result = c == cLower && cUpper != cLower;
+                if (!result)
+                    return false;
             }
-        }
-
-        static camelCaseToSlug(s: string, slug = "_") {
-            let result = "";
-            for (let i = 0; i < s.length; i++) {
-                const c = s[i];
-                if (c.)
-            }
+            return true;
         }
     }
 }
-/*
-        public static string CamelcaseToSlug(this string s, char slug = '_')
-        {
-            var builder = new StringBuilder();
-            foreach (var c in s)
-            {
-                if (char.IsUpper(c))
-                {
-                    builder.Append(slug);
-                    builder.Append(char.ToLower(c));
-                }
-                else
-                {
-                    builder.Append(c);
-                }
-            }
-            return builder.ToString();
-        }
-*/
