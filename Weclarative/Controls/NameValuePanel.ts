@@ -1,4 +1,4 @@
-﻿namespace Controls {
+﻿namespace Weclarative.Controls {
     /**
      * A control that renders each successive pairs added to it as a label
      * and a value.  This control uses a TablePanel to align the labels in

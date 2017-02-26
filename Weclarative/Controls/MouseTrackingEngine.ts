@@ -1,4 +1,4 @@
-﻿namespace Controls {
+﻿namespace Weclarative.Controls {
     export class MouseTrackingEngine {
         private lastElement: HTMLElement;
         private _isMouseDown: boolean;

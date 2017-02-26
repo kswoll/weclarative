@@ -1,4 +1,7 @@
-﻿namespace Views {
+﻿namespace Weclarative.Views {
+    import EventHandler = Utils.EventHandler;
+    import Control = Controls.Control;
+
     export class View {
         title: string;
         layoutType: LayoutType;

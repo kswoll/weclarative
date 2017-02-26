@@ -1,4 +1,4 @@
-﻿namespace Controls {
+﻿namespace Weclarative.Controls {
     export class Button extends Control {
         constructor(text = "") {
             super("input");

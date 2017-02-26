@@ -1,4 +1,6 @@
-﻿namespace Controls {
+﻿namespace Weclarative.Controls {
+    import EventHandler = Utils.EventHandler;
+
     export class TextArea extends Control {
         private readonly element: HTMLTextAreaElement;
 

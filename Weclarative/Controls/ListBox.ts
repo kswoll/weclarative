@@ -1,4 +1,7 @@
-﻿namespace Controls {
+﻿namespace Weclarative.Controls {
+    import IEventHandler = Utils.IEventHandler;
+    import EventHandler = Utils.EventHandler;
+
     export class ListBox<T> extends Control {
         private readonly items = new Array<T>();
         private readonly textProvider: (item: T) => string;

@@ -1,4 +1,4 @@
-﻿namespace Utils {
+﻿namespace Weclarative.Utils {
     export class Elements {
         /**
          * If offsetHeight is non-zero, will return that. Otherwise will temporarily place the element in a hidden

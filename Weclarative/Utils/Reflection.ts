@@ -1,4 +1,4 @@
-﻿namespace Utils {
+﻿namespace Weclarative.Utils {
     export class Reflection {
         private static STRIP_COMMENTS = /(\/\/.*$)|(\/\*[\s\S]*?\*\/)|(\s*=[^,\)]*(('(?:\\'|[^'\r\n])*')|("(?:\\"|[^"\r\n])*"))|(\s*=[^,\)]*))/mg;
         private static ARGUMENT_NAMES = /([^\s,]+)/g;

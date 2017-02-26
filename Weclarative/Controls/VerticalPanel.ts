@@ -1,9 +1,4 @@
-﻿/// <reference path="Control.ts" />
-/// <reference path="../Utils/Elements.ts" />
-
-import Elements = Utils.Elements;
-
-namespace Controls {
+﻿namespace Weclarative.Controls {
     export class VerticalPanel extends Control {
         private static readonly animationSpeed = 250;
 
@@ -142,7 +137,7 @@ namespace Controls {
             row.appendChild(cell);
 
             if (animate) {
-                const height = Elements.measureOffsetHeight(row);
+                const height = Utils.Elements.measureOffsetHeight(row);
                 row.style.display = "none";
                 div.style.overflow = "hidden";
                 Utils.Animator.animate(
@@ -183,7 +178,7 @@ namespace Controls {
             const row = cell.parentElement as HTMLElement;
 
             const childNode = this.internalAdd(child, alignment as HorizontalAlignment, spaceAbove, animate);
-            Elements.insertAfter(this.node, childNode, row);
+            Utils.Elements.insertAfter(this.node, childNode, row);
         }
 
         replace(oldChild: Control, newChild: Control) {
@@ -201,7 +196,7 @@ namespace Controls {
             const row = cell.parentElement as HTMLElement;
 
             if (animate) {
-                const height = Elements.measureOffsetHeight(row);
+                const height = Utils.Elements.measureOffsetHeight(row);
                 div.style.overflow = "hidden";
                 Utils.Animator.animate(
                     (progress) => {

@@ -1,4 +1,4 @@
-﻿namespace Controls {
+﻿namespace Weclarative.Controls {
     export class TitledPanel extends Control {
         private legend: Element;
         private contentDiv: Element;

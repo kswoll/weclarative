@@ -1,6 +1,7 @@
-﻿/// <reference path="RouteData.ts" />
+﻿namespace Weclarative.Routes {
+    import Strings = Utils.Strings;
+    import Arrays = Utils.Arrays;
 
-namespace Routes {
     export class RouteEngine {
         routeTree = new RouteTree();
 

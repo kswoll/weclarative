@@ -1,4 +1,4 @@
-﻿namespace Routes {
+﻿namespace Weclarative.Routes {
     export class RouteData {
         static readonly controllerKey = "@controller";
         static readonly actionKey = "@action";

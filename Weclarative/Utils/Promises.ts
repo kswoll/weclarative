@@ -1,4 +1,4 @@
-﻿namespace Utils {
+﻿namespace Weclarative.Utils {
     export class Promises {
         static delay(timeout: number) {
             const promise = new Promise((resolve) => {

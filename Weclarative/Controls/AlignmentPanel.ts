@@ -1,6 +1,4 @@
-﻿/// <reference path="Control.ts" />
-
-namespace Controls {
+﻿namespace Weclarative.Controls {
     export class AlignmentPanel extends Control {
         static Top(content: Control) {
             return new AlignmentPanel(content, HorizontalAlignment.Fill, VerticalAlignment.Top);

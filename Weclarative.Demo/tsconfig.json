@@ -2,13 +2,24 @@
   "compilerOptions": {
     "noImplicitAny": true,
     "noEmitOnError": true,
+    "strictNullChecks": true,
     "removeComments": false,
     "sourceMap": true,
-    "target": "es6"
+    "target": "es6",
+    "outFile": "weclarative-demo.js"
   },
+  "files": [
+    "weclarative.d.ts",
+    "Tests/TestController.ts",
+    "Demos/Views/DemoLayout.ts",
+    "Demos/Views/HomeView.ts",
+    "Demos/DemoController.ts",
+    "App.ts"
+  ],
   "exclude": [
     "node_modules",
     "wwwroot",
     "weclarative"
-  ]
+  ],
+  "compileOnSave": true
 }

@@ -1,4 +1,4 @@
-﻿namespace Controls {
+﻿namespace Weclarative.Controls {
     /**
      * Renders the content by setting width/height at 100% so that it fills inside the parent element
      */

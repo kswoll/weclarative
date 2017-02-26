@@ -1,9 +1,10 @@
-﻿/// <reference path="../weclarative.d.ts" />
-
-import VerticalPanel = Controls.VerticalPanel;
-import HorizontalPanel = Controls.HorizontalPanel;
-import CenteredPanel = Controls.CenteredPanel;
-import TablePanelWidth = Controls.TablePanelWidth;
+﻿import VerticalPanel = Weclarative.Controls.VerticalPanel;
+import HorizontalPanel = Weclarative.Controls.HorizontalPanel;
+import CenteredPanel = Weclarative.Controls.CenteredPanel;
+import TablePanelWidth = Weclarative.Controls.TablePanelWidth;
+import Controller = Weclarative.Controller;
+import View = Weclarative.Views.View;
+import Controls = Weclarative.Controls;
 
 class TestController extends Controller {
     get path() {

@@ -1,4 +1,4 @@
-﻿namespace Controls {
+﻿namespace Weclarative.Controls {
     export enum VerticalAlignment {
         Top,
         Middle,

@@ -1,11 +1,13 @@
-﻿interface IDisposable {
-    dispose(): void;
-}
+﻿namespace Weclarative.Utils {
+    export interface IDisposable {
+        dispose(): void;
+    }
 
-function using<T extends IDisposable, TResult>(resource: T, action: (resource: T) => TResult) {
-    try {
-        return action(resource);
-    } finally {
-        resource.dispose();
+    export function using<T extends IDisposable, TResult>(resource: T, action: (resource: T) => TResult) {
+        try {
+            return action(resource);
+        } finally {
+            resource.dispose();
+        }
     }
 }

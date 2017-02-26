@@ -1,4 +1,4 @@
-﻿namespace Controls {
+﻿namespace Weclarative.Controls {
     export class TablePanel extends Control {
         defaultConstraint: TablePanelConstraint;
 

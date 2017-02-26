@@ -40,7 +40,7 @@
     <TypeScriptCompile Include="Controls\FlowPanel.ts" />
     <TypeScriptCompile Include="Controls\HorizontalAlignment.ts" />
     <TypeScriptCompile Include="Controls\HorizontalPanel.ts" />
-    <TypeScriptCompile Include="Controls\HorizontalRue.ts" />
+    <TypeScriptCompile Include="Controls\HorizontalRule.ts" />
     <TypeScriptCompile Include="Controls\Html.ts" />
     <TypeScriptCompile Include="Controls\HtmlControl.ts" />
     <TypeScriptCompile Include="Controls\Icon.ts" />
@@ -97,6 +97,10 @@
     <TypeScriptCompile Include="Views\Layout.ts" />
     <TypeScriptCompile Include="Views\View.ts" />
     <TypeScriptCompile Include="ViewContext.ts" />
+    <TypeScriptCompile Include="weclarative.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="tsconfig.json" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

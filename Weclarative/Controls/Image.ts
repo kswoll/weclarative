@@ -1,4 +1,6 @@
-﻿namespace Controls {
+﻿namespace Weclarative.Controls {
+    import Strings = Utils.Strings;
+
     export class Image extends Control {
         constructor(source?: string, width?: number, height?: number, highlightedSource?: string, highlightColor?: string) {
             super();

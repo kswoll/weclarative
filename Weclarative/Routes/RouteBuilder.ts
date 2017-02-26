@@ -1,4 +1,4 @@
-﻿namespace Routes {
+﻿namespace Weclarative.Routes {
     export class RouteBuilder {
         private parts = Array<IRoutePart>();
         private pinning = new Array<number>();
@@ -25,7 +25,9 @@
     }
 
     export namespace RouteBuilder {
-        export class Pinned implements IDisposable {
+        import Disposable = Weclarative.Utils.IDisposable;
+
+        export class Pinned implements Disposable {
             private builder: RouteBuilder;
             private accepted: boolean;
 

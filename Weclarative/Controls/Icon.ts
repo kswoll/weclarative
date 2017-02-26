@@ -1,4 +1,7 @@
-﻿namespace Controls {
+﻿namespace Weclarative.Controls {
+    import Arrays = Utils.Arrays;
+    import Strings = Utils.Strings;
+
     export class Icon extends Control {
         constructor(source: IconType) {
             super("i");

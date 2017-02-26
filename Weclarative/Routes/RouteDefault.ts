@@ -1,6 +1,4 @@
-﻿/// <reference path="RoutePart.ts" />
-
-namespace Routes {
+﻿namespace Weclarative.Routes {
     export class RouteDefault extends RoutePart {
         constructor() {
             super();

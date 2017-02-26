@@ -1,7 +1,4 @@
-﻿/// <reference path="Control.ts" />
-/// <reference path="../Utils/Elements.ts" />
-
-namespace Controls {
+﻿namespace Weclarative.Controls {
     export class SidePanel extends Control {
         private _top: Control | null;
         private _bottom: Control | null;
@@ -34,7 +31,7 @@ namespace Controls {
         private getTopRow() {
             if (this.topRow == null) {
                 this.topRow = document.createElement("tr");
-                Elements.prepend(this.node, this.topRow as HTMLElement);
+                Utils.Elements.prepend(this.node, this.topRow as HTMLElement);
             }
             return this.topRow as HTMLElement;
         }
@@ -43,9 +40,9 @@ namespace Controls {
             if (this.middleRow == null) {
                 this.middleRow = document.createElement("tr");
                 if (this.topRow != null)
-                    Elements.insertAfter(this.node, this.middleRow as HTMLElement, this.topRow);
+                    Utils.Elements.insertAfter(this.node, this.middleRow as HTMLElement, this.topRow);
                 else
-                    Elements.prepend(this.node, this.middleRow as HTMLElement);
+                    Utils.Elements.prepend(this.node, this.middleRow as HTMLElement);
 
                 if (this.spacing != 0 && this.topRow != null)
                     (this.topCellContent as HTMLElement).style.paddingBottom = this.spacing + "px";
@@ -119,7 +116,7 @@ namespace Controls {
                 const leftCellContent = document.createElement("div");
                 leftCell.style.height = "100%";
                 this.adjustColSpan();
-                Elements.prepend(this.getMiddleRow(), leftCell);
+                Utils.Elements.prepend(this.getMiddleRow(), leftCell);
 
                 leftCellContent.style.width = "100%";
                 leftCellContent.style.height = "100%";
@@ -142,9 +139,9 @@ namespace Controls {
                 centerCell.style.width = "100%";
                 this.adjustColSpan();
                 if (this.leftCell != null)
-                    Elements.insertAfter(this.getMiddleRow(), centerCell, this.leftCell);
+                    Utils.Elements.insertAfter(this.getMiddleRow(), centerCell, this.leftCell);
                 else
-                    Elements.prepend(this.getMiddleRow(), centerCell);
+                    Utils.Elements.prepend(this.getMiddleRow(), centerCell);
 
                 centerCellContent.style.width = "100%";
                 centerCellContent.style.height = "100%";

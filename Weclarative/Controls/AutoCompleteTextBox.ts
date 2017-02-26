@@ -1,4 +1,6 @@
-﻿namespace Controls {
+﻿namespace Weclarative.Controls {
+    import Arrays = Utils.Arrays;
+
     export class AutoCompleteTextBox<T> extends Control
     {
         onSearch: (text: string, setItems: (items: T[]) => void) => Promise<void>;
@@ -152,7 +154,7 @@
             const itemCell = document.createElement("td");
             itemCell.style.paddingLeft = "2px";
             itemCell.appendChild(itemWidget);
-            Elements.insertBefore(itemCell, this.contentNodeCell);
+            Utils.Elements.insertBefore(itemCell, this.contentNodeCell);
 
             this.selectedWidgets.set(item, itemWidget);
             this.selectedItems.push(item);

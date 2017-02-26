@@ -1,4 +1,7 @@
-﻿namespace Controls {
+﻿namespace Weclarative.Controls {
+    import IEventHandler = Utils.IEventHandler;
+    import EventHandler = Utils.EventHandler;
+
     export class TextBox extends Control {
         private onChanged: IEventHandler<void>;
         private inputElement: HTMLInputElement;

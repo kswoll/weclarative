@@ -1,4 +1,4 @@
-﻿namespace Controls {
+﻿namespace Weclarative.Controls {
     export class InlineText extends Control {
         constructor(value: string = "") {
             super("span");

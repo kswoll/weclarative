@@ -1,4 +1,4 @@
-﻿namespace Routes {
+﻿namespace Weclarative.Routes {
     export abstract class RoutePart implements IRoutePart {
         abstract acceptPath(path: RoutePath): boolean;
 

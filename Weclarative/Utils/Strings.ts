@@ -1,4 +1,4 @@
-﻿namespace Utils {
+﻿namespace Weclarative.Utils {
     export class Strings {
         static chopStart(s: string, prefix: string): string {
             if (s.startsWith(prefix))

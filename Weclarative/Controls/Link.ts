@@ -1,12 +1,14 @@
-﻿namespace Controls {
+﻿namespace Weclarative.Controls {
+    import EventHandler = Utils.EventHandler;
+
     export class Link extends Control {
         private useTextMode: boolean;
         private _localHref: string | null;
 
         constructor(content?: string | Control) {
             super();
-            if (typeof(content) == "string") {
-                this.text = content;
+            if (content as string) {
+                this.text = content as string;
             }
             else if (content instanceof Control) {
                 this.add(content);

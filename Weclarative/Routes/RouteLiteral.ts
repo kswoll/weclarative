@@ -1,4 +1,6 @@
-﻿namespace Routes {
+﻿// <reference path="RoutePart.ts" />
+
+namespace Weclarative.Routes {
     export class RouteLiteral extends RoutePart {
         constructor(readonly literal: string, readonly isTerminal: boolean) {
             super();

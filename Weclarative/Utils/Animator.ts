@@ -1,4 +1,4 @@
-﻿namespace Utils {
+﻿namespace Weclarative.Utils {
     export type FrameHandler = (progress: number) => void;
 
     export class Animator {

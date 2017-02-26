@@ -1,9 +1,8 @@
-﻿/// <reference path="View.ts" />
-/// <reference path="../Controls/Control.ts" />
-
-import Control = Controls.Control;
+﻿// <reference path="View.ts" />
 
 namespace Weclarative.Views {
+    import Control = Controls.Control;
+
     export abstract class Layout extends View {
         private subviews: Array<View>;
 

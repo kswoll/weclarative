@@ -1,6 +1,4 @@
-﻿/// <reference path="../weclarative.d.ts" />
-
-namespace Demos {
+﻿namespace Demos {
     export class DemoController extends Controller {
         get path() {
             return "";

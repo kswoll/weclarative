@@ -1,4 +1,4 @@
-﻿namespace Controls {
+﻿namespace Weclarative.Controls {
     export class TablePanelConstraint {
         readonly horizontalAlignment: HorizontalAlignment;
         readonly verticalAlignment: VerticalAlignment;

@@ -1,4 +1,4 @@
-﻿namespace Controls {
+﻿namespace Weclarative.Controls {
     export class HorizontalRule extends Control {
         constructor() {
             super("hr");

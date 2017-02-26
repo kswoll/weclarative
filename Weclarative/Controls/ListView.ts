@@ -1,4 +1,7 @@
-﻿namespace Controls {
+﻿namespace Weclarative.Controls {
+    import EventHandler = Utils.EventHandler;
+    import Arrays = Utils.Arrays;
+
     export class ListView<T> extends Control {
         highlightColor = "rgb(221, 236, 247)";
         highlightTextColor = "inherit";
@@ -10,7 +13,7 @@
         private readonly textProvider: (item: T) => string;
         private readonly list = new VerticalPanel();
 
-        private _onChanged: IEventHandler<void>;
+        private _onChanged: EventHandler<void>;
         private _selectedIndex = -1;
 
         constructor(textProvider: (item: T) => string = (x) => x.toString()) {

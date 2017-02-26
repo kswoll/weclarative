@@ -1,4 +1,4 @@
-﻿namespace Controls {
+﻿namespace Weclarative.Controls {
     export class FixedPanel extends Control {
         private _content: Control | null;
 

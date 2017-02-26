@@ -1,4 +1,7 @@
-﻿namespace Routes {
+﻿namespace Weclarative.Routes {
+    import Strings = Utils.Strings;
+    import using = Utils.using;
+
     export class RouteTree implements IRouteNode {
         rootPaths = new Array<RouteNode>();
 

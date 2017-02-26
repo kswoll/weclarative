@@ -1,4 +1,6 @@
-﻿namespace Controls {
+﻿namespace Weclarative.Controls {
+    import Arrays = Utils.Arrays;
+
     export class LayeredPanel extends Control {
         private container: HTMLElement;
         private _background: Control | null;
@@ -37,7 +39,7 @@
             wrapper.appendChild(layer.node);
 
             if (this.background != null)
-                Elements.insertBefore(wrapper, this.background.node);
+                Utils.Elements.insertBefore(wrapper, this.background.node);
             else
                 this.container.appendChild(wrapper);
 

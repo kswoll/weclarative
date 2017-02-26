@@ -1,6 +1,6 @@
-﻿/// <reference path="Control.ts" />
+﻿namespace Weclarative.Controls {
+    import EventHandler = Utils.EventHandler;
 
-namespace Controls {
     export class CheckBox extends Control {
         public readonly onChanged = new EventHandler<void>();
 

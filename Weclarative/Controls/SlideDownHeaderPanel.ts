@@ -1,4 +1,4 @@
-﻿namespace Controls {
+﻿namespace Weclarative.Controls {
     /**
      * Establishes a header that can be populated with arbitrary content and that can
      * animate downwards when content is populated and animate upward when content is

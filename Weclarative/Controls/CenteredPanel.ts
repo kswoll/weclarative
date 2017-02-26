@@ -1,6 +1,4 @@
-﻿/// <reference path="Control.ts" />
-
-namespace Controls {
+﻿namespace Weclarative.Controls {
     export class CenteredPanel extends Control {
         private _content: Control | null;
         private contentContainer: HTMLElement;

@@ -1,7 +1,4 @@
-﻿/// <reference path="Control.ts" />
-/// <reference path="../Utils/Elements.ts" />
-
-namespace Controls {
+﻿namespace Weclarative.Controls {
     export class HorizontalPanel extends Control {
         defaultAlignment = VerticalAlignment.Fill;
 
@@ -41,7 +38,7 @@ namespace Controls {
                 case HorizontalAlignment.Center:
                     this.firstSpacer = document.createElement("td");
                     (this.firstSpacer as HTMLElement).style.width = "50%";
-                    Elements.prepend(this.row, this.firstSpacer as HTMLElement);
+                    Utils.Elements.prepend(this.row, this.firstSpacer as HTMLElement);
                     this.lastSpacer = document.createElement("td");
                     (this.lastSpacer as HTMLElement).style.width = "50%";
                     this.row.appendChild(this.lastSpacer as HTMLElement);
@@ -54,7 +51,7 @@ namespace Controls {
                 case HorizontalAlignment.Right:
                     this.firstSpacer = document.createElement("td");
                     (this.firstSpacer as HTMLElement).style.width = "50%";
-                    Elements.prepend(this.row, this.firstSpacer as HTMLElement);
+                    Utils.Elements.prepend(this.row, this.firstSpacer as HTMLElement);
                     break;
             }
         }

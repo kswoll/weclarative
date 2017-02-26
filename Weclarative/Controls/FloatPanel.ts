@@ -1,4 +1,4 @@
-﻿namespace Controls {
+﻿namespace Weclarative.Controls {
     export class FloatPanel extends Control {
         static left(content?: Control) {
             return new FloatPanel(content || null, FloatPanelSide.Left);

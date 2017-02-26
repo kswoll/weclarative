@@ -1,4 +1,4 @@
-﻿namespace Routes {
+﻿namespace Weclarative.Routes {
     export class RouteNode implements IRouteNode {
         children = Array<RouteNode>();
 

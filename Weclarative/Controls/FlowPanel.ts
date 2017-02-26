@@ -1,4 +1,4 @@
-﻿namespace Controls {
+﻿namespace Weclarative.Controls {
     /**
      * This panel renders its children as a normal series of HTML elements.  If you wish to to
      * align images and other content to the left or right so that content flows around it,

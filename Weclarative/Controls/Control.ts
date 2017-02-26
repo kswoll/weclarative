@@ -1,6 +1,7 @@
-﻿/// <reference path="MouseTrackingEngine.ts" />
+﻿namespace Weclarative.Controls {
+    import EventHandler = Utils.EventHandler;
+    import IEventHandler = Utils.IEventHandler;
 
-namespace Controls {
     export abstract class Control {
         private static mouseTrackingEngine = new MouseTrackingEngine();
 
@@ -9,7 +10,7 @@ namespace Controls {
 
         private children: Array<Control>;
         private isAttachedToDom: boolean;
-        private _view: View | null;
+        private _view: Views.View | null;
         private _node: HTMLElement;
         private _style: CSSStyleDeclaration;
         private _parent: Control | null;
@@ -60,7 +61,7 @@ namespace Controls {
             this.node.setAttribute("data-class-name", this.constructor.name);
         }
 
-        get view(): View {
+        get view(): Views.View {
             if (this._view != null)
                 return this._view;
             else if (this._parent != null)
@@ -68,7 +69,7 @@ namespace Controls {
             else
                 throw new Error("View not found for control");
         }
-        set view(value: View) {
+        set view(value: Views.View) {
             this._view = value;
         }
 

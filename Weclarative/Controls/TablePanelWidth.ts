@@ -1,4 +1,4 @@
-﻿namespace Controls {
+﻿namespace Weclarative.Controls {
     export class TablePanelWidth {
         static percent(value: number) {
             return new TablePanelWidth(value, TablePanelWidthStyle.Percent);

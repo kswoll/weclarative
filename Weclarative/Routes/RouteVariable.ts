@@ -1,8 +1,6 @@
-﻿/// <reference path="../Utils/Convert.ts" />
+﻿namespace Weclarative.Routes {
+    import Convert = Utils.Convert;
 
-import Convert = Utils.Convert;
-
-namespace Routes {
     export class RouteVariable extends RoutePart {
         constraints = Array<IRouteConstraint>();
 

@@ -1,4 +1,4 @@
-﻿namespace Controls {
+﻿namespace Weclarative.Controls {
     export class HtmlControl extends Control {
         constructor(node: HTMLElement) {
             super(null, node);

@@ -1,4 +1,4 @@
-﻿namespace Utils {
+﻿namespace Weclarative.Utils {
     export class Convert {
         static to(value: any, type: string): any {
             if (type == "number" && typeof(value) == "string") {
