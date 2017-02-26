@@ -6,7 +6,7 @@
 
 import View = Views.View;
 import RouteTree = Routes.RouteTree;
-import Layout = Views.Layout;
+import Layout = Weclarative.Views.Layout;
 import RouteEngine = Routes.RouteEngine;
 import HtmlControl = Controls.HtmlControl;
 

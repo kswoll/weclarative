@@ -7,5 +7,6 @@ class App extends MvcApplication {
 
     registerControllers(registry: ControllerRegistry): void {
         registry.register(new TestController());
+        registry.register(new Demos.DemoController());
     }
 }

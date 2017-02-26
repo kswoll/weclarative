@@ -3,11 +3,11 @@
 
 import Control = Controls.Control;
 
-namespace Views {
+namespace Weclarative.Views {
     export abstract class Layout extends View {
         private subviews: Array<View>;
 
-        constructor(readonly layoutType: LayoutType) {
+        constructor() {
             super();
             this.subviews = new Array<View>();
         }

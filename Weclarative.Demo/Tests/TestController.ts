@@ -1,11 +1,13 @@
-﻿import VerticalPanel = Controls.VerticalPanel;
+﻿/// <reference path="../weclarative.d.ts" />
+
+import VerticalPanel = Controls.VerticalPanel;
 import HorizontalPanel = Controls.HorizontalPanel;
 import CenteredPanel = Controls.CenteredPanel;
 import TablePanelWidth = Controls.TablePanelWidth;
 
 class TestController extends Controller {
     get path() {
-        return "";
+        return "tests";
     }
 
     registerRoutes(registrar: (route: string, action: Function) => void) {

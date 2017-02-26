@@ -99,6 +99,7 @@
     <Content Include="font-awesome-4.7.0\scss\_screen-reader.scss" />
     <Content Include="font-awesome-4.7.0\scss\_stacked.scss" />
     <Content Include="font-awesome-4.7.0\scss\_variables.scss" />
+    <Content Include="tsconfig.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -108,8 +109,10 @@
     <Content Include="weclarative.js.map" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Demo\DemoController.ts" />
+    <TypeScriptCompile Include="Demos\DemoController.ts" />
     <TypeScriptCompile Include="App.ts" />
+    <TypeScriptCompile Include="Demos\Views\DemoLayout.ts" />
+    <TypeScriptCompile Include="Demos\Views\HomeView.ts" />
     <TypeScriptCompile Include="Tests\TestController.ts" />
     <TypeScriptCompile Include="weclarative.d.ts" />
   </ItemGroup>
