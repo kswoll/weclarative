@@ -36,7 +36,7 @@
         loadSections(sections: Map<string, Control>) {
             this.leftPanel.removeAll();
 
-            const leftSection = this.sections.get("sidebar");
+            const leftSection = sections.get("sidebar");
             if (leftSection) {
                 this.leftPanel.add(leftSection);
             }

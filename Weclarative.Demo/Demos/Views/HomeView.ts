@@ -7,6 +7,8 @@
 
             this.title = "Weclarative Demo";
             this.layoutType = DemoLayout.type;
+
+            this.sections.set("sidebar", new DemoSidebar());
         }
     }
 }
