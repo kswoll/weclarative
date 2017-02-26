@@ -41,6 +41,13 @@ abstract class MvcApplication {
         MvcApplication.instance = this;
     }
 
+    static load(application: () => MvcApplication) {
+        window.addEventListener("load", evt => {
+            var app = application();
+            app.start();
+        });        
+    }
+
     get view() {
         return this._view;
     }

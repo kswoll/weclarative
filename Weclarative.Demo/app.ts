@@ -1,4 +1,11 @@
-﻿window.onload = () => {
-    var application = new Tests.TestApplication();
-    application.start();
-};
+﻿MvcApplication.load(() => new App());
+
+class App extends MvcApplication {
+    constructor() {
+        super();
+    }
+
+    registerControllers(registry: ControllerRegistry): void {
+        registry.register(new TestController());
+    }
+}

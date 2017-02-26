@@ -1,8 +1,6 @@
-declare namespace Tests {
-    class TestApplication extends MvcApplication {
-        constructor();
-        registerControllers(registry: ControllerRegistry): void;
-    }
+declare class App extends MvcApplication {
+    constructor();
+    registerControllers(registry: ControllerRegistry): void;
 }
 import VerticalPanel = Controls.VerticalPanel;
 import HorizontalPanel = Controls.HorizontalPanel;

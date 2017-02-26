@@ -108,17 +108,15 @@
     <Content Include="weclarative.js.map" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="app.ts" />
-    <TypeScriptCompile Include="Tests\TestApplication.ts" />
+    <TypeScriptCompile Include="Demo\DemoController.ts" />
+    <TypeScriptCompile Include="App.ts" />
     <TypeScriptCompile Include="Tests\TestController.ts" />
     <TypeScriptCompile Include="weclarative.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Demo\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
