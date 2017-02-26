@@ -6,7 +6,7 @@
             super();
 
             this.title = "Weclarative Demo";
-
+            this.layoutType = DemoLayout.type;
         }
     }
 }

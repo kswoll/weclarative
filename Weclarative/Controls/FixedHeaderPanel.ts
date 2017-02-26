@@ -31,7 +31,7 @@
                 this.removeChild(this.header);
                 Utils.Elements.clear(this.headerNode);
             }
-            this.header = value;
+            this._header = value;
             if (value != null) {
                 this.headerNode.appendChild(value.node);
                 if (this.isAttachedToDom)
@@ -60,7 +60,7 @@
                 this.removeChild(this.content);
                 Utils.Elements.clear(this.contentNode);
             }
-            this.content = value;
+            this._content = value;
             if (value != null) {
                 this.contentNode.appendChild(value.node);
                 this.addChild(value);

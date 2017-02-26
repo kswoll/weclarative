@@ -221,5 +221,9 @@
         removeChild(child: Control) {
             this.remove(child);
         }
+
+        removeAll() {
+            super.removeAll();
+        }
     }
 }

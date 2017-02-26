@@ -103,6 +103,9 @@
   <ItemGroup>
     <Content Include="tsconfig.json" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="weclarative.js.map" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>

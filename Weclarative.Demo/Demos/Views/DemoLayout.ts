@@ -1,11 +1,14 @@
 ﻿namespace Demos.Views {
     import Layout = Weclarative.Views.Layout;
+    import LayoutType = Weclarative.LayoutType;
     import Controls = Weclarative.Controls;
     import Control = Controls.Control;
     import HorizontalAlignment = Controls.HorizontalAlignment;
     import VerticalAlignment = Controls.VerticalAlignment;
 
     export class DemoLayout extends Layout {
+        static type = new LayoutType(DemoLayout.name, () => new DemoLayout());
+
         private headerPanel = new Controls.VerticalPanel(HorizontalAlignment.Fill);
         private contentPanel = new Controls.SlideDownHeaderPanel();
         private leftPanel = new VerticalPanel(HorizontalAlignment.Left);
@@ -23,11 +26,20 @@
             mainPanel.left = this.leftPanel;
             mainPanel.center = this.contentPanel;
 
-            this.content = new Controls.FixedHeaderPanel();
+            const content = new Controls.FixedHeaderPanel();
+            content.header = new Controls.TextBlock("Weclarative Demo");
+            content.content = mainPanel;
+
+            this.content = content;
         }
 
         loadSections(sections: Map<string, Control>) {
+            this.leftPanel.removeAll();
 
+            const leftSection = this.sections.get("sidebar");
+            if (leftSection) {
+                this.leftPanel.add(leftSection);
+            }
         }
     }
 }
