@@ -34,7 +34,13 @@
         }
 
         static insertBefore(child: Node, referenceNode: Node) {
-            referenceNode.parentElement.insertBefore(child, referenceNode);
+            (referenceNode.parentElement as HTMLElement).insertBefore(child, referenceNode);
+        }
+
+        static clear(parent: Node) {
+            while (parent.firstChild != null) {
+                parent.removeChild(parent.firstChild);
+            }
         }
     }
 }

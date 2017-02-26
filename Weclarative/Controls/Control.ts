@@ -9,7 +9,7 @@
         public associatedLabel: Control;
 
         private children: Array<Control>;
-        private isAttachedToDom: boolean;
+        private _isAttachedToDom: boolean;
         private _view: Views.View | null;
         private _node: HTMLElement;
         private _style: CSSStyleDeclaration;
@@ -30,6 +30,10 @@
                 this.node = node;
             else
                 this.node = this.createNode();
+        }
+
+        get isAttachedToDom() {
+            return this._isAttachedToDom;
         }
 
         getChild(index: number) {
@@ -225,7 +229,7 @@
         protected onAttachedToDom()
         {
             if (!this.isAttachedToDom) {
-                this.isAttachedToDom = true;
+                this._isAttachedToDom = true;
                 if (this._attachedToDom != null)
                     this.attachedToDom.trigger();
 
@@ -239,7 +243,7 @@
         protected onDetachedFromDom()
         {
             if (this.isAttachedToDom) {
-                this.isAttachedToDom = false;
+                this._isAttachedToDom = false;
                 if (this._detachedFromDom != null)
                     this.detachedFromDom.trigger();
 

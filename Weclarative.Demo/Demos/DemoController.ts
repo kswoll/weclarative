@@ -1,4 +1,6 @@
 ﻿namespace Demos {
+    import Controller = Weclarative.Controller;
+
     export class DemoController extends Controller {
         get path() {
             return "";

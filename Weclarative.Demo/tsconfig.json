@@ -11,6 +11,7 @@
   "files": [
     "weclarative.d.ts",
     "Tests/TestController.ts",
+    "Demos/DemoColors.ts",
     "Demos/Views/DemoLayout.ts",
     "Demos/Views/HomeView.ts",
     "Demos/DemoController.ts",
