@@ -26,10 +26,12 @@
         protected constructor(tagName: string | null = "div", node: HTMLElement | null = null) {
             this.tagName = tagName as string;
             this.children = new Array<Control>();
-            if (node != null)
+            if (node != null) {
                 this.node = node;
-            else
+                this._isAttachedToDom = true;
+            } else {
                 this.node = this.createNode();
+            }
         }
 
         get isAttachedToDom() {

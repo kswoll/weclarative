@@ -6,7 +6,7 @@
         constructor() {
             super();
 
-            this.add(new TextBlock("Itme 1"));
+            this.add(new TextBlock("Item 1"));
         }
     }
 }
