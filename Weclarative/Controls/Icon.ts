@@ -35,7 +35,7 @@
             return (IconType as any)[slug] as IconType;
         }
         set source(value: IconType) {
-            const slug = Strings.camelCaseToSlug(Strings.decapitalize(value.toString()), "-");
+            const slug = Strings.camelCaseToSlug(Strings.decapitalize(IconType[value]), "-");
             this.node.className = `fa fa-${slug}`;
         }
     }

@@ -32,6 +32,7 @@ class TestController extends Controller {
         registrar("html", this.html);
         registrar("flowPanel", this.flowPanel);
         registrar("autoCompleteTextBox", this.autoCompleteTextBox);
+        registrar("icon", this.icon);
         registrar("{id:number}", this.getById);
         registrar("", this.home);
     }
@@ -311,13 +312,36 @@ class TestController extends Controller {
         const view = new View();
         view.title = "AutoCompleteTextBox";
 
+        const panel = new VerticalPanel();
+
         const textBox = new Controls.AutoCompleteTextBox<string>(item => item.toString());
         textBox.onSearch = (text: string, setItems: (items: string[]) => void) => {
-            setItems(["1"]);
+            setItems(["1", "a", "b", "ab", "abadsf", "badfasd"].filter(x => x.startsWith(text)));
             return Promise.resolve(undefined);
         };
+        textBox.throttle = 0;
+        panel.add(textBox);
 
-        view.content = new CenteredPanel(textBox);
+        const multiselectTextBox = new Controls.AutoCompleteTextBox<string>(item => item.toString(), true);
+        multiselectTextBox.onSearch = (text: string, setItems: (items: string[]) => void) => {
+            setItems(["1", "a", "b", "ab", "abadsf", "badfasd"].filter(x => x.startsWith(text)));
+            return Promise.resolve(undefined);
+        };
+        multiselectTextBox.throttle = 0;
+        panel.add(multiselectTextBox);
+
+        view.content = new CenteredPanel(panel);
+        return view;
+    }
+
+    icon() {
+        const view = new View();
+        view.title = "Icon";
+
+        const icon = new Controls.Icon(Controls.IconType.Android);
+        icon.isSpinning = true;
+
+        view.content = new CenteredPanel(icon);
         return view;
     }
 }

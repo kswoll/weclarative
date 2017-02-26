@@ -2,7 +2,7 @@
     export class AutoCompleteTextBox<T> extends Control
     {
         onSearch: (text: string, setItems: (items: T[]) => void) => Promise<void>;
-        multiselect: boolean;
+        throttle = 500;
         readonly loadingIcon: Icon;
         readonly selectedItems = new Array<T>();
 
@@ -13,8 +13,9 @@
         private contentNodeCell: HTMLElement;
         private selectedWidgets = new Map<T, HTMLElement>();
         private keyPressEvent: KeyboardEvent;
+        private isResettingOverlay: boolean;
 
-        constructor(private readonly textProvider: (item: T) => string) {
+        constructor(private readonly textProvider: (item: T) => string, readonly multiselect = false) {
             super();
 
             this.overlay = new ListView<T>(textProvider);
@@ -47,7 +48,9 @@
             this.contentNodeCell.appendChild(contentNodeCellDiv);
 
             const loadingIconCell = document.createElement("td");
-            loadingIconCell.appendChild(this.loadingIcon.node);
+            const loadingIconDiv = document.createElement("div");
+            loadingIconCell.appendChild(loadingIconDiv);
+            loadingIconDiv.appendChild(this.loadingIcon.node);
             loadingIconCell.setAttribute("align", "center");
             loadingIconCell.style.verticalAlign = "middle";
             loadingIconCell.style.lineHeight = ".1";
@@ -62,7 +65,7 @@
             this.contentNode.style.paddingLeft = "5px";
             this.contentNode.style.outline = "none";
             this.contentNode.addEventListener("keydown", evt => this.onKeyDown(evt));
-            this.contentNode.addEventListener("keypress", evt => this.onKeyPress(evt));
+            this.contentNode.addEventListener("keyup", evt => this.onKeyUp(evt));
             this.contentNode.addEventListener("blur", evt => this.onBlur(evt));
             contentNodeCellDiv.appendChild(this.contentNode);
 
@@ -108,11 +111,18 @@
             return this.selectedItems.length > 0 ? this.selectedItems[0] : null;
         }
         set selectedItem(value: T | null) {
-            this.clearSelectedItems();
-            if (value) {
-                this.selectedItems.push(value);                
+            if (this.multiselect) {
+                this.clearSelectedItems();
+                if (value) {
+                    this.addSelectedItem(value);
+                }
             }
-            this.text = value == null ? "" : this.textProvider(value);
+            else {
+                this.selectedItems.length = 0;
+                if (value)
+                    this.selectedItems.push(value);
+                this.text = value == null ? "" : this.textProvider(value);
+            }
         }
 
         clearSelectedItems() {
@@ -156,13 +166,14 @@
         }
 
         dropDown() {
-            if (this.overlay != null)
-                this.overlayContainer.style.display = "";
+            this.overlayContainer.style.display = "";
         }
 
         closeUp() {
-            if (this.overlay != null)
-                this.overlayContainer.style.display = "none";
+            this.overlayContainer.style.display = "none";
+            this.isResettingOverlay = true;
+            this.overlay.selectedItem = null;
+            this.isResettingOverlay = false;
         }
 
         private onKeyDown(event: KeyboardEvent) {
@@ -191,9 +202,29 @@
             }
         }
 
-        private async onKeyPress(event: KeyboardEvent) {
+        private async onKeyUp(event: KeyboardEvent) {
+            switch (event.keyCode) {
+                case KeyCode.DownArrow:
+                case KeyCode.UpArrow:
+                case KeyCode.Escape:
+                case KeyCode.Enter:
+                case KeyCode.Tab:
+                case KeyCode.LeftArrow:
+                case KeyCode.RightArrow:
+                case KeyCode.PageDown:
+                case KeyCode.PageUp:
+                case KeyCode.Home:
+                case KeyCode.End:
+                case KeyCode.Ctrl:
+                case KeyCode.Alt:
+                case KeyCode.Shift:
+                    return;
+            }
+
+            this.loadingIcon.style.display = "inherit";
             this.keyPressEvent = event;
-            await Utils.Promises.delay(1000);
+            if (this.throttle > 0)
+                await Utils.Promises.delay(this.throttle);
             if (this.keyPressEvent == event) {
                 this.loadingIcon.style.display = "inherit";
                 if (this.onSearch != null)
@@ -215,7 +246,7 @@
         }
 
         private overlayChanged() {
-            if (!this.multiselect) {
+            if (!this.multiselect && !this.isResettingOverlay) {
                 this.selectedItem = this.overlay.selectedItem || null;
             }
         }

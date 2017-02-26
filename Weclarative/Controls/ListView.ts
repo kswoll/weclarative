@@ -77,9 +77,9 @@
         }
 
         get selectedItem() {
-            return this.selectedIndex == -1 ? undefined : this.items[this.selectedIndex];
+            return this.selectedIndex == -1 ? null : this.items[this.selectedIndex];
         }
-        set selectedItem(value: T | undefined) {
+        set selectedItem(value: T | null) {
             this.selectedIndex = value == undefined ? -1 : this.items.indexOf(value);
         }
 
