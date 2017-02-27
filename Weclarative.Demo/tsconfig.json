@@ -12,9 +12,11 @@
     "weclarative.d.ts",
     "Tests/TestController.ts",
     "Demos/DemoColors.ts",
+    "Demos/Views/BaseView.ts",
     "Demos/Views/DemoSidebar.ts",
     "Demos/Views/DemoLayout.ts",
     "Demos/Views/HomeView.ts",
+    "Demos/Views/SidePanelView.ts",
     "Demos/DemoController.ts",
     "App.ts"
   ],

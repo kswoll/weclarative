@@ -1,17 +1,12 @@
 ﻿namespace Demos.Views {
-    import View = Weclarative.Views.View;
     import Controls = Weclarative.Controls;
 
-    export class HomeView extends View {
+    export class HomeView extends BaseView {
         constructor() {
             super();
 
-            this.content = new CenteredPanel(new Controls.TextBlock("Hello World"));
-
-            this.title = "Weclarative Demo";
-            this.layoutType = DemoLayout.type;
-
-            this.sections.set("sidebar", new DemoSidebar());
+            this.content = new CenteredPanel(new Controls.TextBlock("Hello World YAY!"));
+            this.title = "Weclarative Demo - Home";
         }
     }
 }

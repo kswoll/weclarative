@@ -6,7 +6,9 @@
         constructor() {
             super();
 
-            this.add(new TextBlock("Item 1"));
+            const item1 = new Controls.Link("Item 1");
+            item1.localHref = "/sidePanel";
+            this.add(item1);
         }
     }
 }

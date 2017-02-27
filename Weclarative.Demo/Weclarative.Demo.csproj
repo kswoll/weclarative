@@ -132,9 +132,11 @@
     <TypeScriptCompile Include="Demos\DemoController.ts" />
     <TypeScriptCompile Include="App.ts" />
     <TypeScriptCompile Include="Demos\DemoColors.ts" />
+    <TypeScriptCompile Include="Demos\Views\BaseView.ts" />
     <TypeScriptCompile Include="Demos\Views\DemoLayout.ts" />
     <TypeScriptCompile Include="Demos\Views\DemoSidebar.ts" />
     <TypeScriptCompile Include="Demos\Views\HomeView.ts" />
+    <TypeScriptCompile Include="Demos\Views\SidePanelView.ts" />
     <TypeScriptCompile Include="Tests\TestController.ts" />
     <TypeScriptCompile Include="weclarative.d.ts" />
     <TypeScriptCompile Include="Weclarative\Controller.ts" />
