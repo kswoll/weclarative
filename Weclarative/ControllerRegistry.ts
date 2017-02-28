@@ -2,8 +2,9 @@
     export class ControllerRegistry {
         private controllers = new Array<Controller>();
 
-        register(controller: Controller) {
+        register<T extends Controller>(controller: T) {
             this.controllers.push(controller);
+            return controller;
         }
 
         registerRoutes(routes: Routes.RouteEngine) {
