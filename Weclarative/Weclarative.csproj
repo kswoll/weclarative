@@ -157,8 +157,8 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>copy $(SolutionDir)Weclarative\weclarative.js $(SolutionDir)\Weclarative.Demo
-copy $(SolutionDir)Weclarative\weclarative.d.ts $(SolutionDir)\Weclarative.Demo
-copy $(SolutionDir)Weclarative\weclarative.js.map $(SolutionDir)\Weclarative.Demo</PostBuildEvent>
+    <PostBuildEvent>copy $(ProjectDir)weclarative.js c:\dev\weclarative\Weclarative.Demo
+copy $(ProjectDir)weclarative.d.ts c:\dev\weclarative\Weclarative.Demo
+copy $(ProjectDir)weclarative.js.map c:\dev\weclarative\Weclarative.Demo</PostBuildEvent>
   </PropertyGroup>
 </Project>
