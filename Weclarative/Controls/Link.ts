@@ -9,8 +9,7 @@
             super();
             if (content as string) {
                 this.text = content as string;
-            }
-            else if (content instanceof Control) {
+            } else if (content instanceof Control) {
                 this.add(content);
             }
         }
@@ -22,6 +21,7 @@
         get localHref() {
             return this._localHref;
         }
+
         set localHref(value: string | null) {
             if (this.localHref != null) {
                 this.node.setAttribute("href", "javascript:void(0);");
@@ -32,6 +32,10 @@
                 this.node.setAttribute("href", value);
                 this.onClick.add(this.localHrefClickHandler);
             }
+        }
+
+        set localAction(value: Function) {
+            this.localHref = Views.View.generateUrl(value);
         }
 
         private localHrefClickHandler = () => this.localHrefClick;

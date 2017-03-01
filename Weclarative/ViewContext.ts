@@ -1,5 +1,6 @@
 ﻿namespace Weclarative {
     export class ViewContext {
-        constructor(readonly controller: Controller) { }
+        constructor(readonly controller: Controller) {
+        }
     }
 }

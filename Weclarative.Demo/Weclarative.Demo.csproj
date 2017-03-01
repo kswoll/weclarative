@@ -62,9 +62,6 @@
     <Content Include="Weclarative\obj\Debug\Weclarative.csproj.FileListAbsolute.txt" />
     <Content Include="Weclarative\obj\Debug\Weclarative.dll" />
     <Content Include="Weclarative\obj\Debug\Weclarative.pdb" />
-    <Content Include="Weclarative\obj\Debug\Weclaritive.csproj.FileListAbsolute.txt" />
-    <Content Include="Weclarative\obj\Debug\Weclaritive.dll" />
-    <Content Include="Weclarative\obj\Debug\Weclaritive.pdb" />
     <Content Include="Weclarative\Weclarative.csproj" />
     <Content Include="Weclarative\Weclarative.csproj.user" />
     <Content Include="Weclarative\weclarative.js" />
@@ -124,7 +121,7 @@
     <Content Include="weclarative.js.map" />
     <Content Include="Weclarative\obj\Debug\CoreCompileInputs.cache" />
     <Content Include="Weclarative\obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <Content Include="Weclarative\obj\Debug\Weclaritive.csprojResolveAssemblyReference.cache" />
+    <Content Include="Weclarative\obj\Debug\Weclarative.csprojResolveAssemblyReference.cache" />
     <Content Include="Weclarative\tsconfig.json" />
     <Content Include="Weclarative\weclarative.js.map" />
   </ItemGroup>

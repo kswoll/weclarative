@@ -6,8 +6,8 @@
         constructor() {
             super();
 
-            const item1 = new Controls.Link("Item 1");
-            item1.localHref = "/sidePanel";
+            const item1 = new Controls.Link("Side Panel");
+            item1.localAction = App.instance.demoController.sidePanel; // Todo: allow Link to take a function that is later translated to a url
             this.add(item1);
         }
     }

@@ -87,5 +87,19 @@
             if (this.content != null)
                 this.content.onAddedToView();
         }
+
+        static generateUrl(action: Function) {
+            const controller = (action as any).$controller as Controller;
+            const route = (action as any).$route as string;
+            const controllerPath = controller.path;
+            if (route.startsWith("/"))
+                return route;
+            let result = "";
+            if (controllerPath != "")
+                result += `/${controllerPath}`;
+            if (route != "")
+                result += `/${route}`;
+            return result;
+        }
     }
 }

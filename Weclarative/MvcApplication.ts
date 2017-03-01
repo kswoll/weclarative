@@ -14,13 +14,6 @@
      * explicit and derived from some contextual object.
      */
     export abstract class MvcApplication {
-        /**
-         * Implement this method to instantiate and register all the controllers in your application.
-         *
-         * @param registry Call the register method passing in a new controller for each controller in your application.
-         */
-        abstract registerControllers(registry: ControllerRegistry): void;
-
         static instance: MvcApplication;
 
         onBottomBounced = new EventHandler<void>();
@@ -34,8 +27,18 @@
         private _scheme: string;
         private _controllerRegistry = new ControllerRegistry();
 
-        protected constructor() {
+        constructor() {
             MvcApplication.instance = this;
+        }
+
+        registerControllers(registry: ControllerRegistry): void {
+            for (const property of Object.getOwnPropertyNames(this)) {
+                const propertyValue = (this as any)[property];
+                if (propertyValue instanceof Controller) {
+                    const controller = propertyValue as Controller;
+                    registry.register(controller);
+                }
+            }
         }
 
         static load(application: () => MvcApplication) {
