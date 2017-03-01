@@ -21,7 +21,6 @@
     "Utils/Reflection.ts",
     "Utils/Strings.ts",
     "Routes/RoutePart.ts",
-    "Routes/IRouteConstraint.ts",
     "Routes/IRouteNode.ts",
     "Routes/IRoutePart.ts",
     "Routes/RouteBuilder.ts",

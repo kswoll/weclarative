@@ -76,7 +76,6 @@
     <TypeScriptCompile Include="Utils\Elements.ts" />
     <TypeScriptCompile Include="Utils\Promises.ts" />
     <TypeScriptCompile Include="ViewRequest.ts" />
-    <TypeScriptCompile Include="Routes\IRouteConstraint.ts" />
     <TypeScriptCompile Include="Routes\IRouteNode.ts" />
     <TypeScriptCompile Include="Routes\IRoutePart.ts" />
     <TypeScriptCompile Include="Routes\RouteBuilder.ts" />
@@ -98,7 +97,6 @@
     <TypeScriptCompile Include="Views\Layout.ts" />
     <TypeScriptCompile Include="Views\View.ts" />
     <TypeScriptCompile Include="ViewContext.ts" />
-    <TypeScriptCompile Include="weclarative.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="tsconfig.json" />
@@ -157,5 +155,10 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>copy $(SolutionDir)Weclarative\weclarative.js $(SolutionDir)\Weclarative.Demo
+copy $(SolutionDir)Weclarative\weclarative.d.ts $(SolutionDir)\Weclarative.Demo
+copy $(SolutionDir)Weclarative\weclarative.js.map $(SolutionDir)\Weclarative.Demo</PostBuildEvent>
   </PropertyGroup>
 </Project>

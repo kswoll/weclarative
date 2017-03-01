@@ -23,6 +23,9 @@
             path.consume();
         }
 
+        construct(args: any[]): string { throw new Error("Not implemented"); }
+
+
 /*
 
         toString() {

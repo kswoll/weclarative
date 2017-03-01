@@ -16,6 +16,10 @@ namespace Weclarative.Routes {
              }
         }
 
+        construct(args: any[]) {
+            return this.literal;
+        }
+
         toString() {
             return this.literal + " " + super.toString();
         }

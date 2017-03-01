@@ -58,7 +58,7 @@
                         routePart = new RouteLiteral(part, routePath.current == null);
                     }
 
-                    nextNode = new RouteNode(routePart);
+                    nextNode = new RouteNode(currentNode as IRouteNode, routePart);
 
                     if (routePath.current == null) {
                         routePart.routeData.set(RouteData.actionKey, action);
@@ -72,7 +72,7 @@
                     const defaultRoute = new RouteDefault();
                     defaultRoute.routeData.set(RouteData.actionKey, action);
                     defaultRoute.routeData.set(RouteData.controllerKey, controller);
-                    const defaultNode = new RouteNode(defaultRoute);
+                    const defaultNode = new RouteNode(currentNode as IRouteNode, defaultRoute);
                     this.addNode(currentNode as IRouteNode, defaultNode);
                 }
                 currentNode = nextNode;

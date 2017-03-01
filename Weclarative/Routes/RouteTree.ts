@@ -4,10 +4,30 @@
 
     export class RouteTree implements IRouteNode {
         parent: IRouteNode | null;
+        part: IRoutePart | null;
         rootPaths = new Array<RouteNode>();
 
         get children() {
             return this.rootPaths;
+        }
+
+        construct(action: Function, args: Array<any>) {
+            const leaf = (action as any).$route;
+            const parts = new Array<IRoutePart>();
+            let current = leaf;
+            while (current != null) {
+                const part = current.part;
+                parts.unshift(part);
+                current = current.parent;
+            }
+            let result = "";
+            for (const part of parts) {
+                const partPath = part.construct(args);
+                if (result.length > 0)
+                    result += "/";
+                result += partPath;
+            }
+            return result;
         }
 
         apply(path: string): RouteData {

@@ -2,17 +2,11 @@
     import Convert = Utils.Convert;
 
     export class RouteVariable extends RoutePart {
-        constraints = Array<IRouteConstraint>();
-
         constructor(readonly isTerminal: boolean, readonly parameter: string, readonly parameterType: string) {
             super();
         }
 
         acceptPath(path: RoutePath): boolean {
-            for (const constraint of this.constraints) {
-                if (!constraint.accept(path))
-                    return false;
-            }
             if (path.current != null) {
                 path.consume();
                 return true;
@@ -31,6 +25,11 @@
             part = decodeURI(part);
             const value = Convert.to(part, this.parameterType);
             data.setValue(this.parameter, value);
+        }
+
+        construct(args: any[]) {
+            const arg = args.shift();
+            return arg.toString();
         }
 
         toString() {

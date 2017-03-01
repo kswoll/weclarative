@@ -3,12 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26206.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weclarative.Demo", "Weclarative.Demo.csproj", "{F467324F-2578-42C5-BD2D-A8AD37B9254E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weclarative.Demo", "Weclarative.Demo\Weclarative.Demo.csproj", "{F467324F-2578-42C5-BD2D-A8AD37B9254E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{80807611-69DB-408E-A313-DECBF41ACB3A} = {80807611-69DB-408E-A313-DECBF41ACB3A}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weclarative", "Weclarative\Weclarative.csproj", "{80807611-69DB-408E-A313-DECBF41ACB3A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weclarative", "Weclarative.Demo\Weclarative\Weclarative.csproj", "{80807611-69DB-408E-A313-DECBF41ACB3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

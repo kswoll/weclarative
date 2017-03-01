@@ -12,6 +12,10 @@
         consumePath(path: RoutePath) {
         }
 
+        construct(args: any[]) {
+            return "";
+        }
+
         toString() {
             return `(default) ${super.toString()}`;
         }
