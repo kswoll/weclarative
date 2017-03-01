@@ -89,7 +89,7 @@
         }
 
         static generateUrl<T extends Function>(action: T, invoker?: (call: T) => void) {
-            let args: Array<any>;
+            const args = new Array<any>();
             if (invoker) {
                 function argumentExtractor() {
                     for (var i = 0; i < arguments.length; i++) {
