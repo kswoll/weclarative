@@ -17,7 +17,8 @@
             let current = leaf;
             while (current != null) {
                 const part = current.part;
-                parts.unshift(part);
+                if (part)
+                    parts.unshift(part);
                 current = current.parent;
             }
             let result = "";

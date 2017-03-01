@@ -135,7 +135,6 @@
     <TypeScriptCompile Include="Demos\Views\HomeView.ts" />
     <TypeScriptCompile Include="Demos\Views\SidePanelView.ts" />
     <TypeScriptCompile Include="Tests\TestController.ts" />
-    <TypeScriptCompile Include="weclarative.d.ts" />
     <TypeScriptCompile Include="Weclarative\Controller.ts" />
     <TypeScriptCompile Include="Weclarative\ControllerRegistry.ts" />
     <TypeScriptCompile Include="Weclarative\Controls\AlignmentPanel.ts" />

@@ -100,7 +100,10 @@
             }
 
             const controller = (action as any).$controller as Controller;
-            const route = (action as any).$route as string;
+            const app = controller.application;
+            return app.routeTree.construct(action, args);
+/*
+            const route = (action as any).$path as string;
             const controllerPath = controller.path;
             if (route.startsWith("/"))
                 return route;
@@ -110,6 +113,7 @@
             if (route != "")
                 result += `/${route}`;
             return result;
+*/
         }
     }
 }

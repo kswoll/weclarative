@@ -39,7 +39,7 @@
             if (route.startsWith("/")) {
                 addToRoot = true;
             }
-            (action as any).$route = route;
+            (action as any).$path = route;
             (action as any).$controller = controller;
             const routePath = new RoutePath(route);
             let currentNode: IRouteNode | null = parentNode;

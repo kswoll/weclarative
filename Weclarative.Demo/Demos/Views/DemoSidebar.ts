@@ -8,7 +8,7 @@
 
             const item1 = new Controls.Link("Side Panel");
             item1.localHref = View.generateUrl(App.instance.testController.getById, call => call(5)); // Todo: allow Link to take a function that is later translated to a url
-            item1.localAction = App.instance.demoController.sidePanel; // Todo: allow Link to take a function that is later translated to a url
+//            item1.localAction = App.instance.demoController.sidePanel; // Todo: allow Link to take a function that is later translated to a url
             this.add(item1);
         }
     }

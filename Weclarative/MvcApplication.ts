@@ -17,9 +17,9 @@
         static instance: MvcApplication;
 
         onBottomBounced = new EventHandler<void>();
+        routeTree: RouteTree;
 
         private currentPath: string;
-        private routeTree: RouteTree;
         private _body = new HtmlControl(document.getElementsByTagName("body")[0]);
         private _view: View;
         private _host: string;
