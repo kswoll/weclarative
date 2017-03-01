@@ -88,7 +88,17 @@
                 this.content.onAddedToView();
         }
 
-        static generateUrl(action: Function) {
+        static generateUrl<T extends Function>(action: T, invoker?: (call: T) => void) {
+            let args: Array<any>;
+            if (invoker) {
+                function argumentExtractor() {
+                    for (var i = 0; i < arguments.length; i++) {
+                        args[i] = arguments[i];
+                    }
+                }
+                invoker((argumentExtractor as any) as T);
+            }
+
             const controller = (action as any).$controller as Controller;
             const route = (action as any).$route as string;
             const controllerPath = controller.path;

@@ -3,6 +3,7 @@
     import using = Utils.using;
 
     export class RouteTree implements IRouteNode {
+        parent: IRouteNode | null;
         rootPaths = new Array<RouteNode>();
 
         get children() {

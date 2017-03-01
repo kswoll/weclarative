@@ -17,7 +17,7 @@
                 if (routePath.current != null) {
                     const routePart = routePath.consume();
                     const part = new RouteLiteral(routePart, true);
-                    nextNode = new RouteNode(part);
+                    nextNode = new RouteNode(currentNode, part);
                     this.addNode(currentNode, nextNode as RouteNode);
 
                     if (routePath.current == null) {
@@ -63,6 +63,7 @@
                     if (routePath.current == null) {
                         routePart.routeData.set(RouteData.actionKey, action);
                         routePart.routeData.set(RouteData.controllerKey, controller);
+                        (action as any).$route = nextNode;
                     }
 
                     nextNode = this.addNode(currentNode as IRouteNode, nextNode as RouteNode);

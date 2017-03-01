@@ -2,7 +2,7 @@
     export class RouteNode implements IRouteNode {
         children = Array<RouteNode>();
 
-        constructor(public part: IRoutePart) {
+        constructor(public parent: IRouteNode, public part: IRoutePart) {
         }
 
         toString(): string {
