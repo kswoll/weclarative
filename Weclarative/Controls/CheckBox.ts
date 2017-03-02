@@ -5,7 +5,7 @@
         private _onChanged: EventHandler<void>;
 
         private label: HTMLElement;
-        private checkbox: HTMLElement;
+        private checkbox: HTMLInputElement;
 
         constructor(text = "") {
             super();
@@ -25,7 +25,7 @@
             const span = document.createElement("span");
             this.checkbox = document.createElement("input");
             this.checkbox.setAttribute("type", "checkbox");
-            this.checkbox.addEventListener("change", this.onJsChanged);
+            this.checkbox.addEventListener("change", evt => this.onJsChanged(evt));
             span.appendChild(this.checkbox);
             span.appendChild(this.label);
 
@@ -44,7 +44,7 @@
         }
 
         get isChecked() {
-            return this.checkbox.hasAttribute("checked");
+            return this.checkbox.checked;
         }
         set isChecked(value: boolean) {
             if (value)
