@@ -2,7 +2,7 @@
     import EventHandler = Utils.EventHandler;
 
     export class CheckBox extends Control {
-        public readonly onChanged = new EventHandler<void>();
+        private _onChanged: EventHandler<void>;
 
         private label: HTMLElement;
         private checkbox: HTMLElement;
@@ -32,9 +32,15 @@
             return span;
         }
 
+        get onChanged() {
+            if (!this._onChanged)
+                this._onChanged = new EventHandler<void>();
+            return this._onChanged;
+        }
+
         onJsChanged(evt: Event) {
-            if (this.onChanged != null)
-                this.onChanged.trigger();
+            if (this._onChanged)
+                this._onChanged.trigger();
         }
 
         get isChecked() {

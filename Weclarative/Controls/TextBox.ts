@@ -3,7 +3,7 @@
     import EventHandler = Utils.EventHandler;
 
     export class TextBox extends Control {
-        private onChanged: IEventHandler<void>;
+        private _onChanged: EventHandler<void>;
         private inputElement: HTMLInputElement;
 
         constructor() {
@@ -56,9 +56,15 @@
             return textBox;
         }
 
+        get onChanged() {
+            if (!this._onChanged)
+                this._onChanged = new EventHandler<void>();
+            return this._onChanged;
+        }
+
         private onJsChanged(evt: Event) {
-            if (this.onChanged)
-                (this.onChanged as EventHandler<void>).trigger();
+            if (this._onChanged)
+                (this._onChanged as EventHandler<void>).trigger();
         }
 
         get text() {

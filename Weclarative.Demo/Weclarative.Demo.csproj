@@ -45,6 +45,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="app.css" />
     <Content Include="coffee-highlight.jpg" />
     <Content Include="coffee.jpg" />
     <Content Include="font-awesome-4.7.0\css\font-awesome.css" />

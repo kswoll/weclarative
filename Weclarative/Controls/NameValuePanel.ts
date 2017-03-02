@@ -36,8 +36,10 @@
                 control.associatedLabel = lastControl;
         }
 
-        addPair(name: Control, value: Control) {
-            this.add(name);
+        addPair(name: Control | string, value: Control) {
+            if (typeof (name) == typeof (""))
+                name = new InlineText(name as string);
+            this.add(name as Control);
             this.add(value);
             value.style.width = "100%";
         }

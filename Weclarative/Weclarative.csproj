@@ -32,6 +32,7 @@
     <TypeScriptCompile Include="Controls\Button.ts" />
     <TypeScriptCompile Include="Controls\CenteredPanel.ts" />
     <TypeScriptCompile Include="Controls\CheckBox.ts" />
+    <TypeScriptCompile Include="Controls\ContentPanel.ts" />
     <TypeScriptCompile Include="Controls\Control.ts" />
     <TypeScriptCompile Include="Controls\FillPanel.ts" />
     <TypeScriptCompile Include="Controls\FixedHeaderPanel.ts" />
@@ -55,6 +56,7 @@
     <TypeScriptCompile Include="Controls\ListView.ts" />
     <TypeScriptCompile Include="Controls\MouseTrackingEngine.ts" />
     <TypeScriptCompile Include="Controls\NameValuePanel.ts" />
+    <TypeScriptCompile Include="Controls\Panels.ts" />
     <TypeScriptCompile Include="Controls\SidePanel.ts" />
     <TypeScriptCompile Include="Controls\SlideDownHeaderPanel.ts" />
     <TypeScriptCompile Include="Controls\TablePanel.ts" />

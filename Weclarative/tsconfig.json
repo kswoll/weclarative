@@ -76,6 +76,8 @@
     "Controls/VerticalPanel.ts",
     "Controls/AutoCompleteTextBox.ts",
     "Controls/FixedHeaderPanel.ts",
+    "Controls/ContentPanel.ts",
+    "Controls/Panels.ts",
     "Controller.ts",
     "ControllerRegistry.ts",
     "LayoutType.ts",

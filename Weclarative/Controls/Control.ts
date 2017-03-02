@@ -2,7 +2,7 @@
     import EventHandler = Utils.EventHandler;
     import IEventHandler = Utils.IEventHandler;
 
-    export abstract class Control {
+    export class Control {
         private static mouseTrackingEngine = new MouseTrackingEngine();
 
         public tagName: string;
@@ -23,7 +23,7 @@
         private _onMouseDown: EventHandler<MouseEvent> | null;
         private _onWheel: EventHandler<MouseEvent> | null;
 
-        protected constructor(tagName: string | null = "div", node: HTMLElement | null = null) {
+        constructor(tagName: string | null = "div", node: HTMLElement | null = null) {
             this.tagName = tagName as string;
             this.children = new Array<Control>();
             if (node != null) {
