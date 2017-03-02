@@ -30,7 +30,7 @@ optional.
     <li>The width of the left and right are determined by the preferred width of their contents.</li>
     <li>The center panel will take up the remaining space.</li>
 </ul>
-For the purposes of calculating the preferred size of the SidePanel itself, the preferred size of the centered 
+For the purposes of calculating the preferred size of the SidePanel itself, the preferred size of the centered
 panel will be factored.
             `));
             mainPanel.add(summary);
@@ -76,11 +76,26 @@ panel will be factored.
             showTop.onChanged.add(() => {
                 demoSidePanel.top = showTop.isChecked ? top : null;
             });
-
             const showLeft = new CheckBox();
+            showLeft.isChecked = true;
+            showLeft.onChanged.add(() => {
+                demoSidePanel.left = showLeft.isChecked ? left : null;
+            });
             const showCenter = new CheckBox();
+            showCenter.isChecked = true;
+            showCenter.onChanged.add(() => {
+                demoSidePanel.center = showCenter.isChecked ? center : null;
+            });
             const showRight = new CheckBox();
+            showRight.isChecked = true;
+            showRight.onChanged.add(() => {
+                demoSidePanel.right = showRight.isChecked ? right : null;
+            });
             const showBottom = new CheckBox();
+            showBottom.isChecked = true;
+            showBottom.onChanged.add(() => {
+                demoSidePanel.bottom = showBottom.isChecked ? bottom : null;
+            });
 
             const footer = new TitledPanel("Properties");
             const properties = new NameValuePanel();

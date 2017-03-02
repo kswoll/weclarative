@@ -47,10 +47,7 @@
             return this.checkbox.checked;
         }
         set isChecked(value: boolean) {
-            if (value)
-                this.checkbox.setAttribute("checked", "checked");
-            else
-                this.checkbox.removeAttribute("checked");
+            this.checkbox.checked = value;
         }
     }
 }

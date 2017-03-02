@@ -43,9 +43,6 @@
                     Utils.Elements.insertAfter(this.node, this.middleRow as HTMLElement, this.topRow);
                 else
                     Utils.Elements.prepend(this.node, this.middleRow as HTMLElement);
-
-                if (this.spacing != 0 && this.topRow != null)
-                    (this.topCellContent as HTMLElement).style.paddingBottom = this.spacing + "px";
             }
             return this.middleRow as HTMLElement;
         }
@@ -70,10 +67,6 @@
                 topCellContent.style.height = "100%";
                 topCell.appendChild(topCellContent);
 
-                if (this.spacing != 0 && (this.middleRow != null || this.bottomRow != null)) {
-                    topCellContent.style.paddingBottom = this.spacing + "px";
-                }
-
                 this.topCell = topCell;
                 this.topCellContent = topCellContent;
             }
@@ -90,10 +83,6 @@
                 bottomCellContent.style.width = "100%";
                 bottomCellContent.style.height = "100%";
                 bottomCell.appendChild(bottomCellContent);
-
-                if (this.spacing != 0 && this.middleRow != null) {
-                    bottomCellContent.style.paddingTop = this.spacing + "px";
-                }
 
                 this.bottomCell = bottomCell;
                 this.bottomCellContent = bottomCellContent;
@@ -121,9 +110,6 @@
                 leftCellContent.style.width = "100%";
                 leftCellContent.style.height = "100%";
                 leftCell.appendChild(leftCellContent);
-
-                if (this.spacing != 0 && (this.centerCell != null || this.rightCell != null))
-                    leftCellContent.style.paddingLeft = this.spacing + "px";
 
                 this.leftCell = leftCell;
                 this.leftCellContent = leftCellContent;
@@ -165,10 +151,6 @@
                 rightCellContent.style.height = "100%";
                 rightCell.appendChild(rightCellContent);
 
-                if (this.spacing != 0 && this.middleRow != null) {
-                    rightCellContent.style.paddingLeft = this.spacing + "px";
-                }
-
                 this.rightCell = rightCell;
                 this.rightCellContent = rightCellContent;
             }
@@ -182,11 +164,8 @@
         }
 
         private removeMiddleRow() {
-            if (this.middleRow != null) {
+            if (this.middleRow != null)
                 this.middleRow.remove();
-                if (this.topCell != null && this.bottom == null)
-                    this.topCell.style.paddingBottom = "";
-            }
             this.middleRow = null;
         }
 
@@ -197,16 +176,18 @@
         }
 
         private removeMiddleRowIfEmpty() {
-            if (this.leftCell == null && this.centerCell == null && this.rightCell == null)
+            if (this.leftCell == null && this.centerCell == null && this.rightCell == null) {
                 this.removeMiddleRow();
+            }
         }
 
         private removeTopCell() {
-            if (this.topCell != null)
+            if (this.topCell != null) {
                 this.topCell.remove();
-            this.topCell = null;
-            this.topCellContent = null;
-            this.removeTopRow();
+                this.topCell = null;
+                this.topCellContent = null;
+                this.removeTopRow();
+            }
         }
 
         private removeBottomCell() {
@@ -225,11 +206,8 @@
         }
 
         private removeCenterCell() {
-            if (this.centerCell != null) {
+            if (this.centerCell)
                 this.centerCell.remove();
-                if (this.leftCell != null && this.right == null)
-                    this.leftCell.style.paddingRight = "";
-            }
             this.centerCell = null;
             this.centerCellContent = null;
             this.removeMiddleRowIfEmpty();
@@ -256,6 +234,7 @@
                 this.getTopCell().appendChild(value.node);
                 this.addChild(value);
             }
+            this.recalculatePadding();
         }
 
         get bottom() {
@@ -271,6 +250,7 @@
                 this.getBottomCell().appendChild(value.node);
                 this.addChild(value);
             }
+            this.recalculatePadding();
         }
 
         get left() {
@@ -286,6 +266,7 @@
                 this.getLeftCell().appendChild(value.node);
                 this.addChild(value);
             }
+            this.recalculatePadding();
         }
 
         get center() {
@@ -301,6 +282,7 @@
                 this.getCenterCell().appendChild(value.node);
                 this.addChild(value);
             }
+            this.recalculatePadding();
         }
 
         get right() {
@@ -316,6 +298,7 @@
                 this.getRightCell().appendChild(value.node);
                 this.addChild(value);
             }
+            this.recalculatePadding();
         }
 
         get spacing() {
@@ -323,14 +306,30 @@
         }
         set spacing(value: number) {
             this._spacing = value;
-            if (this.top != null && (this.left != null || this.center != null || this.right != null || this.bottom != null))
+            this.recalculatePadding();
+        }
+
+        recalculatePadding() {
+            const value = this.spacing;
+            if (this.top && (this.left || this.center || this.right || this.bottom))
                 this.getTopCell().style.paddingBottom = value + "px";
-            if (this.left != null && (this.center != null || this.right != null))
+            else if (this.topCell)
+                this.getTopCell().style.paddingBottom = "";
+
+            if (this.left != null && (this.center || this.right))
                 this.getLeftCell().style.paddingRight = value + "px";
-            if (this.right != null && this.center != null)
+            else if (this.leftCell)
+                this.getLeftCell().style.paddingRight = "";
+
+            if (this.right && this.center)
                 this.getRightCell().style.paddingLeft = value + "px";
-            if (this.bottom != null && (this.left != null || this.center != null || this.right != null))
+            else if (this.rightCell)
+                this.getRightCell().style.paddingLeft = "";
+
+            if (this.bottom && (this.left || this.center || this.right))
                 this.getBottomCell().style.paddingTop = value + "px";
+            else if (this.bottomCell)
+                this.getBottomCell().style.paddingTop = "";
         }
     }
 }
