@@ -42,19 +42,12 @@
         private _content: Control | null;
         private _horizontalAlignment: HorizontalAlignment;
         private _verticalAlignemnt: VerticalAlignment;
-        private cell: HTMLElement;
-        private cellDiv: HTMLElement;
 
         constructor(content: Control, horizontalAlignment: HorizontalAlignment, verticalAlignment: VerticalAlignment) {
             super();
 
             this.node.style.display = "flex";
             this.node.style.flexDirection = "row";
-            this.node.style.justifyContent = "center";
-            this.node.style.alignItems = "center";
-            this.cellDiv = document.createElement("div");
-            this.cellDiv.style.flex = "1 1 auto";
-            this.node.appendChild(this.cellDiv);
 
             this.content = content;
             this.horizontalAlignment = horizontalAlignment;
@@ -78,49 +71,38 @@
         }
 
         updateAlignment() {
-            switch (this.horizontalAlignment) {
-                case HorizontalAlignment.Left:
-                    this.cell.setAttribute("align", "left");
-                    this.cellDiv.style.width = "";
-                    this.cell.style.width = "";
-                    break;
-                case HorizontalAlignment.Center:
-                    this.cell.setAttribute("align", "center");
-                    this.cellDiv.style.width = "";
-                    this.cell.style.width = "";
-                    break;
-                case HorizontalAlignment.Right:
-                    this.cell.setAttribute("align", "right");
-                    this.cellDiv.style.width = "";
-                    this.cell.style.width = "";
-                    break;
-                case HorizontalAlignment.Fill:
-                    this.cellDiv.style.width = "100%";
-                    this.cell.style.width = "100%";
-                    this.cell.removeAttribute("align");
-                    break;
-            }
-            switch (this.verticalAlignment) {
-                case VerticalAlignment.Top:
-                    this.cell.style.verticalAlign = "top";
-                    this.cell.style.height = "";
-                    this.cellDiv.style.height = "";
-                    break;
-                case VerticalAlignment.Middle:
-                    this.cell.style.verticalAlign = "middle";
-                    this.cell.style.height = "";
-                    this.cellDiv.style.height = "";
-                    break;
-                case VerticalAlignment.Bottom:
-                    this.cell.style.verticalAlign = "bottom";
-                    this.cell.style.height = "";
-                    this.cellDiv.style.height = "";
-                    break;
-                case VerticalAlignment.Fill:
-                    this.cell.style.verticalAlign = "";
-                    this.cell.style.height = "100%";
-                    this.cellDiv.style.height = "100%";
-                    break;
+            if (this.content) {
+                switch (this.horizontalAlignment) {
+                    case HorizontalAlignment.Left:
+                        this.node.style.justifyContent = "flex-start";
+                        this.content.node.style.width = "";
+                        break;
+                    case HorizontalAlignment.Center:
+                        this.node.style.justifyContent = "center";
+                        this.content.node.style.width = "";
+                        break;
+                    case HorizontalAlignment.Right:
+                        this.node.style.justifyContent = "flex-end";
+                        this.content.node.style.width = "";
+                        break;
+                    case HorizontalAlignment.Fill:
+                        this.content.style.width = "100%";
+                        break;
+                }
+                switch (this.verticalAlignment) {
+                    case VerticalAlignment.Top:
+                        this.node.style.alignItems = "flex-start";
+                        break;
+                    case VerticalAlignment.Middle:
+                        this.node.style.alignItems = "center";
+                        break;
+                    case VerticalAlignment.Bottom:
+                        this.node.style.alignItems = "flex-end";
+                        break;
+                    case VerticalAlignment.Fill:
+                        this.node.style.alignItems = "stretch";
+                        break;
+                }                
             }
         }
 
@@ -134,7 +116,7 @@
             }
             this._content = value;
             if (value != null) {
-                this.cellDiv.appendChild(value.node);
+                this.node.appendChild(value.node);
                 this.addChild(value);
             }
         }
