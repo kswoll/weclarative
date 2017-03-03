@@ -1,9 +1,16 @@
 ﻿namespace Weclarative.Controls {
     export class ContentPanel extends Control {
         private _content: Control | null;
+        private row: HTMLElement;
+        private cell: HTMLElement;
 
         constructor(content: Control) {
-            super();
+            super("table");
+            this.row = document.createElement("tr");
+            this.cell = document.createElement("td");
+            this.node.appendChild(this.row);
+            this.row.appendChild(this.cell);
+
             this.content = content;
         }
 
@@ -17,7 +24,7 @@
             }
             this._content = value;
             if (value) {
-                this.node.appendChild(value.node);
+                this.cell.appendChild(value.node);
                 this.addChild(value);
             }
         }

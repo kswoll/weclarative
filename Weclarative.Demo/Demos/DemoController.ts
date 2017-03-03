@@ -9,6 +9,7 @@
         registerRoutes(registrar: (route: string, action: Function) => void) {
             registrar("", this.home);
             registrar("sidePanel", this.sidePanel);
+            registrar("alignmentPanel", this.alignmentPanel);
         }
 
         home() {
@@ -17,6 +18,10 @@
 
         sidePanel() {
             return new Views.SidePanelView();
+        }
+
+        alignmentPanel() {
+            return new Views.AlignmentPanelView();
         }
     }
 }

@@ -8,13 +8,19 @@
         private readonly valueProvider: (item: T) => string;
         private readonly selectElement: HTMLSelectElement;
 
-        private onChanged: IEventHandler<void>;
+        private _onChanged: EventHandler<void> | null;
 
         constructor(textProvider?: (item: T) => string, valueProvider?: (item: T) => string) {
             super();
             this.textProvider = textProvider || ((x: T) => x.toString());
             this.valueProvider = valueProvider || ((x: T) => x.toString());
             this.selectElement = this.node as HTMLSelectElement;
+        }
+
+        get onChanged(): IEventHandler<void> {
+            if (!this._onChanged)
+                this._onChanged = new EventHandler<void>();
+            return this._onChanged;
         }
 
         get isDropDown() {
@@ -58,8 +64,8 @@
         }
 
         onJsChanged(evt: Event) {
-            if (this.onChanged)
-                (this.onChanged as EventHandler<void>).trigger();
+            if (this._onChanged)
+                (this._onChanged as EventHandler<void>).trigger();
         }
 
         get isMultiselect() {
