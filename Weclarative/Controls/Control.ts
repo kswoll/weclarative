@@ -95,7 +95,7 @@
             (this._onClick as EventHandler<MouseEvent>).trigger(evt);
         }
 
-        get onMouseEntered(): IEventHandler<MouseEvent> {
+        get onMouseEntered(): IEventHandler<Event> {
             if (this._onMouseEntered == null) {
                 this._onMouseEntered = new EventHandler<MouseEvent>();
                 this.node.addEventListener("mouseentered", (evt) => this.onJsMouseEntered(evt));
@@ -107,7 +107,7 @@
             (this._onMouseEntered as EventHandler<Event>).trigger(evt);
         }
 
-        get onMouseExited(): IEventHandler<MouseEvent> {
+        get onMouseExited(): IEventHandler<Event> {
             if (this._onMouseExited == null) {
                 this._onMouseExited = new EventHandler<Event>();
                 this.node.addEventListener("mouseexited", evt => this.onJsMouseExited(evt));

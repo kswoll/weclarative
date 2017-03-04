@@ -7,8 +7,10 @@
     import VerticalAlignment = Weclarative.Controls.VerticalAlignment;
     import NameValuePanel = Weclarative.Controls.NameValuePanel;
     import TitledPanel = Weclarative.Controls.TitledPanel;
-    import ListBox = Weclarative.Controls.ListBox;
     import ContentPanel = Weclarative.Controls.ContentPanel;
+    import RadioGroup = Weclarative.Controls.RadioGroup;
+    import RadioButton = Weclarative.Controls.RadioButton;
+    import Enums = Weclarative.Utils.Enums;
 
     export class AlignmentPanelView extends BaseView {
         constructor() {
@@ -44,24 +46,24 @@ and "verticalAlignment".
 
             mainPanel.add(container);
 
-            const horizontalAlignment = new ListBox<HorizontalAlignment>(x => HorizontalAlignment[x]);
-            horizontalAlignment.isDropDown = true;
-            horizontalAlignment.add(HorizontalAlignment.Left);
-            horizontalAlignment.add(HorizontalAlignment.Right);
-            horizontalAlignment.add(HorizontalAlignment.Center);
-            horizontalAlignment.add(HorizontalAlignment.Fill);
-            horizontalAlignment.onChanged.add(() => {
-                alignmentPanel.horizontalAlignment = horizontalAlignment.selectedItem as HorizontalAlignment;
+            const horizontalAlignment = new HorizontalPanel(10);
+            const horizontalAlignmentGroup = new RadioGroup();
+            for (const alignment of Enums.getValues(HorizontalAlignment)) {
+                horizontalAlignment.add(new RadioButton(alignment, horizontalAlignmentGroup, HorizontalAlignment[alignment]));
+            }
+            horizontalAlignmentGroup.selectedValue = HorizontalAlignment.Left;
+            horizontalAlignmentGroup.onChanged.add(button => {
+                alignmentPanel.horizontalAlignment = button.value as HorizontalAlignment;
             });
 
-            const verticalAlignment = new ListBox<VerticalAlignment>(x => VerticalAlignment[x]);
-            verticalAlignment.isDropDown = true;
-            verticalAlignment.add(VerticalAlignment.Top);
-            verticalAlignment.add(VerticalAlignment.Bottom);
-            verticalAlignment.add(VerticalAlignment.Middle);
-            verticalAlignment.add(VerticalAlignment.Fill);
-            verticalAlignment.onChanged.add(() => {
-                alignmentPanel.verticalAlignment = verticalAlignment.selectedItem as VerticalAlignment;
+            const verticalAlignment = new HorizontalPanel(10);
+            const verticalAlignmentGroup = new RadioGroup();
+            for (const alignment of Enums.getValues(VerticalAlignment)) {
+                verticalAlignment.add(new RadioButton(alignment, verticalAlignmentGroup, VerticalAlignment[alignment]));
+            }
+            verticalAlignmentGroup.selectedValue = VerticalAlignment.Top;
+            verticalAlignmentGroup.onChanged.add(button => {
+                alignmentPanel.verticalAlignment = button.value as VerticalAlignment;
             });
 
             const footer = new TitledPanel("Properties");

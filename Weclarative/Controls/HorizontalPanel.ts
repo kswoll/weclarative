@@ -1,14 +1,13 @@
 ﻿namespace Weclarative.Controls {
     export class HorizontalPanel extends Control {
-        defaultAlignment = VerticalAlignment.Fill;
-
         private row: HTMLElement;
         private firstSpacer: HTMLElement | null;
         private lastSpacer: HTMLElement | null;
         private _horizontalAlignment: HorizontalAlignment;
 
-        constructor(public spacing = 0) {
+        constructor(public spacing = 0, horizontalAlignment = HorizontalAlignment.Left, public defaultAlignment = VerticalAlignment.Fill) {
             super();
+            this.horizontalAlignment = horizontalAlignment;
         }
 
         get horizontalAlignment() {
@@ -69,6 +68,7 @@
             const cell = document.createElement("td");
             const div = document.createElement("div");
             cell.appendChild(div);
+            cell.style.paddingRight = this.spacing + "px";
 
             switch (alignment) {
                 case VerticalAlignment.Fill:

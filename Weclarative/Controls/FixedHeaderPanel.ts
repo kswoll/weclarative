@@ -49,7 +49,7 @@
 
         fixHeight() {
             const header = this.header as Control;
-            this.contentNode.style.paddingTop = header.node.offsetHeight + "px";
+            this.contentNode.style.paddingTop = (header.node.offsetHeight - 1) + "px";
         }
 
         get content() {

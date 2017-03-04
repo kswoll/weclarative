@@ -87,22 +87,27 @@
                         break;
                     case HorizontalAlignment.Fill:
                         this.content.style.width = "100%";
+                        this.node.style.justifyContent = "";
                         break;
                 }
                 switch (this.verticalAlignment) {
                     case VerticalAlignment.Top:
                         this.node.style.alignItems = "flex-start";
+                        this.content.style.height = "";
                         break;
                     case VerticalAlignment.Middle:
                         this.node.style.alignItems = "center";
+                        this.content.style.height = "";
                         break;
                     case VerticalAlignment.Bottom:
                         this.node.style.alignItems = "flex-end";
+                        this.content.style.height = "";
                         break;
                     case VerticalAlignment.Fill:
-                        this.node.style.alignItems = "stretch";
+                        this.content.style.height = "100%";
+                        this.node.style.alignItems = "";
                         break;
-                }                
+                }
             }
         }
 

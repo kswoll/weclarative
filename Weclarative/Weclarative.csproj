@@ -57,6 +57,8 @@
     <TypeScriptCompile Include="Controls\MouseTrackingEngine.ts" />
     <TypeScriptCompile Include="Controls\NameValuePanel.ts" />
     <TypeScriptCompile Include="Controls\Panels.ts" />
+    <TypeScriptCompile Include="Controls\RadioButton.ts" />
+    <TypeScriptCompile Include="Controls\RadioGroup.ts" />
     <TypeScriptCompile Include="Controls\SidePanel.ts" />
     <TypeScriptCompile Include="Controls\SlideDownHeaderPanel.ts" />
     <TypeScriptCompile Include="Controls\TablePanel.ts" />
@@ -76,6 +78,7 @@
     <TypeScriptCompile Include="MvcApplication.ts" />
     <TypeScriptCompile Include="Utils\Animator.ts" />
     <TypeScriptCompile Include="Utils\Elements.ts" />
+    <TypeScriptCompile Include="Utils\Enums.ts" />
     <TypeScriptCompile Include="Utils\Promises.ts" />
     <TypeScriptCompile Include="ViewRequest.ts" />
     <TypeScriptCompile Include="Routes\IRouteNode.ts" />

@@ -7,11 +7,11 @@
     export class EventHandler<T> implements IEventHandler<T> {
         private handlers: { (data?: T): void; }[] = [];
 
-        add(handler: { (data?: T): void }) {
+        add(handler: { (data: T): void }) {
             this.handlers.push(handler);
         }
 
-        remove(handler: { (data?: T): void }) {
+        remove(handler: { (data: T): void }) {
             this.handlers = this.handlers.filter(x => x != handler);
         }
 
