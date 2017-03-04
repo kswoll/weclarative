@@ -53,6 +53,8 @@
     <Content Include="font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="font-awesome-4.7.0\HELP-US-OUT.txt" />
     <Content Include="index.html" />
+    <Content Include="markdown-it.js" />
+    <Content Include="markdown-it.min.js" />
     <Content Include="packages.config" />
     <Content Include="reset.css" />
     <Content Include="weclarative-demo.js" />
@@ -135,6 +137,7 @@
     <TypeScriptCompile Include="Demos\Views\DemoLayout.ts" />
     <TypeScriptCompile Include="Demos\Views\DemoSidebar.ts" />
     <TypeScriptCompile Include="Demos\Views\HomeView.ts" />
+    <TypeScriptCompile Include="Demos\Views\HorizontalPanelView.ts" />
     <TypeScriptCompile Include="Demos\Views\SidePanelView.ts" />
     <TypeScriptCompile Include="Tests\TestController.ts" />
     <TypeScriptCompile Include="Weclarative\Controller.ts" />

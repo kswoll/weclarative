@@ -1,89 +1,114 @@
 ﻿namespace Weclarative.Controls {
+    /**
+     * A panel that lays out its children horizontally in a single row, with control over
+     * spacing and alignment.
+     */
     export class HorizontalPanel extends Control {
-        private row: HTMLElement;
-        private firstSpacer: HTMLElement | null;
-        private lastSpacer: HTMLElement | null;
         private _horizontalAlignment: HorizontalAlignment;
+        private _verticalAlignment: VerticalAlignment;
 
-        constructor(public spacing = 0, horizontalAlignment = HorizontalAlignment.Left, public defaultAlignment = VerticalAlignment.Fill) {
-            super();
+        /**
+         * Creates a new HorizontalPanel optionally specifying the spacing and alignment.
+         * @param spacing The amount of space between each child
+         * @param horizontalAlignment How the panel aligns all the children as a whole.
+         * @param verticalAlignment The default vertical alignment for each child.  This can be overridden on a
+         * per-child basis when a control is being added.
+         */
+        constructor(public spacing = 0, horizontalAlignment = HorizontalAlignment.Left, verticalAlignment = VerticalAlignment.Top) {
+            super("div");
+
+            this.node.style.display = "flex";
+            this.node.style.flexDirection = "row";
+
             this.horizontalAlignment = horizontalAlignment;
+            this.verticalAlignment = verticalAlignment;
         }
 
         get horizontalAlignment() {
-            if (this.firstSpacer == null && this.lastSpacer == null)
-                return HorizontalAlignment.Fill;
-            else if (this.firstSpacer != null && this.lastSpacer != null)
-                return HorizontalAlignment.Center;
-            else if (this.firstSpacer != null)
-                return HorizontalAlignment.Right;
-            else if (this.lastSpacer != null)
-                return HorizontalAlignment.Left;
-            else throw new Error();
+            return this._horizontalAlignment;
         }
-
         set horizontalAlignment(value: HorizontalAlignment) {
-            if (this.firstSpacer != null) {
-                this.firstSpacer.remove();
-                this.firstSpacer = null;
-            }
-            if (this.lastSpacer != null) {
-                this.lastSpacer.remove();
-                this.lastSpacer = null;
-            }
+            this._horizontalAlignment = value;
             switch (value) {
                 case HorizontalAlignment.Fill:
+                    this.node.style.justifyContent = "";
+                    for (let i = 0; i < this.count; i++) {
+                        const child = this.getChild(i);
+                        const div = child.node.parentElement as HTMLElement;
+                        div.style.flexGrow = "1";
+                    }
                     break;
                 case HorizontalAlignment.Center:
-                    this.firstSpacer = document.createElement("td");
-                    (this.firstSpacer as HTMLElement).style.width = "50%";
-                    Utils.Elements.prepend(this.row, this.firstSpacer as HTMLElement);
-                    this.lastSpacer = document.createElement("td");
-                    (this.lastSpacer as HTMLElement).style.width = "50%";
-                    this.row.appendChild(this.lastSpacer as HTMLElement);
+                    this.node.style.justifyContent = "center";
                     break;
                 case HorizontalAlignment.Left:
-                    this.lastSpacer = document.createElement("td");
-                    (this.lastSpacer as HTMLElement).style.width = "50%";
-                    this.row.appendChild(this.lastSpacer as HTMLElement);
+                    this.node.style.justifyContent = "flex-start";
                     break;
                 case HorizontalAlignment.Right:
-                    this.firstSpacer = document.createElement("td");
-                    (this.firstSpacer as HTMLElement).style.width = "50%";
-                    Utils.Elements.prepend(this.row, this.firstSpacer as HTMLElement);
+                    this.node.style.justifyContent = "flex-end";
                     break;
             }
         }
 
-        createNode() {
-            const table = document.createElement("table");
-            this.row = document.createElement("tr");
-            table.appendChild(this.row);
-            return table;
+        get verticalAlignment() {
+            return this._verticalAlignment;
+        }
+        set verticalAlignment(value: VerticalAlignment) {
+            this._verticalAlignment = value;
+            switch (value) {
+                case VerticalAlignment.Top:
+                    this.node.style.alignItems = "flex-start";
+                    break;
+                case VerticalAlignment.Middle:
+                    this.node.style.alignItems = "center";
+                    break;
+                case VerticalAlignment.Bottom:
+                    this.node.style.alignItems = "flex-end";
+                    break;
+                case VerticalAlignment.Fill:
+                    this.node.style.alignItems = "stretch";
+                    break;
+            }
         }
 
+        /**
+         * Append a child to the end of this panel.
+         * @param child The child to add
+         * @param alignment How the child should be positioned vertically in its slot
+         * @param spaceBefore How much space to add (in addition to the spacing set for the entire panel)
+         * in front of this child.
+         */
         add(child: Control, alignment?: VerticalAlignment, spaceBefore = 0) {
             this.addChild(child);
 
-            const cell = document.createElement("td");
-            const div = document.createElement("div");
-            cell.appendChild(div);
-            cell.style.paddingRight = this.spacing + "px";
+            const previousChild = this.node.lastElementChild as HTMLElement;
+            if (previousChild)
+                previousChild.style.paddingRight = this.spacing + "px";
 
-            switch (alignment) {
-                case VerticalAlignment.Fill:
-                    child.node.style.height = "100%";
-                    div.style.height = "100%";
+            const div = document.createElement("div");
+
+            switch (this.horizontalAlignment) {
+                case HorizontalAlignment.Fill:
+                    div.style.flexGrow = "1";
                     break;
-                case VerticalAlignment.Top:
-                    cell.style.verticalAlign = "top";
-                    break;
-                case VerticalAlignment.Middle:
-                    cell.style.verticalAlign = "middle";
-                    break;
-                case VerticalAlignment.Bottom:
-                    cell.style.verticalAlign = "bottom";
-                    break;
+            }
+
+            if (alignment) {
+                const resolvedAlignment = alignment as VerticalAlignment;
+                switch (resolvedAlignment) {
+                    case VerticalAlignment.Fill:
+                        div.style.alignSelf = "stretch";
+                        break;
+                    case VerticalAlignment.Top:
+                        div.style.alignSelf = "flex-start";
+                        break;
+                    case VerticalAlignment.Middle:
+                        div.style.alignSelf = "center";
+                        break;
+                    case VerticalAlignment.Bottom:
+                        div.style.alignSelf = "flex-end";
+                        break;
+                }                
             }
 
             if (spaceBefore != 0) {
@@ -92,10 +117,19 @@
 
             div.appendChild(child.node);
 
-            if (this.lastSpacer != null)
-                this.row.insertBefore(cell, this.lastSpacer);
-            else
-                this.row.appendChild(cell);
+            this.node.appendChild(div);
+        }
+
+        remove(child: Control) {
+            const cell = child.node.parentElement as HTMLElement;
+            if (!cell.nextElementSibling) {
+                const previousCell = cell.previousElementSibling as HTMLElement;
+                previousCell.style.paddingRight = "";
+            }
+
+            child.node.remove();
+            cell.remove();
+            this.removeChild(child);
         }
     }
 }

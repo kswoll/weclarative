@@ -10,6 +10,7 @@
             registrar("", this.home);
             registrar("sidePanel", this.sidePanel);
             registrar("alignmentPanel", this.alignmentPanel);
+            registrar("horizontalPanel", this.horizontalPanel);
         }
 
         home() {
@@ -22,6 +23,10 @@
 
         alignmentPanel() {
             return new Views.AlignmentPanelView();
+        }
+
+        horizontalPanel() {
+            return new Views.HorizontalPanelView();
         }
     }
 }

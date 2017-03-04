@@ -8,40 +8,65 @@
     import NameValuePanel = Weclarative.Controls.NameValuePanel;
     import TitledPanel = Weclarative.Controls.TitledPanel;
     import ContentPanel = Weclarative.Controls.ContentPanel;
+    import MarkDown = Weclarative.Controls.MarkDown;
     import RadioGroup = Weclarative.Controls.RadioGroup;
     import RadioButton = Weclarative.Controls.RadioButton;
     import Enums = Weclarative.Utils.Enums;
+    import FillPanel = Weclarative.Controls.FillPanel;
 
-    export class AlignmentPanelView extends BaseView {
+    export class HorizontalPanelView extends BaseView {
         constructor() {
             super();
 
-            this.title = "Weclarative Demo - AlignmentPanel";
+            this.title = "Weclarative Demo - HorizontalPanel";
 
             const mainPanel = new VerticalPanel();
             mainPanel.style.padding = "10px";
             mainPanel.spacing = 10;
             mainPanel.style.maxWidth = "800px";
-            const summary = AlignmentPanel.Left(new Html(`
-The AlignmentPanel allows you to arrange its content (a Control) along the top-left, top, top-right, right,
-bottom-right, bottom, bottom-left, and left.  This is controlled by two alignment properties, "horizontalAlignment"
-and "verticalAlignment".
-<ul>
-    <li>Setting the horizontal alignment to left and the vertical alignment to top, will align the content
-        along the top-left, with the remaining space (if any) left empty.</li>
-    <li>Setting the horizontal alignment to right, and the vertial alignment to fill, the content will take
-        up all the space on the right, with the width determined by the content.</li>
-    <li>In contrast, setting the vertial alignment to middle, will align the content along the right as well, but
-        but it's height will be determined by what the content prefers.
-</ul>
+            const summary = AlignmentPanel.Left(new MarkDown(`
+The \`HorizontalPanel\` lays out its children in a single row.
+
+* If the children do not take up all the space available, the \`horizontalAlignment\` property controls
+  whether they are all to the left, centered, etc. 
+* The \`spacing\` property allows you to control how much space there is between controls. This space can also
+  be controlled on an individual basis when adding a control.
+* Finally, each child, if it doesn't take up the entire available vertical space, can be aligned based on the 
+  global \`verticalAlignment\`, which defaults to fill.  This too can be controlled individually when adding a 
+  child.
+
+When you select \`Fill\` for the \`verticalAlignment\`, you will see a light green color representing the area
+of the child within the horizontal panel, in contrast to the light red that indicates the content itself. The 
+idea here is that if your child isn't one that expands to fill its contents, it will keep its default size.
+Here the \`TextBlock\` is set up in an \`AlignmentPanel\` to the top so you can see it would only take its
+preferred size.  However, the \`AlignmentPanel\` is set up in a \`FillPanel\`, which is why it takes up the 
+entire height.
             `));
             mainPanel.add(summary);
 
+/*
             const content = new ContentPanel(new TextBlock("Content"));
             content.style.backgroundColor = "#FFDDDD";
             content.style.padding = "10px";
-            const alignmentPanel = new AlignmentPanel(content, HorizontalAlignment.Left, VerticalAlignment.Top);
-            const container = new FixedPanel(alignmentPanel, "400px", "400px");
+*/
+            const horizontalPanel = new HorizontalPanel();
+
+            let itemNameIndex = 1;
+            const add = () => {
+                const content = new TextBlock(`Item ${itemNameIndex++}`);
+                content.style.backgroundColor = "#FFDDDD";
+                content.style.padding = "10px";
+
+                const panel = AlignmentPanel.Top(content);
+                panel.node.style.backgroundColor = "#DDFFDD";
+
+                horizontalPanel.add(new FillPanel(panel));
+            };
+            add();
+            add();
+            add();
+
+            const container = new FixedPanel(horizontalPanel, "100%", "400px");
             container.style.backgroundColor = "#DDDDFF";
 
             mainPanel.add(container);
@@ -53,7 +78,7 @@ and "verticalAlignment".
             }
             horizontalAlignmentGroup.selectedValue = HorizontalAlignment.Left;
             horizontalAlignmentGroup.onChanged.add(button => {
-                alignmentPanel.horizontalAlignment = button.value as HorizontalAlignment;
+                horizontalPanel.horizontalAlignment = button.value as HorizontalAlignment;
             });
 
             const verticalAlignment = new HorizontalPanel(10);
@@ -63,19 +88,18 @@ and "verticalAlignment".
             }
             verticalAlignmentGroup.selectedValue = VerticalAlignment.Top;
             verticalAlignmentGroup.onChanged.add(button => {
-                alignmentPanel.verticalAlignment = button.value as VerticalAlignment;
+                horizontalPanel.verticalAlignment = button.value as VerticalAlignment;
             });
 
             const footer = new TitledPanel("Properties");
             const properties = new NameValuePanel();
             properties.spacing = 10;
             properties.addPair("Horizontal Alignment", horizontalAlignment);
-            properties.addPair("Vertial Alignment", verticalAlignment);
+            properties.addPair("Vertical Alignment", verticalAlignment);
             footer.content = properties;
             mainPanel.add(footer);
 
             this.content = mainPanel;
-
         }
     }
 }

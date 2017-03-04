@@ -22,6 +22,10 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="commonmark.js" />
+    <Content Include="commonmark.min.js" />
+    <Content Include="remarkable.js" />
+    <Content Include="remarkable.min.js" />
     <Content Include="weclarative.js" />
   </ItemGroup>
   <ItemGroup>
@@ -54,6 +58,7 @@
     <TypeScriptCompile Include="Controls\Link.ts" />
     <TypeScriptCompile Include="Controls\ListBox.ts" />
     <TypeScriptCompile Include="Controls\ListView.ts" />
+    <TypeScriptCompile Include="Controls\MarkDown.ts" />
     <TypeScriptCompile Include="Controls\MouseTrackingEngine.ts" />
     <TypeScriptCompile Include="Controls\NameValuePanel.ts" />
     <TypeScriptCompile Include="Controls\Panels.ts" />

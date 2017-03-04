@@ -81,6 +81,7 @@
     "Controls/FixedHeaderPanel.ts",
     "Controls/ContentPanel.ts",
     "Controls/Panels.ts",
+    "Controls/MarkDown.ts",
     "Controller.ts",
     "ControllerRegistry.ts",
     "LayoutType.ts",

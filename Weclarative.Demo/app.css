@@ -3,10 +3,20 @@
 
 ol, ul {
     list-style: inherit;
-    margin-top: 10px;
     margin-bottom: 10px;
 }
 
 li {
     margin-left: 20px;
+}
+
+code {
+    background-color: #EEE;
+    font-family: monospace;
+    font-size: 110%;
+    padding: 1px;
+}
+
+p {
+    padding-bottom: 10px;
 }

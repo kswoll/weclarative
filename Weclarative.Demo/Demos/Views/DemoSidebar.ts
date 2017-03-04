@@ -14,6 +14,10 @@
             const alignmentPanel = new Controls.Link("Alignment Panel");
             alignmentPanel.localAction = App.instance.demoController.alignmentPanel;
             this.add(alignmentPanel);
+
+            const horizontalPanel = new Controls.Link("Horizontal Panel");
+            horizontalPanel.localAction = App.instance.demoController.horizontalPanel;
+            this.add(horizontalPanel);
         }
     }
 }

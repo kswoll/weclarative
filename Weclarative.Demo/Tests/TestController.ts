@@ -92,7 +92,7 @@ class TestController extends Controller {
     fixedPanel() {
         const view = new View();
         view.title = "Fixed Panel";
-        const panel = new Controls.FixedPanel(new Controls.InlineText("Fixed Panel"), 200, 200);
+        const panel = new Controls.FixedPanel(new Controls.InlineText("Fixed Panel"), "200px", "200px");
         panel.style.backgroundColor = "#FFDDDD";
         view.content = panel;
         return view;
@@ -175,7 +175,7 @@ class TestController extends Controller {
         listBox.add("Item 2");
         listBox.add("Item 3");
 
-        const panel = new CenteredPanel(new Controls.FixedPanel(listBox, 200, 200));
+        const panel = new CenteredPanel(new Controls.FixedPanel(listBox, "200px", "200px"));
         view.content = panel;
         return view;
     }
@@ -307,7 +307,7 @@ class TestController extends Controller {
         flowPanel.add(Controls.FloatPanel.right(image));
         flowPanel.add(new Controls.InlineText("lasdaer aer asr ae re r aesr ar as rasr asdrasdr asdr asdr asd rasd rasdr sadraewqwrq era wra r a ar aras er aeer re  esra"));
 
-        view.content = new CenteredPanel(new Controls.FixedPanel(flowPanel, 200, 200));
+        view.content = new CenteredPanel(new Controls.FixedPanel(flowPanel, "200px", "200px"));
         return view;
     }
 
