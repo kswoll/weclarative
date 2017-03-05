@@ -4,6 +4,7 @@
      * spacing and alignment.
      */
     export class HorizontalPanel extends Control {
+        private _spacing: number;
         private _horizontalAlignment: HorizontalAlignment;
         private _verticalAlignment: VerticalAlignment;
 
@@ -14,14 +15,27 @@
          * @param verticalAlignment The default vertical alignment for each child.  This can be overridden on a
          * per-child basis when a control is being added.
          */
-        constructor(public spacing = 0, horizontalAlignment = HorizontalAlignment.Left, verticalAlignment = VerticalAlignment.Top) {
+        constructor(spacing = 0, horizontalAlignment = HorizontalAlignment.Left, verticalAlignment = VerticalAlignment.Top) {
             super("div");
 
             this.node.style.display = "flex";
             this.node.style.flexDirection = "row";
 
+            this.spacing = spacing;
             this.horizontalAlignment = horizontalAlignment;
             this.verticalAlignment = verticalAlignment;
+        }
+
+        get spacing() {
+            return this._spacing;
+        }
+        set spacing(value: number) {
+            this._spacing = value;
+
+            for (let i = 0; i < this.count - 1; i++) {
+                const child = this.getChild(i);
+                child.style.paddingRight = value + "px";
+            }
         }
 
         get horizontalAlignment() {

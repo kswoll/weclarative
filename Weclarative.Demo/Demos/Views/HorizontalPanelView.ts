@@ -13,6 +13,8 @@
     import RadioButton = Weclarative.Controls.RadioButton;
     import Enums = Weclarative.Utils.Enums;
     import FillPanel = Weclarative.Controls.FillPanel;
+    import TextBox = Weclarative.Controls.TextBox;
+    import TextBoxType = Weclarative.Controls.TextBoxType;
 
     export class HorizontalPanelView extends BaseView {
         constructor() {
@@ -91,9 +93,15 @@ entire height.
                 horizontalPanel.verticalAlignment = button.value as VerticalAlignment;
             });
 
+            const spacing = new TextBox();
+            spacing.text = "1";
+            spacing.type = TextBoxType.Number;
+            spacing.onChanged.add(() => horizontalPanel.spacing = parseInt(spacing.text));
+
             const footer = new TitledPanel("Properties");
             const properties = new NameValuePanel();
             properties.spacing = 10;
+            properties.addPair("Spacing", spacing);
             properties.addPair("Horizontal Alignment", horizontalAlignment);
             properties.addPair("Vertical Alignment", verticalAlignment);
             footer.content = properties;
