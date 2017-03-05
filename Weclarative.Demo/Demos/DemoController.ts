@@ -11,6 +11,7 @@
             registrar("sidePanel", this.sidePanel);
             registrar("alignmentPanel", this.alignmentPanel);
             registrar("horizontalPanel", this.horizontalPanel);
+            registrar("verticalPanel", this.verticalPanel);
         }
 
         home() {
@@ -27,6 +28,10 @@
 
         horizontalPanel() {
             return new Views.HorizontalPanelView();
+        }
+
+        verticalPanel() {
+            return new Views.VerticalPanelView();
         }
     }
 }

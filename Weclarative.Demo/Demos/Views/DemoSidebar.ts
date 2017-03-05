@@ -18,6 +18,10 @@
             const horizontalPanel = new Controls.Link("Horizontal Panel");
             horizontalPanel.localAction = App.instance.demoController.horizontalPanel;
             this.add(horizontalPanel);
+
+            const verticalPanel = new Controls.Link("Vertical Panel");
+            verticalPanel.localAction = App.instance.demoController.verticalPanel;
+            this.add(verticalPanel);
         }
     }
 }

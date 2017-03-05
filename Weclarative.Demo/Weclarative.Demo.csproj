@@ -139,6 +139,7 @@
     <TypeScriptCompile Include="Demos\Views\HomeView.ts" />
     <TypeScriptCompile Include="Demos\Views\HorizontalPanelView.ts" />
     <TypeScriptCompile Include="Demos\Views\SidePanelView.ts" />
+    <TypeScriptCompile Include="Demos\Views\VerticalPanelView.ts" />
     <TypeScriptCompile Include="Tests\TestController.ts" />
     <TypeScriptCompile Include="Weclarative\Controller.ts" />
     <TypeScriptCompile Include="Weclarative\ControllerRegistry.ts" />

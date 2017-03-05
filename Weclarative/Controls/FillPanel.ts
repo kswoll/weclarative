@@ -13,8 +13,9 @@
 
         createNode() {
             const container = super.createNode();
-            container.style.width = "100%";
-            container.style.height = "100%";
+            container.style.display = "flex";
+            container.style.flexDirection = "column";
+            container.style.alignItems = "stretch";
             return container;
         }
 
@@ -29,8 +30,7 @@
             this._content = value;
             if (value != null) {
                 const childNode = value.node;
-                childNode.style.width = "100%";
-                childNode.style.height = "100%";
+                childNode.style.flexGrow = "1";
                 this.node.appendChild(childNode);
                 this.addChild(value);
             }
