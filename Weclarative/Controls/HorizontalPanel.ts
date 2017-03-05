@@ -36,7 +36,8 @@
 
             for (let i = 0; i < this.count - 1; i++) {
                 const child = this.getChild(i);
-                child.style.paddingRight = value + "px";
+                const div = child.node.parentElement as HTMLElement;
+                div.style.paddingRight = value + "px";
             }
         }
 

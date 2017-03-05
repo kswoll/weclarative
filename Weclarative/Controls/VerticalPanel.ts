@@ -25,7 +25,8 @@
 
             for (let i = 0; i < this.count - 1; i++) {
                 const child = this.getChild(i);
-                child.style.paddingBottom = value + "px";
+                const div = child.node.parentElement as HTMLElement;
+                div.style.paddingBottom = value + "px";
             }
         }
 
