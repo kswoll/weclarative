@@ -29,23 +29,31 @@
         }
         set horizontalAlignment(value: HorizontalAlignment) {
             this._horizontalAlignment = value;
+
+            const updateFlexGrow = (value: string) => {
+                for (let i = 0; i < this.count; i++) {
+                    const child = this.getChild(i);
+                    const div = child.node.parentElement as HTMLElement;
+                    div.style.flexGrow = value;
+                }                
+            };
+
             switch (value) {
                 case HorizontalAlignment.Fill:
                     this.node.style.justifyContent = "";
-                    for (let i = 0; i < this.count; i++) {
-                        const child = this.getChild(i);
-                        const div = child.node.parentElement as HTMLElement;
-                        div.style.flexGrow = "1";
-                    }
+                    updateFlexGrow("1");
                     break;
                 case HorizontalAlignment.Center:
                     this.node.style.justifyContent = "center";
+                    updateFlexGrow("");
                     break;
                 case HorizontalAlignment.Left:
                     this.node.style.justifyContent = "flex-start";
+                    updateFlexGrow("");
                     break;
                 case HorizontalAlignment.Right:
                     this.node.style.justifyContent = "flex-end";
+                    updateFlexGrow("");
                     break;
             }
         }
