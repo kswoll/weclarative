@@ -46,7 +46,7 @@ entire height.
             `));
             mainPanel.add(summary);
 
-            const horizontalPanel = new HorizontalPanel();
+            const horizontalPanel = new HorizontalPanel(1);
 
             let itemNameIndex = 1;
             const add = () => {

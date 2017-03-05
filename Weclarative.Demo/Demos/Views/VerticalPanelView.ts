@@ -46,7 +46,7 @@ entire width.
             `));
             mainPanel.add(summary);
 
-            const verticalPanel = new VerticalPanel();
+            const verticalPanel = new VerticalPanel(1);
 
             let itemNameIndex = 1;
             const add = () => {

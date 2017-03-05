@@ -89,8 +89,6 @@
         }
 
         private internalAdd(child: Control, alignment?: HorizontalAlignment, spaceAbove = 0, animate: boolean = false): HTMLElement {
-            if (this.count > 0)
-                spaceAbove += this.spacing;
             this.addChild(child);
 
             const previousChild = this.node.lastElementChild as HTMLElement;
