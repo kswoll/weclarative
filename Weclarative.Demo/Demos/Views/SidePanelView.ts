@@ -11,6 +11,7 @@
     import InlineText = Weclarative.Controls.InlineText;
     import Panels = Weclarative.Controls.Panels;
     import CheckBox = Weclarative.Controls.CheckBox;
+    import MarkDown = Weclarative.Controls.MarkDown;
 
     export class SidePanelView extends BaseView {
         constructor() {
@@ -22,14 +23,14 @@
             mainPanel.style.padding = "10px";
             mainPanel.spacing = 10;
             mainPanel.style.maxWidth = "800px";
-            const summary = AlignmentPanel.Left(new Html(`
+            const summary = AlignmentPanel.Left(new MarkDown(`
 The SidePanel allows you to arrange children by attaching them to the top, bottom, left, right or center. All are
 optional.
-<ul>
-    <li>The height of the top and bottom are determined by the preferred height of their contents.</li>
-    <li>The width of the left and right are determined by the preferred width of their contents.</li>
-    <li>The center panel will take up the remaining space.</li>
-</ul>
+
+* The height of the top and bottom are determined by the preferred height of their contents.
+* The width of the left and right are determined by the preferred width of their contents.
+* The center panel will take up the remaining space.
+
 For the purposes of calculating the preferred size of the SidePanel itself, the preferred size of the centered
 panel will be factored.
             `));

@@ -11,6 +11,7 @@
     import RadioGroup = Weclarative.Controls.RadioGroup;
     import RadioButton = Weclarative.Controls.RadioButton;
     import Enums = Weclarative.Utils.Enums;
+    import MarkDown = Weclarative.Controls.MarkDown;
 
     export class AlignmentPanelView extends BaseView {
         constructor() {
@@ -22,18 +23,16 @@
             mainPanel.style.padding = "10px";
             mainPanel.spacing = 10;
             mainPanel.style.maxWidth = "800px";
-            const summary = AlignmentPanel.Left(new Html(`
-The AlignmentPanel allows you to arrange its content (a Control) along the top-left, top, top-right, right,
-bottom-right, bottom, bottom-left, and left.  This is controlled by two alignment properties, "horizontalAlignment"
-and "verticalAlignment".
-<ul>
-    <li>Setting the horizontal alignment to left and the vertical alignment to top, will align the content
-        along the top-left, with the remaining space (if any) left empty.</li>
-    <li>Setting the horizontal alignment to right, and the vertial alignment to fill, the content will take
-        up all the space on the right, with the width determined by the content.</li>
-    <li>In contrast, setting the vertial alignment to middle, will align the content along the right as well, but
-        but it's height will be determined by what the content prefers.
-</ul>
+            const summary = AlignmentPanel.Left(new MarkDown(`
+The \`AlignmentPanel\` allows you to arrange its content (a Control) along the top-left, top, top-right, right,
+bottom-right, bottom, bottom-left, and left.  This is controlled by two alignment properties, \`horizontalAlignment\`
+and \`verticalAlignment\`.
+* Setting \`horizontalAlignment\` to left and the \`verticalAlignment\` to top, will align the content
+  along the top-left, with the remaining space (if any) left empty.
+* Setting the \`horizontalAlignment\` to right, and the \`verticalAlignment\` to fill, the content will take
+  up all the space on the right, with the width determined by the content.
+* In contrast, setting the \`verticalAlignment\` to middle, will align the content along the right as well, but
+  but it's height will be determined by what the content prefers.
             `));
             mainPanel.add(summary);
 
