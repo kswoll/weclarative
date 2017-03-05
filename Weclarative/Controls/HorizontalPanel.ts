@@ -108,6 +108,8 @@
                 previousChild.style.paddingRight = this.spacing + "px";
 
             const div = document.createElement("div");
+            div.style.display = "flex";
+            child.style.flexGrow = "1";
 
             switch (this.horizontalAlignment) {
                 case HorizontalAlignment.Fill:
