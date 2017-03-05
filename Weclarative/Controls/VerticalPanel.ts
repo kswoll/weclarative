@@ -105,7 +105,7 @@
                     break;
             }
 
-            if (alignment) {
+            if (alignment != undefined) {
                 const resolvedAlignment = alignment as HorizontalAlignment;
                 switch (resolvedAlignment) {
                     case HorizontalAlignment.Left:

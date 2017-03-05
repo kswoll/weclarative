@@ -15,6 +15,8 @@
     import FillPanel = Weclarative.Controls.FillPanel;
     import TextBox = Weclarative.Controls.TextBox;
     import TextBoxType = Weclarative.Controls.TextBoxType;
+    import Button = Weclarative.Controls.Button;
+    import CheckBox = Weclarative.Controls.CheckBox;
 
     export class VerticalPanelView extends BaseView {
         constructor() {
@@ -48,16 +50,32 @@ entire width.
 
             const verticalPanel = new VerticalPanel(1);
 
+            const adderText = new TextBox();
+            const spaceAbove = new TextBox();
+            spaceAbove.type = TextBoxType.Number;
+            spaceAbove.text = "0";
+            const animate = new CheckBox();
+
+            const overrideHorizontalAlignment = new HorizontalPanel(10);
+            const overrideHorizontalAlignmentGroup = new RadioGroup();
+            overrideHorizontalAlignment.add(new RadioButton(null, overrideHorizontalAlignmentGroup, "Default"));
+            for (const alignment of Enums.getValues(HorizontalAlignment)) {
+                overrideHorizontalAlignment.add(new RadioButton(alignment, overrideHorizontalAlignmentGroup, HorizontalAlignment[alignment]));
+            }
+            overrideHorizontalAlignmentGroup.selectedValue = null;
+
             let itemNameIndex = 1;
+            adderText.text = `Item ${itemNameIndex++}`;
             const add = () => {
-                const content = new TextBlock(`Item ${itemNameIndex++}`);
+                const content = new TextBlock(adderText.text);
                 content.style.backgroundColor = "#FFDDDD";
                 content.style.padding = "10px";
 
                 const panel = AlignmentPanel.Top(content);
                 panel.node.style.backgroundColor = "#DDFFDD";
 
-                verticalPanel.add(new FillPanel(panel));
+                verticalPanel.add(new FillPanel(panel), overrideHorizontalAlignmentGroup.selectedValue, parseInt(spaceAbove.text), animate.isChecked);
+                adderText.text = `Item ${itemNameIndex++}`;
             };
             add();
             add();
@@ -101,6 +119,22 @@ entire width.
             properties.addPair("Vertical Alignment", verticalAlignment);
             footer.content = properties;
             mainPanel.add(footer);
+
+            const addItem = new Button("Add");
+            addItem.onClick.add(() => {
+                add();
+            });
+
+            const adder = new TitledPanel("Add Item");
+            const adderProperties = new NameValuePanel();
+            adderProperties.spacing = 10;
+            adderProperties.addPair("Text", adderText);
+            adderProperties.addPair("Space Above", spaceAbove);
+            adderProperties.addPair("Horizontal Alignment", overrideHorizontalAlignment);
+            adderProperties.addPair("Animate", animate);
+            adderProperties.addPair("", AlignmentPanel.Left(addItem));
+            adder.content = adderProperties;
+            mainPanel.add(adder);
 
             this.content = mainPanel;
         }
