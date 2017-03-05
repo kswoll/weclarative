@@ -84,7 +84,7 @@
             }
         }
 
-        add(child: Control, alignment?: HorizontalAlignment, spaceAbove?: number, animate: boolean = false) {
+        add(child: Control, alignment?: HorizontalAlignment, spaceAbove?: number, animate = false) {
             this.node.appendChild(this.internalAdd(child, alignment, spaceAbove || 0, animate));
         }
 

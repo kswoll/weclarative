@@ -4,6 +4,8 @@
      * spacing and alignment.
      */
     export class HorizontalPanel extends Control {
+        private static readonly animationSpeed = 250;
+
         private _spacing: number;
         private _horizontalAlignment: HorizontalAlignment;
         private _verticalAlignment: VerticalAlignment;
@@ -100,7 +102,7 @@
          * @param spaceBefore How much space to add (in addition to the spacing set for the entire panel)
          * in front of this child.
          */
-        add(child: Control, alignment?: VerticalAlignment, spaceBefore = 0) {
+        add(child: Control, alignment?: VerticalAlignment, spaceBefore = 0, animate = false) {
             this.addChild(child);
 
             const previousChild = this.node.lastElementChild as HTMLElement;
@@ -117,7 +119,7 @@
                     break;
             }
 
-            if (alignment) {
+            if (alignment != undefined) {
                 const resolvedAlignment = alignment as VerticalAlignment;
                 switch (resolvedAlignment) {
                     case VerticalAlignment.Fill:
@@ -140,6 +142,25 @@
             }
 
             div.appendChild(child.node);
+
+            if (animate) {
+                const width = Utils.Elements.measureOffsetWidth(div);
+                div.style.display = "none";
+                div.style.overflow = "hidden";
+                div.style.whiteSpace = "nowrap";
+                Utils.Animator.animate(
+                    (progress: number) => {
+                        const newWidth = Math.floor(width * progress);
+                        div.style.width = newWidth + "px";
+                        div.style.display = "";
+                    },
+                    HorizontalPanel.animationSpeed,
+                    () => {
+                        div.style.overflow = "";
+                        div.style.height = "";
+                        div.style.whiteSpace = "inherit";
+                    });
+            }
 
             this.node.appendChild(div);
         }

@@ -50,7 +50,9 @@ entire width.
 
             const verticalPanel = new VerticalPanel(1);
 
+            let itemNameIndex = 1;
             const adderText = new TextBox();
+            adderText.text = `Item ${itemNameIndex++}`;
             const spaceAbove = new TextBox();
             spaceAbove.type = TextBoxType.Number;
             spaceAbove.text = "0";
@@ -64,8 +66,6 @@ entire width.
             }
             overrideHorizontalAlignmentGroup.selectedValue = null;
 
-            let itemNameIndex = 1;
-            adderText.text = `Item ${itemNameIndex++}`;
             const add = () => {
                 const content = new TextBlock(adderText.text);
                 content.style.backgroundColor = "#FFDDDD";
