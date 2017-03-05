@@ -43,19 +43,6 @@
                 }
             };
 
-/*
-            for (let i = 0; i < this.count; i++) {
-                const child = this.getChild(i);
-                const div = child.node.parentElement as HTMLElement;
-                if (value == VerticalAlignment.Fill) {
-                    div.style.position = "relative";
-                    child.style.position = "absolute";
-                } else {
-                    div.style.position = "inherit";
-                    child.style.position = "inherit";
-                }
-            }
-*/
             switch (value) {
                 case VerticalAlignment.Fill:
                     this.node.style.justifyContent = "";
@@ -113,12 +100,6 @@
             const div = document.createElement("div");
             div.style.display = "flex";
             child.style.flexGrow = "1";
-/*
-            if (this.verticalAlignment == VerticalAlignment.Fill) {                
-                div.style.position = "relative";
-                child.style.position = "absolute";
-            }
-*/
 
             switch (this.verticalAlignment) {
                 case VerticalAlignment.Fill:
