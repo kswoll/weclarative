@@ -1,4 +1,3 @@
-*.js
 *.map
 Weclaritive/obj/
 .vs/
@@ -14,3 +13,9 @@ Weclarative.Demo/Weclarative
 Weclarative.Demo/weclarative.d.ts
 debug.log
 weclarative.d.ts
+
+Weclarative\.Demo/weclarative\.js
+
+Weclarative\.Demo/weclarative-demo\.js
+
+Weclarative/weclarative\.js
