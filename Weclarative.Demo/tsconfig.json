@@ -20,6 +20,7 @@
     "Demos/Views/AlignmentPanelView.ts",
     "Demos/Views/HorizontalPanelView.ts",
     "Demos/Views/VerticalPanelView.ts",
+    "Demos/Views/CheckBoxView.ts",
     "Demos/DemoController.ts",
     "App.ts"
   ],

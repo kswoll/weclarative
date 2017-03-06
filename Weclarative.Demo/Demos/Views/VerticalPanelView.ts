@@ -114,7 +114,7 @@ entire width.
             const footer = new TitledPanel("Properties");
             const properties = new NameValuePanel();
             properties.spacing = 10;
-            properties.addPair("Spacing", spacing);
+            properties.addPair("Spacing", AlignmentPanel.Left(spacing));
             properties.addPair("Horizontal Alignment", horizontalAlignment);
             properties.addPair("Vertical Alignment", verticalAlignment);
             footer.content = properties;

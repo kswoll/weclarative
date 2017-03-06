@@ -24,14 +24,14 @@
             mainPanel.spacing = 10;
             mainPanel.style.maxWidth = "800px";
             const summary = AlignmentPanel.Left(new MarkDown(`
-The SidePanel allows you to arrange children by attaching them to the top, bottom, left, right or center. All are
+The \`SidePanel\` allows you to arrange children by attaching them to the top, bottom, left, right or center. All are
 optional.
 
 * The height of the top and bottom are determined by the preferred height of their contents.
 * The width of the left and right are determined by the preferred width of their contents.
 * The center panel will take up the remaining space.
 
-For the purposes of calculating the preferred size of the SidePanel itself, the preferred size of the centered
+For the purposes of calculating the preferred size of the \`SidePanel\` itself, the preferred size of the centered
 panel will be factored.
             `));
             mainPanel.add(summary);
@@ -101,7 +101,7 @@ panel will be factored.
             const footer = new TitledPanel("Properties");
             const properties = new NameValuePanel();
             properties.spacing = 10;
-            properties.addPair("Spacing", spacing);
+            properties.addPair("Spacing", AlignmentPanel.Left(spacing));
             properties.addPair("Top", showTop);
             properties.addPair("Left", showLeft);
             properties.addPair("Center", showCenter);

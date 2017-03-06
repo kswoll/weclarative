@@ -134,6 +134,7 @@
     <TypeScriptCompile Include="Demos\DemoColors.ts" />
     <TypeScriptCompile Include="Demos\Views\AlignmentPanelView.ts" />
     <TypeScriptCompile Include="Demos\Views\BaseView.ts" />
+    <TypeScriptCompile Include="Demos\Views\CheckBoxView.ts" />
     <TypeScriptCompile Include="Demos\Views\DemoLayout.ts" />
     <TypeScriptCompile Include="Demos\Views\DemoSidebar.ts" />
     <TypeScriptCompile Include="Demos\Views\HomeView.ts" />
