@@ -80,6 +80,7 @@
     <TypeScriptCompile Include="Utils\Animator.ts" />
     <TypeScriptCompile Include="Utils\Elements.ts" />
     <TypeScriptCompile Include="Utils\Enums.ts" />
+    <TypeScriptCompile Include="Utils\Http.ts" />
     <TypeScriptCompile Include="Utils\Promises.ts" />
     <TypeScriptCompile Include="ViewRequest.ts" />
     <TypeScriptCompile Include="Routes\IRouteNode.ts" />

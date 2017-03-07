@@ -21,6 +21,7 @@
     "Utils/Reflection.ts",
     "Utils/Strings.ts",
     "Utils/Enums.ts",
+    "Utils/Http.ts",
     "Routes/RoutePart.ts",
     "Routes/IRouteNode.ts",
     "Routes/IRoutePart.ts",
