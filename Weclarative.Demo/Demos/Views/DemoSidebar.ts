@@ -22,6 +22,10 @@
             const verticalPanel = new Controls.Link("Vertical Panel");
             verticalPanel.localAction = App.instance.demoController.verticalPanel;
             this.add(verticalPanel);
+
+            const checkBox = new Controls.Link("CheckBox");
+            checkBox.localAction = App.instance.demoController.checkBox;
+            this.add(checkBox);
         }
     }
 }

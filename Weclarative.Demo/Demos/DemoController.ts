@@ -12,6 +12,7 @@
             registrar("alignmentPanel", this.alignmentPanel);
             registrar("horizontalPanel", this.horizontalPanel);
             registrar("verticalPanel", this.verticalPanel);
+            registrar("checkBox", this.checkBox);
         }
 
         home() {
@@ -32,6 +33,10 @@
 
         verticalPanel() {
             return new Views.VerticalPanelView();
+        }
+
+        checkBox() {
+            return new Views.CheckBoxView();
         }
     }
 }

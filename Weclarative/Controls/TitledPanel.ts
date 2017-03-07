@@ -1,12 +1,16 @@
 ﻿namespace Weclarative.Controls {
     export class TitledPanel extends Control {
-        private legend: Element;
-        private contentDiv: Element;
+        private _title: Control | null;
+        private legend: HTMLElement;
+        private contentDiv: HTMLElement;
         private _content: Control | null;
 
-        constructor(title = "") {
+        constructor(title?: string | Control) {
             super();
-            this.title = title;
+            if (typeof(title) == typeof(""))
+                this.title = new InlineText(title as string);
+            else
+                this.title = title as Control;
         }
 
         createNode() {
@@ -23,10 +27,18 @@
         }
 
         get title() {
-            return this.legend.innerHTML;
+            return this._title;
         }
-        set title(value: string) {
-            this.legend.innerHTML = value;
+        set title(value: Control | null) {
+            if (this.title) {
+                this.removeChild(this.title);
+                this.legend.removeChild(this.title.node);
+            }
+            this._title = value;
+            if (value) {
+                this.legend.appendChild(value.node);
+                this.addChild(value);
+            }
         }
 
         get content() {

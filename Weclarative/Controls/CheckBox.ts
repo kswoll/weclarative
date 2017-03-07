@@ -7,9 +7,10 @@
         private label: HTMLElement;
         private checkbox: HTMLInputElement;
 
-        constructor(text = "") {
+        constructor(text = "", public value?: any) {
             super();
             this.text = text;
+            this.value = value;
         }
 
         get text() {
