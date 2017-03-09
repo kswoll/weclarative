@@ -16,7 +16,7 @@
     <RootNamespace>Weclarative.Demo</RootNamespace>
     <AssemblyName>Weclarative.Demo</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -52,6 +52,87 @@
     <Content Include="font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="font-awesome-4.7.0\HELP-US-OUT.txt" />
+    <Content Include="highlightjs\highlight.pack.js" />
+    <Content Include="highlightjs\styles\agate.css" />
+    <Content Include="highlightjs\styles\androidstudio.css" />
+    <Content Include="highlightjs\styles\arduino-light.css" />
+    <Content Include="highlightjs\styles\arta.css" />
+    <Content Include="highlightjs\styles\ascetic.css" />
+    <Content Include="highlightjs\styles\atelier-cave-dark.css" />
+    <Content Include="highlightjs\styles\atelier-cave-light.css" />
+    <Content Include="highlightjs\styles\atelier-dune-dark.css" />
+    <Content Include="highlightjs\styles\atelier-dune-light.css" />
+    <Content Include="highlightjs\styles\atelier-estuary-dark.css" />
+    <Content Include="highlightjs\styles\atelier-estuary-light.css" />
+    <Content Include="highlightjs\styles\atelier-forest-dark.css" />
+    <Content Include="highlightjs\styles\atelier-forest-light.css" />
+    <Content Include="highlightjs\styles\atelier-heath-dark.css" />
+    <Content Include="highlightjs\styles\atelier-heath-light.css" />
+    <Content Include="highlightjs\styles\atelier-lakeside-dark.css" />
+    <Content Include="highlightjs\styles\atelier-lakeside-light.css" />
+    <Content Include="highlightjs\styles\atelier-plateau-dark.css" />
+    <Content Include="highlightjs\styles\atelier-plateau-light.css" />
+    <Content Include="highlightjs\styles\atelier-savanna-dark.css" />
+    <Content Include="highlightjs\styles\atelier-savanna-light.css" />
+    <Content Include="highlightjs\styles\atelier-seaside-dark.css" />
+    <Content Include="highlightjs\styles\atelier-seaside-light.css" />
+    <Content Include="highlightjs\styles\atelier-sulphurpool-dark.css" />
+    <Content Include="highlightjs\styles\atelier-sulphurpool-light.css" />
+    <Content Include="highlightjs\styles\atom-one-dark.css" />
+    <Content Include="highlightjs\styles\atom-one-light.css" />
+    <Content Include="highlightjs\styles\brown-paper.css" />
+    <Content Include="highlightjs\styles\brown-papersq.png" />
+    <Content Include="highlightjs\styles\codepen-embed.css" />
+    <Content Include="highlightjs\styles\color-brewer.css" />
+    <Content Include="highlightjs\styles\darcula.css" />
+    <Content Include="highlightjs\styles\dark.css" />
+    <Content Include="highlightjs\styles\darkula.css" />
+    <Content Include="highlightjs\styles\default.css" />
+    <Content Include="highlightjs\styles\docco.css" />
+    <Content Include="highlightjs\styles\dracula.css" />
+    <Content Include="highlightjs\styles\far.css" />
+    <Content Include="highlightjs\styles\foundation.css" />
+    <Content Include="highlightjs\styles\github-gist.css" />
+    <Content Include="highlightjs\styles\github.css" />
+    <Content Include="highlightjs\styles\googlecode.css" />
+    <Content Include="highlightjs\styles\grayscale.css" />
+    <Content Include="highlightjs\styles\gruvbox-dark.css" />
+    <Content Include="highlightjs\styles\gruvbox-light.css" />
+    <Content Include="highlightjs\styles\hopscotch.css" />
+    <Content Include="highlightjs\styles\hybrid.css" />
+    <Content Include="highlightjs\styles\idea.css" />
+    <Content Include="highlightjs\styles\ir-black.css" />
+    <Content Include="highlightjs\styles\kimbie.dark.css" />
+    <Content Include="highlightjs\styles\kimbie.light.css" />
+    <Content Include="highlightjs\styles\magula.css" />
+    <Content Include="highlightjs\styles\mono-blue.css" />
+    <Content Include="highlightjs\styles\monokai-sublime.css" />
+    <Content Include="highlightjs\styles\monokai.css" />
+    <Content Include="highlightjs\styles\obsidian.css" />
+    <Content Include="highlightjs\styles\ocean.css" />
+    <Content Include="highlightjs\styles\paraiso-dark.css" />
+    <Content Include="highlightjs\styles\paraiso-light.css" />
+    <Content Include="highlightjs\styles\pojoaque.css" />
+    <Content Include="highlightjs\styles\pojoaque.jpg" />
+    <Content Include="highlightjs\styles\purebasic.css" />
+    <Content Include="highlightjs\styles\qtcreator_dark.css" />
+    <Content Include="highlightjs\styles\qtcreator_light.css" />
+    <Content Include="highlightjs\styles\railscasts.css" />
+    <Content Include="highlightjs\styles\rainbow.css" />
+    <Content Include="highlightjs\styles\school-book.css" />
+    <Content Include="highlightjs\styles\school-book.png" />
+    <Content Include="highlightjs\styles\solarized-dark.css" />
+    <Content Include="highlightjs\styles\solarized-light.css" />
+    <Content Include="highlightjs\styles\sunburst.css" />
+    <Content Include="highlightjs\styles\tomorrow-night-blue.css" />
+    <Content Include="highlightjs\styles\tomorrow-night-bright.css" />
+    <Content Include="highlightjs\styles\tomorrow-night-eighties.css" />
+    <Content Include="highlightjs\styles\tomorrow-night.css" />
+    <Content Include="highlightjs\styles\tomorrow.css" />
+    <Content Include="highlightjs\styles\vs.css" />
+    <Content Include="highlightjs\styles\xcode.css" />
+    <Content Include="highlightjs\styles\xt256.css" />
+    <Content Include="highlightjs\styles\zenburn.css" />
     <Content Include="index.html" />
     <Content Include="markdown-it.js" />
     <Content Include="markdown-it.min.js" />
@@ -139,6 +220,7 @@
     <TypeScriptCompile Include="Demos\Views\DemoSidebar.ts" />
     <TypeScriptCompile Include="Demos\Views\HomeView.ts" />
     <TypeScriptCompile Include="Demos\Views\HorizontalPanelView.ts" />
+    <TypeScriptCompile Include="Demos\Views\HttpView.ts" />
     <TypeScriptCompile Include="Demos\Views\SidePanelView.ts" />
     <TypeScriptCompile Include="Demos\Views\VerticalPanelView.ts" />
     <TypeScriptCompile Include="Tests\TestController.ts" />
@@ -254,11 +336,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>63133</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:63133/</IISUrl>
+          <IISUrl>http://weclarative.local</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

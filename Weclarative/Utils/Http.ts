@@ -64,8 +64,20 @@
             return new Http(url);
         }
 
-        get() {
-            return new HttpResponseContext(new HttpRequestContext(this, "GET"), "application/json", null);
+        get(contentType = "application/json") {
+            return new HttpResponseContext(new HttpRequestContext(this, "GET"), contentType, null);
+        }
+
+        post(contentType = "application/json") {
+            return new HttpResponseContext(new HttpRequestContext(this, "POST"), contentType, null);
+        }
+
+        put(contentType = "application/json") {
+            return new HttpResponseContext(new HttpRequestContext(this, "PUT"), contentType, null);
+        }
+
+        delete(contentType = "application/json") {
+            return new HttpResponseContext(new HttpRequestContext(this, "DELETE"), contentType, null);
         }
 
         withProgress(onProgress: (evt: ProgressEvent) => void): this {
@@ -117,10 +129,11 @@
         }
 
         execute(request: HttpRequest) {
-            const promise = new Promise((resolve, reject) => {
+            const promise = new Promise<HttpResponse>((resolve, reject) => {
                 const xmlHttpRequest = new XMLHttpRequest();
                 if (this.progressEvents.length > 0)
                     xmlHttpRequest.upload.onprogress = evt => this.onProgress(evt);
+                xmlHttpRequest.open(request.method, this.url);
                 xmlHttpRequest.setRequestHeader("Content-Type", request.contentType);
 
                 for (const key in this.headers) {
@@ -183,6 +196,16 @@
 
     export class HttpResponseContext {
         constructor(readonly context: HttpRequestContext, readonly contentType: string, readonly payload: any) {
+        }
+
+        async asJson<T>() {
+            const response = await this.context.execute(this.contentType, this.payload);
+            const result = JSON.parse(response.response as string) as T;
+            return result;
+        }
+
+        async go() {
+            await this.context.execute(this.contentType, this.payload);
         }
     }
 

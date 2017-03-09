@@ -13,6 +13,7 @@
             registrar("horizontalPanel", this.horizontalPanel);
             registrar("verticalPanel", this.verticalPanel);
             registrar("checkBox", this.checkBox);
+            registrar("http", this.http);
         }
 
         home() {
@@ -37,6 +38,10 @@
 
         checkBox() {
             return new Views.CheckBoxView();
+        }
+
+        http() {
+            return new Views.HttpView();
         }
     }
 }

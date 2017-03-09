@@ -26,6 +26,10 @@
             const checkBox = new Controls.Link("CheckBox");
             checkBox.localAction = App.instance.demoController.checkBox;
             this.add(checkBox);
+
+            const http = new Controls.Link("Calling APIs");
+            http.localAction = App.instance.demoController.http;
+            this.add(http);
         }
     }
 }

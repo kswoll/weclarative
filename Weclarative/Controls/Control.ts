@@ -83,16 +83,6 @@
             return this._parent;
         }
 
-        get isEnabled() {
-            return this.node.getAttribute("disabled") != "true";
-        }
-        set isEnabled(value: boolean) {
-            if (value)
-                this.node.removeAttribute("disabled");
-            else
-                this.node.setAttribute("disabled", "true");
-        }
-
         get onClick(): IEventHandler<MouseEvent> {
             if (this._onClick == null) {
                 this._onClick = new EventHandler<MouseEvent>();

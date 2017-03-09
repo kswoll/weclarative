@@ -17,6 +17,14 @@ code {
     padding: 1px;
 }
 
+pre {
+    background-color: #EEE;
+    font-family: monospace;
+    font-size: 110%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
 p {
     padding-bottom: 10px;
 }

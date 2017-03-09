@@ -55,5 +55,15 @@
                 this.addChild(value);
             }
         }
+
+        get isEnabled() {
+            return this.node.getAttribute("disabled") != "true";
+        }
+        set isEnabled(value: boolean) {
+            if (value)
+                this.node.removeAttribute("disabled");
+            else
+                this.node.setAttribute("disabled", "true");
+        }
     }
 }

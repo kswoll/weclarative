@@ -1,4 +1,17 @@
-﻿var md = (window as any).markdownit();
+﻿var hljs = (window as any).hljs;
+
+var md = (window as any).markdownit("default", {
+    highlight: (str: string, lang: string) => {
+        if (lang && hljs.getLanguage(lang)) {
+            try {
+                return hljs.highlight(lang, str).value;
+            } catch (_) {
+            }
+        }
+
+        return ""; // use external default escaping
+    }
+});
 
 namespace Weclarative.Controls {
     /**
