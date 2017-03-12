@@ -10,6 +10,8 @@
     import TitledPanel = Weclarative.Controls.TitledPanel;
 
     export class IconView extends BaseView {
+        private iconType: ListBox<IconType>;
+
         constructor() {
             super();
 
@@ -25,19 +27,22 @@ making it easy to choose the one you want.
             `));
             mainPanel.add(summary);
 
-            const icon = new Icon(IconType.Cloud);
-            mainPanel.add(icon);
+            const icon = new Icon(IconType.Adjust);
+            mainPanel.add(new TitledPanel("Icon", icon));
 
             const properties = new NameValuePanel();
             properties.spacing = 10;
 
-            const iconType = new ListBox<IconType>(x => IconType[x]);
-            iconType.bindItems(Enums.getValues<IconType>(IconType));
-            iconType.onChanged.add(() =>
+            this.iconType = new ListBox<IconType>(x => IconType[x]);
+            this.iconType.bindItems(Enums.getValues<IconType>(IconType));
+            this.iconType.selectedItem = IconType.Adjust;
+            this.iconType.focus();
+
+            this.iconType.onChanged.add(() =>
             {
-                icon.source = iconType.selectedItem || IconType.None;
+                icon.source = this.iconType.selectedItem || IconType.None;
             });
-            properties.addPair("Icon Type", new FixedPanel(iconType, "100%", "200px"));
+            properties.addPair("Icon Type", new FixedPanel(this.iconType, "100%", "200px"));
 
             mainPanel.add(new TitledPanel("Properties", properties));
 

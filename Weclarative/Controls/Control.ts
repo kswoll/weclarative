@@ -256,6 +256,10 @@
             }
         }
 
+        focus() {
+            setTimeout(() => this.node.focus(), 0);
+        }
+
         static get isMouseDown(): boolean
         {
             return Control.mouseTrackingEngine.isMouseDown;
