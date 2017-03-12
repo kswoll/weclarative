@@ -6,10 +6,13 @@
 
         private _onChanged: EventHandler<void>;
 
-        constructor() {
+        constructor(text?: string) {
             super("textarea");
             this.element = this.node as HTMLTextAreaElement;
             this.element.addEventListener("change", evt => this.onJsChanged(evt));
+
+            if (text)
+                this.text = text;
         }
 
         get onChanged() {

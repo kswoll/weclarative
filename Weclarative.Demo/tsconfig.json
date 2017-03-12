@@ -24,6 +24,7 @@
     "Demos/Views/HttpView.ts",
     "Demos/Views/AutoCompleteTextBoxView.ts",
     "Demos/Views/IconView.ts",
+    "Demos/Views/MarkDownView.ts",
     "Demos/DemoController.ts",
     "App.ts"
   ],

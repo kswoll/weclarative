@@ -22,6 +22,9 @@
         private _onMouseUp: EventHandler<MouseEvent> | null;
         private _onMouseDown: EventHandler<MouseEvent> | null;
         private _onWheel: EventHandler<MouseEvent> | null;
+        private _onKeyDown: EventHandler<KeyboardEvent> | null;
+        private _onKeyUp: EventHandler<KeyboardEvent> | null;
+        private _onKeyPress: EventHandler<KeyboardEvent> | null;
 
         constructor(tagName: string | null = "div", node: HTMLElement | null = null) {
             this.tagName = tagName as string;
@@ -153,6 +156,42 @@
 
         private onJsWheel(evt: MouseEvent) {
             (this.onWheel as EventHandler<MouseEvent>).trigger(evt);
+        }
+
+        get onKeyDown() {
+            if (!this._onKeyDown) {
+                this._onKeyDown = new EventHandler<KeyboardEvent>();
+                this.node.addEventListener("keydown", evt => this.onJsKeyDown(evt));
+            }
+            return this._onKeyDown as EventHandler<KeyboardEvent>;
+        }
+
+        private onJsKeyDown(evt: KeyboardEvent) {
+            (this.onKeyDown as EventHandler<KeyboardEvent>).trigger(evt);
+        }
+
+        get onKeyUp() {
+            if (!this._onKeyUp) {
+                this._onKeyUp = new EventHandler<KeyboardEvent>();
+                this.node.addEventListener("keyup", evt => this.onJsKeyUp(evt));
+            }
+            return this._onKeyUp as EventHandler<KeyboardEvent>;
+        }
+
+        private onJsKeyUp(evt: KeyboardEvent) {
+            (this.onKeyUp as EventHandler<KeyboardEvent>).trigger(evt);
+        }
+
+        get onKeyPress() {
+            if (!this._onKeyPress) {
+                this._onKeyPress = new EventHandler<KeyboardEvent>();
+                this.node.addEventListener("keypress", evt => this.onJsKeyPress(evt));
+            }
+            return this._onKeyPress as EventHandler<KeyboardEvent>;
+        }
+
+        private onJsKeyPress(evt: KeyboardEvent) {
+            (this.onKeyPress as EventHandler<KeyboardEvent>).trigger(evt);
         }
 
         onAddedToView()

@@ -223,6 +223,7 @@
     <TypeScriptCompile Include="Demos\Views\HorizontalPanelView.ts" />
     <TypeScriptCompile Include="Demos\Views\HttpView.ts" />
     <TypeScriptCompile Include="Demos\Views\IconView.ts" />
+    <TypeScriptCompile Include="Demos\Views\MarkDownView.ts" />
     <TypeScriptCompile Include="Demos\Views\SidePanelView.ts" />
     <TypeScriptCompile Include="Demos\Views\VerticalPanelView.ts" />
     <TypeScriptCompile Include="Tests\TestController.ts" />

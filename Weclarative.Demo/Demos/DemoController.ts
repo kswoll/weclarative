@@ -16,6 +16,7 @@
             registrar("http", this.http);
             registrar("autoCompleteTextBox", this.autoCompleteTextBox);
             registrar("icon", this.icon);
+            registrar("markDown", this.markDown);
         }
 
         home() {
@@ -52,6 +53,10 @@
 
         icon() {
             return new Views.IconView();
+        }
+
+        markDown() {
+            return new Views.MarkDownView();
         }
     }
 }

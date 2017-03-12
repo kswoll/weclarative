@@ -38,6 +38,10 @@
             const icon = new Controls.Link("Icon");
             icon.localAction = App.instance.demoController.icon;
             this.add(icon);
+
+            const markDown = new Controls.Link("MarkDown");
+            markDown.localAction = App.instance.demoController.markDown;
+            this.add(markDown);
         }
     }
 }

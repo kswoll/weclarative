@@ -19,8 +19,19 @@ namespace Weclarative.Controls {
      * descriptive content, though using it dynamically has many use-cases as well.
      */
     export class MarkDown extends Html {
-        constructor(markdown: string) {
-            super(md.render(markdown) as string);
+        private _markdown: string;
+
+        constructor(markdown: string = "", isInline = false) {
+            super("", isInline);
+            this.markdown = markdown;
+        }
+
+        get markdown() {
+            return this._markdown;
+        }
+        set markdown(value: string) {
+            this._markdown = value;
+            this.html = md.render(value);
         }
     }
 }

@@ -66,8 +66,8 @@
             this.contentNode.style.width = "100%";
             this.contentNode.style.paddingLeft = "5px";
             this.contentNode.style.outline = "none";
-            this.contentNode.addEventListener("keydown", evt => this.onKeyDown(evt));
-            this.contentNode.addEventListener("keyup", evt => this.onKeyUp(evt));
+            this.onKeyDown.add(evt => this.handleKeyDown(evt));
+            this.onKeyUp.add(evt => this.handleKeyUp(evt));
             this.contentNode.addEventListener("blur", evt => this.onBlur(evt));
             contentNodeCellDiv.appendChild(this.contentNode);
 
@@ -178,7 +178,7 @@
             this.isResettingOverlay = false;
         }
 
-        private onKeyDown(event: KeyboardEvent) {
+        private handleKeyDown(event: KeyboardEvent) {
             switch (event.keyCode) {
                 case KeyCode.DownArrow:
                     this.overlay.selectNextItem();
@@ -204,7 +204,7 @@
             }
         }
 
-        private async onKeyUp(event: KeyboardEvent) {
+        private async handleKeyUp(event: KeyboardEvent) {
             switch (event.keyCode) {
                 case KeyCode.DownArrow:
                 case KeyCode.UpArrow:
