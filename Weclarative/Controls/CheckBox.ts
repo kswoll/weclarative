@@ -8,7 +8,16 @@
         private checkbox: HTMLInputElement;
 
         constructor(text = "", public value?: any) {
-            super();
+            super("label");
+
+            this.label = document.createElement("span");
+
+            this.checkbox = document.createElement("input");
+            this.checkbox.setAttribute("type", "checkbox");
+            this.checkbox.addEventListener("change", evt => this.onJsChanged(evt));
+            this.node.appendChild(this.checkbox);
+            this.node.appendChild(this.label);
+
             this.text = text;
             this.value = value;
         }
@@ -18,19 +27,6 @@
         }
         set text(value: string) {
             this.label.innerHTML = value;
-        }
-
-        createNode() {
-            this.label = document.createElement("span");
-
-            const span = document.createElement("span");
-            this.checkbox = document.createElement("input");
-            this.checkbox.setAttribute("type", "checkbox");
-            this.checkbox.addEventListener("change", evt => this.onJsChanged(evt));
-            span.appendChild(this.checkbox);
-            span.appendChild(this.label);
-
-            return span;
         }
 
         get onChanged() {

@@ -318,17 +318,15 @@ class TestController extends Controller {
         const panel = new VerticalPanel();
 
         const textBox = new Controls.AutoCompleteTextBox<string>(item => item.toString());
-        textBox.onSearch = (text: string, setItems: (items: string[]) => void) => {
-            setItems(["1", "a", "b", "ab", "abadsf", "badfasd"].filter(x => x.startsWith(text)));
-            return Promise.resolve(undefined);
+        textBox.onSearch = (text: string) => {
+            return Promise.resolve(["1", "a", "b", "ab", "abadsf", "badfasd"].filter(x => x.startsWith(text)));
         };
         textBox.throttle = 0;
         panel.add(textBox);
 
         const multiselectTextBox = new Controls.AutoCompleteTextBox<string>(item => item.toString(), true);
-        multiselectTextBox.onSearch = (text: string, setItems: (items: string[]) => void) => {
-            setItems(["1", "a", "b", "ab", "abadsf", "badfasd"].filter(x => x.startsWith(text)));
-            return Promise.resolve(undefined);
+        multiselectTextBox.onSearch = (text: string) => {
+            return Promise.resolve(["1", "a", "b", "ab", "abadsf", "badfasd"].filter(x => x.startsWith(text)));
         };
         multiselectTextBox.throttle = 0;
         panel.add(multiselectTextBox);

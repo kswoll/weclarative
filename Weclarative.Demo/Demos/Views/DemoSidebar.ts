@@ -30,6 +30,10 @@
             const http = new Controls.Link("Calling APIs");
             http.localAction = App.instance.demoController.http;
             this.add(http);
+
+            const autoCompleteTextBox = new Controls.Link("Auto Complete Text Box");
+            autoCompleteTextBox.localAction = App.instance.demoController.autoCompleteTextBox;
+            this.add(autoCompleteTextBox);
         }
     }
 }

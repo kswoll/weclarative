@@ -13,8 +13,8 @@
 
             this.table = new TablePanel(TablePanelWidth.preferred(), TablePanelWidth.weight());
             this.table.cellSpacing = 0;
-            this.table.node.style.width = "100%";
-            this.table.node.style.height = "100%";
+            this.table.style.width = "100%";
+            this.table.style.height = "100%";
             this.node.appendChild(this.table.node);
         }
 
@@ -29,7 +29,7 @@
             const isNameControl = this.count % 2 == 0;
             const lastControl = this.getChild(this.count - 1);
             this.addChild(control);
-            const cell = this.table.add(control, TablePanelConstraint.horizontalAlignment(isNameControl ? HorizontalAlignment.Right : HorizontalAlignment.Left));
+            const cell = this.table.add(control, new TablePanelConstraint(isNameControl ? HorizontalAlignment.Right : HorizontalAlignment.Left, VerticalAlignment.Top));
             if (isNameControl)
                 cell.style.whiteSpace = "nowrap";
             else

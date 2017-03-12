@@ -9,12 +9,12 @@
         private constructor(url: string) {
             // If the url already contains a query string, we want to decompose it into our query string
             // dictionary so we can seamlessly add on other query string arguments if necessary.
-            var queryIndex = url.indexOf("?");
+            const queryIndex = url.indexOf("?");
             if (queryIndex != -1) {
-                var baseUrl = url.substring(0, queryIndex);
-                var queryString = url.substring(queryIndex + 1);
+                const baseUrl = url.substring(0, queryIndex);
+                const queryString = url.substring(queryIndex + 1);
                 for (const pair of queryString.split("&")) {
-                    var parts = pair.split("=");
+                    const parts = pair.split("=");
                     this.withQueryString(parts[0], decodeURI(parts[1]));
                 }
                 url = baseUrl;
@@ -27,7 +27,7 @@
             let result = "";
             let delimiter = "";
 
-            for (const key in dictionary) {
+            for (const key of dictionary.keys()) {
                 const value = dictionary.get(key);
                 if (value != null) {
                     result += delimiter;
@@ -198,9 +198,14 @@
         constructor(readonly context: HttpRequestContext, readonly contentType: string, readonly payload: any) {
         }
 
-        async asJson<T>() {
+        async asString() {
             const response = await this.context.execute(this.contentType, this.payload);
-            const result = JSON.parse(response.response as string) as T;
+            return response.response as string;            
+        }
+
+        async asJson<T>() {
+            const response = await this.asString();
+            const result = JSON.parse(response) as T;
             return result;
         }
 
@@ -219,7 +224,7 @@
     }
 
     export class HttpStatusCodeError extends Error {
-        constructor(readonly statusCode: HttpStatusCode, message: string, response: any) {
+        constructor(readonly statusCode: HttpStatusCode, readonly message: string, readonly response: any) {
             super(`${statusCode}: ${message}`);
         }
     }

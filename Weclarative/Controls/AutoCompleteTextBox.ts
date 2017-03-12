@@ -3,7 +3,7 @@
 
     export class AutoCompleteTextBox<T> extends Control
     {
-        onSearch: (text: string, setItems: (items: T[]) => void) => Promise<void>;
+        onSearch: (text: string) => Promise<T[]>;
         throttle = 500;
         readonly loadingIcon: Icon;
         readonly selectedItems = new Array<T>();
@@ -17,7 +17,7 @@
         private keyPressEvent: KeyboardEvent;
         private isResettingOverlay: boolean;
 
-        constructor(private readonly textProvider: (item: T) => string, readonly multiselect = false) {
+        constructor(private readonly textProvider: (item: T) => string = x => x.toString(), readonly multiselect = false) {
             super();
 
             this.overlay = new ListView<T>(textProvider);
@@ -29,7 +29,7 @@
             this.overlay.style.minWidth = "300px";
             this.overlay.style.minHeight = "200px";
             this.overlay.style.cursor = "default";
-            this.overlay.onChanged.add(evt => this.overlayChanged());
+            this.overlay.onChanged.add(() => this.overlayChanged());
             this.addChild(this.overlay);
 
             this.addChild(this.loadingIcon);
@@ -229,8 +229,10 @@
                 await Utils.Promises.delay(this.throttle);
             if (this.keyPressEvent == event) {
                 this.loadingIcon.style.display = "inherit";
-                if (this.onSearch != null)
-                    this.onSearch(this.contentNode.value, items => this.populateItems(items));
+                if (this.onSearch != null) {
+                    const items = await this.onSearch(this.contentNode.value);
+                    this.populateItems(items);
+                }
                 this.loadingIcon.style.display = "none";
             }
         }

@@ -14,6 +14,7 @@
             registrar("verticalPanel", this.verticalPanel);
             registrar("checkBox", this.checkBox);
             registrar("http", this.http);
+            registrar("autoCompleteTextBox", this.autoCompleteTextBox);
         }
 
         home() {
@@ -42,6 +43,10 @@
 
         http() {
             return new Views.HttpView();
+        }
+
+        autoCompleteTextBox() {
+            return new Views.AutoCompleteTextBoxView();
         }
     }
 }

@@ -13,15 +13,15 @@
             return this._content;
         }
         set content(value: Control | null) {
-            if (this._content != null) {
+            if (this._content) {
                 this.removeChild(this.content as Control);
                 (this.content as Control).node.remove();
             }
             this._content = value;
-            if (value != null) {
+            if (value) {
                 this.node.appendChild(value.node);
-                (this.content as Control).style.width = "100%";
-                (this.content as Control).style.height = "100%";
+                value.style.width = "100%";
+                value.style.height = "100%";
                 this.addChild(value);
             }
         }

@@ -12,7 +12,26 @@ namespace Weclarative.Demo.Api.Controllers
         // GET api/values
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new[] { "value1", "value2" };
+        }
+
+        [HttpGet, Route("api/names")]
+        public string[] GetNames(string q)
+        {
+            var allNames = new[]
+            {
+                "John Doe",
+                "Justin Trudeau",
+                "Steven Spielberg",
+                "Sylvester Stallone",
+                "Arnold Schwartzenegger",
+                "Kobe Bryant",
+                "LeBron James",
+                "Dwyane Wade",
+                "Stephen Curry",
+                "Klay Thompson"
+            };
+            return allNames.Where(x => x.IndexOf(q, StringComparison.CurrentCultureIgnoreCase) != -1).OrderBy(x => x).ToArray();
         }
 
         // GET api/values/5

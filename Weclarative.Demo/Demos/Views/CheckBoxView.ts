@@ -2,19 +2,9 @@
     import AlignmentPanel = Weclarative.Controls.AlignmentPanel;
     import MarkDown = Weclarative.Controls.MarkDown;
     import TextBox = Weclarative.Controls.TextBox;
-    import TextBoxType = Weclarative.Controls.TextBoxType;
     import CheckBox = Weclarative.Controls.CheckBox;
-    import RadioGroup = Weclarative.Controls.RadioGroup;
-    import RadioButton = Weclarative.Controls.RadioButton;
-    import Enums = Weclarative.Utils.Enums;
-    import HorizontalAlignment = Weclarative.Controls.HorizontalAlignment;
-    import FixedPanel = Weclarative.Controls.FixedPanel;
-    import TextBlock = Weclarative.Controls.TextBlock;
-    import FillPanel = Weclarative.Controls.FillPanel;
-    import VerticalAlignment = Weclarative.Controls.VerticalAlignment;
     import TitledPanel = Weclarative.Controls.TitledPanel;
     import NameValuePanel = Weclarative.Controls.NameValuePanel;
-    import Button = Weclarative.Controls.Button;
 
     export class CheckBoxView extends BaseView {
         constructor() {
