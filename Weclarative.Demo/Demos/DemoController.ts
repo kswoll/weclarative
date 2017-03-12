@@ -15,6 +15,7 @@
             registrar("checkBox", this.checkBox);
             registrar("http", this.http);
             registrar("autoCompleteTextBox", this.autoCompleteTextBox);
+            registrar("icon", this.icon);
         }
 
         home() {
@@ -47,6 +48,10 @@
 
         autoCompleteTextBox() {
             return new Views.AutoCompleteTextBoxView();
+        }
+
+        icon() {
+            return new Views.IconView();
         }
     }
 }

@@ -111,5 +111,10 @@
                 option.selected = valueSet.has(item);
             }
         }
+
+        public bindItems(values: Array<T>) {
+            for (const value of values)
+                this.add(value);
+        }
     }
 }

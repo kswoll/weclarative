@@ -34,6 +34,10 @@
             const autoCompleteTextBox = new Controls.Link("Auto Complete Text Box");
             autoCompleteTextBox.localAction = App.instance.demoController.autoCompleteTextBox;
             this.add(autoCompleteTextBox);
+
+            const icon = new Controls.Link("Icon");
+            icon.localAction = App.instance.demoController.icon;
+            this.add(icon);
         }
     }
 }

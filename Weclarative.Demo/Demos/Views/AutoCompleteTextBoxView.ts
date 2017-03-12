@@ -34,8 +34,7 @@ deselects the item.
             singleSelect.onSearch = (q: string) => Http.to("/api/names").withQueryString("q", q).get().asJson<string[]>();
             nameValuePanel.addPair("Single Select", singleSelect);
 
-            const multiSelect = new AutoCompleteTextBox<string>();
-            multiSelect.multiselect = true;
+            const multiSelect = new AutoCompleteTextBox<string>(undefined, true);
             multiSelect.onSearch = (q: string) => Http.to("/api/names").withQueryString("q", q).get().asJson<string[]>();
             nameValuePanel.addPair("Multi Select", multiSelect);
 

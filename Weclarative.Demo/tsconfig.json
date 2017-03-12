@@ -23,6 +23,7 @@
     "Demos/Views/CheckBoxView.ts",
     "Demos/Views/HttpView.ts",
     "Demos/Views/AutoCompleteTextBoxView.ts",
+    "Demos/Views/IconView.ts",
     "Demos/DemoController.ts",
     "App.ts"
   ],

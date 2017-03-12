@@ -3,9 +3,9 @@
     import Strings = Utils.Strings;
 
     export class Icon extends Control {
-        constructor(source: IconType) {
+        constructor(source?: IconType) {
             super("i");
-            this.source = source;
+            this.source = source || IconType.None;
         }
 
         get isSpinning() {

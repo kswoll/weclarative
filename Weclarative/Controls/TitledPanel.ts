@@ -5,12 +5,15 @@
         private contentDiv: HTMLElement;
         private _content: Control | null;
 
-        constructor(title?: string | Control) {
+        constructor(title?: string | Control, content?: Control) {
             super();
             if (typeof(title) == typeof(""))
                 this.title = new InlineText(title as string);
             else
                 this.title = title as Control;
+
+            if (content)
+                this.content = content;
         }
 
         createNode() {
