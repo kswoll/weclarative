@@ -23,7 +23,7 @@
 
             const input = new TextArea();
             input.focus();
-            mainPanel.add(new TitledPanel("Input", new FixedPanel(input, "100%", "100px")));
+            mainPanel.add(new TitledPanel("Input", new FixedPanel(input, "100%", "200px")));
 
             const output = new MarkDown();
             output.style.overflowY = "auto";
@@ -57,6 +57,8 @@ class Foo {
 
 See [the Markdown documentation](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) for more information.
 `;
+            input.selectionStart = 0;
+            input.selectionEnd = 0;
             output.markdown = input.text;
 
             this.content = mainPanel;

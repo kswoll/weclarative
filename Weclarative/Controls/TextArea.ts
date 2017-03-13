@@ -15,6 +15,20 @@
                 this.text = text;
         }
 
+        get selectionStart() {
+            return this.element.selectionStart;
+        }
+        set selectionStart(value: number) {
+            this.element.selectionStart = value;
+        }
+
+        get selectionEnd() {
+            return this.element.selectionEnd;
+        }
+        set selectionEnd(value: number) {
+            this.element.selectionEnd = value;
+        }
+
         get onChanged() {
             if (this._onChanged == null)
                 this._onChanged = new EventHandler<void>();
