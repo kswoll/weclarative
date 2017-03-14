@@ -46,21 +46,21 @@ h3 {
     padding-top: 5px;
 }
 
-markdown table {
+div.markdown table {
     margin-bottom: 10px;
 }
 
-markdown th {
+div.markdown th {
     font-weight: bold;
     border-bottom: 1px black solid;
 }
 
-markdown th, markdown td {
+div.markdown th, div.markdown td {
     padding-right: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
 }
 
-markdown td:last-child, markdown th:last-child {
+div.markdown td:last-child, div.markdown th:last-child {
     padding-right: 0px;
 }
