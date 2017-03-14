@@ -1,7 +1,7 @@
 ﻿namespace Weclarative.Controls {
     export class Html extends Control {
-        constructor(html: string = "", isInline = true) {
-            super(isInline ? "span" : "div");
+        constructor(html: string = "", tag: string = "span") {
+            super(tag);
             this.html = html;
         }
 

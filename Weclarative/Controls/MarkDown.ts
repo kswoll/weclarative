@@ -22,7 +22,8 @@ namespace Weclarative.Controls {
         private _markdown: string;
 
         constructor(markdown: string = "", isInline = false) {
-            super("", isInline);
+            super("", "markdown");
+            this.node.style.display = isInline ? "inline" : "block";
             this.markdown = markdown;
         }
 
