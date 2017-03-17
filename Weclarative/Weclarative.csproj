@@ -40,6 +40,11 @@
     <TypeScriptCompile Include="Controls\FloatPanel.ts" />
     <TypeScriptCompile Include="Controls\FloatPanelSide.ts" />
     <TypeScriptCompile Include="Controls\FlowPanel.ts" />
+    <TypeScriptCompile Include="Controls\Grids\ContentGridCell.ts" />
+    <TypeScriptCompile Include="Controls\Grids\Grid.ts" />
+    <TypeScriptCompile Include="Controls\Grids\GridCell.ts" />
+    <TypeScriptCompile Include="Controls\Grids\GridRow.ts" />
+    <TypeScriptCompile Include="Controls\Grids\IGridColumn.ts" />
     <TypeScriptCompile Include="Controls\HorizontalAlignment.ts" />
     <TypeScriptCompile Include="Controls\HorizontalPanel.ts" />
     <TypeScriptCompile Include="Controls\HorizontalRule.ts" />

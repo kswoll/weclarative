@@ -83,17 +83,17 @@
     "Controls/ContentPanel.ts",
     "Controls/Panels.ts",
     "Controls/MarkDown.ts",
+    "Controls/Grids/Grid.ts",
+    "Controls/Grids/GridCell.ts",
+    "Controls/Grids/GridRow.ts",
+    "Controls/Grids/IGridColumn.ts",
+    "Controls/Grids/ContentGridCell.ts",
     "Controller.ts",
     "ControllerRegistry.ts",
     "LayoutType.ts",
     "ViewContext.ts",
     "ViewRequest.ts",
     "MvcApplication.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "wwwroot",
-    "weclarative.d.ts"
   ],
   "compileOnSave": true
 }
