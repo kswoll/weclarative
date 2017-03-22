@@ -63,5 +63,14 @@
                 parent.removeChild(parent.firstChild);
             }
         }
+
+        static isMouseInElement(element: HTMLElement) {
+            const mousedNodes = document.querySelectorAll(":hover");
+            for (var i = 0; i < mousedNodes.length; i++) {
+                if (mousedNodes[i] == element)
+                    return true;
+            }
+            return false;
+        }
     }
 }

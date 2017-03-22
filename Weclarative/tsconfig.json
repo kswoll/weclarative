@@ -11,6 +11,8 @@
     "sourceRoot": "./"
   },
   "files": [
+    "Fixups/WindowFixups.ts",
+    "Fixups/CSSStyleDeclarationFixups.ts",
     "Utils/Animator.ts",
     "Utils/Arrays.ts",
     "Utils/Convert.ts",
@@ -91,6 +93,9 @@
     "Controls/Grids/ContentGridCell.ts",
     "Controls/Grids/DataGrid.ts",
     "Controls/Grids/IGridEditor.ts",
+    "Controls/Grids/IGridEditing.ts",
+    "Controls/Grids/GridEditing.ts",
+    "Controls/Grids/GridShowMoreButton.ts",
     "Controller.ts",
     "ControllerRegistry.ts",
     "LayoutType.ts",

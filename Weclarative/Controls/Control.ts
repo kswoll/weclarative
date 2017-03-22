@@ -1,6 +1,7 @@
 ﻿namespace Weclarative.Controls {
     import EventHandler = Utils.EventHandler;
     import IEventHandler = Utils.IEventHandler;
+    import Elements = Utils.Elements;
 
     export class Control {
         private static mouseTrackingEngine = new MouseTrackingEngine();
@@ -91,7 +92,7 @@
                 this._onClick = new EventHandler<MouseEvent>();
                 this.node.addEventListener("click", (evt) => this.onJsClick(evt));
             }
-            return this._onClick;
+            return this._onClick as IEventHandler<MouseEvent>;
         }
 
         private onJsClick(evt: MouseEvent) {
@@ -103,7 +104,7 @@
                 this._onMouseEntered = new EventHandler<MouseEvent>();
                 this.node.addEventListener("mouseentered", (evt) => this.onJsMouseEntered(evt));
             }
-            return this._onMouseEntered;
+            return this._onMouseEntered as IEventHandler<Event>;
         }
 
         private onJsMouseEntered(evt: Event) {
@@ -115,7 +116,7 @@
                 this._onMouseExited = new EventHandler<Event>();
                 this.node.addEventListener("mouseexited", evt => this.onJsMouseExited(evt));
             }
-            return this._onMouseExited;
+            return this._onMouseExited as IEventHandler<Event>;
         }
 
         private onJsMouseExited(evt: Event) {
@@ -127,7 +128,7 @@
                 this._onMouseDown = new EventHandler<MouseEvent>();
                 this.node.addEventListener("mousedown", evt => this.onJsMouseDown(evt));
             }
-            return this._onMouseDown;
+            return this._onMouseDown as IEventHandler<MouseEvent>;
         }
 
         private onJsMouseDown(evt: MouseEvent) {
@@ -139,7 +140,7 @@
                 this._onMouseUp = new EventHandler<MouseEvent>();
                 this.node.addEventListener("mousedown", evt => this.onJsMouseUp(evt));
             }
-            return this._onMouseUp;
+            return this._onMouseUp as IEventHandler<MouseEvent>;
         }
 
         private onJsMouseUp(evt: MouseEvent) {
@@ -302,6 +303,11 @@
         static get isMouseDown(): boolean
         {
             return Control.mouseTrackingEngine.isMouseDown;
+        }
+
+        isMouseInControl()
+        {
+            return Elements.isMouseInElement(this.node);
         }
     }
 }

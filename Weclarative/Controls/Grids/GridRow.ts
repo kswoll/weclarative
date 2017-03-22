@@ -1,6 +1,6 @@
 ﻿namespace Weclarative.Controls.Grids {
-    import Elements = Weclarative.Utils.Elements;
-    import Arrays = Weclarative.Utils.Arrays;
+    import Elements = Utils.Elements;
+    import Arrays = Utils.Arrays;
 
     export class GridRow<T> extends Control {
         private readonly cells = new Array<GridCell>();
@@ -18,7 +18,7 @@
         private actionsCell: HTMLElement | null;
         private actionsDiv: HTMLElement | null;
 
-        constructor(readonly grid: Grid<T>, readonly item: T) {
+        constructor(readonly grid: Grid<T>, readonly item?: T) {
             super("tr");
 
             this.row = this.node as HTMLTableRowElement;
