@@ -1,14 +1,14 @@
 ﻿namespace Weclarative.Controls.Grids {
-    import Arrays = Weclarative.Utils.Arrays;
+    import Arrays = Utils.Arrays;
 
     export class Grid<T> extends Control {
         minSize: number;
 
-        protected readonly columns = new Array<IGridColumn<T>>();
+        readonly columns = new Array<IGridColumn<T>>();
         readonly items = new Array<T>();
         private rows = new Map<T, GridRow<T>>();
-        private headerCells = new Map<IGridColumn<T>, GridCell>();
-        private footerCells = new Map<IGridColumn<T>, GridCell>();
+        private headerCells = new Map<IGridColumn<T>, GridCell<T>>();
+        private footerCells = new Map<IGridColumn<T>, GridCell<T>>();
 
         private readonly table: HTMLTableElement;
         private readonly thead: HTMLElement;
@@ -262,7 +262,7 @@
         }
 
         getRow(item: T) {
-            return this.rows.get(item);
+            return this.rows.get(item) as GridRow<T>;
         }
 
         addColumn(column: IGridColumn<T>) {
@@ -284,10 +284,10 @@
 
         removeColumn(column: IGridColumn<T>) {
             Arrays.remove(this.columns, column);
-            const headerCell = this.headerCells.get(column) as GridCell;
+            const headerCell = this.headerCells.get(column) as GridCell<T>;
             this.headerCells.delete(column);
             this.headerRow.remove(headerCell);
-            const footerCell = this.footerCells.get(column) as GridCell;
+            const footerCell = this.footerCells.get(column) as GridCell<T>;
             this.footerCells.delete(column);
             this.footerRow.remove(footerCell);
             if (this.emptyCell)

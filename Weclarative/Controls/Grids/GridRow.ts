@@ -3,7 +3,7 @@
     import Arrays = Utils.Arrays;
 
     export class GridRow<T> extends Control {
-        private readonly cells = new Array<GridCell>();
+        private readonly cells = new Array<GridCell<T>>();
         private readonly row: HTMLTableRowElement;
         private readonly editors = new Map<IGridColumn<T>, Control>();
         private readonly callMouseEntered = () => this.mouseEntered();
@@ -108,7 +108,7 @@
                         saveLink.onClick.add(() => this.save());
                         cancelLink.onClick.add(() => this.cancel());
                         deleteLink.onClick.add(() => {
-                            this.grid.remove(item);
+                            this.grid.remove(this.item as T);
                             this.grid.refreshButtonStates();
                         });
                         addLink.onClick.add(() => {
@@ -130,7 +130,7 @@
             }
         }
 
-        add(cell: GridCell) {
+        add(cell: GridCell<T>) {
             this.addChild(cell);
             this.cells.push(cell);
             if (this.actionsCell == null)
@@ -139,7 +139,7 @@
                 Elements.insertBefore(cell.node, this.actionsCell);
         }
 
-        remove(cell: GridCell) {
+        remove(cell: GridCell<T>) {
             this.removeChild(cell);
             Arrays.remove(this.cells, cell);
             this.row.removeChild(cell.node);
@@ -155,7 +155,7 @@
             actionsDiv.appendChild((this.addLink as Link).node);
 
             for (const column of this.grid.columns) {
-                const cell = column.createCell(this.item);
+                const cell = column.createCell(this.item as T);
                 this.add(cell);
             }
         }
@@ -177,13 +177,13 @@
             let firstEditor: Control | null = null;
             for (let i = 0; i < this.grid.columns.length; i++) {
                 const column = this.grid.columns[i];
-                let cell: GridCell;
+                let cell: GridCell<T>;
                 if (column.editor == null) {
-                    cell = column.createCell(this.item);
+                    cell = column.createCell(this.item as T);
                     this.editors.delete(column);
                 } else {
                     const editor = column.editor.createEditor(
-                        this.item,
+                        this.item as T,
                         () => {
                             const nextEditors = this.grid.columns.map(x => this.editors.get(x)).filter(x => x).map(x => x as Control);
                             if (nextEditors.length > 0) {

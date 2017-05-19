@@ -1,10 +1,10 @@
 ﻿namespace Weclarative.Controls.Grids {
-    export class GridCell extends Control {
+    export class GridCell<T> extends Control {
         protected readonly body: HTMLElement;
 
         private _control: Control | null;
 
-        constructor(column: IGridColumn, tagName?: string) {
+        constructor(column: IGridColumn<T>, tagName?: string) {
             super(tagName || "td");
 
             this.body = document.createElement("div");

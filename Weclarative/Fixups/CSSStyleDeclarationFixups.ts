@@ -1,3 +1,3 @@
-﻿interface CSSStyleDeclarationFixups {
+﻿interface CSSStyleDeclaration {
     userSelect: string | null;
 }
