@@ -6,6 +6,7 @@
 
         readonly columns = new Array<IGridColumn<T>>();
         readonly items = new Array<T>();
+
         private rows = new Map<T, GridRow<T>>();
         private headerCells = new Map<IGridColumn<T>, GridCell<T>>();
         private footerCells = new Map<IGridColumn<T>, GridCell<T>>();

@@ -8,7 +8,9 @@
     "target": "es6",
     "outFile": "weclarative.js",
     "declaration": true,
-    "sourceRoot": "./"
+    "inlineSources":  true,
+    "sourceRoot": "./.",
+    "rootDir": "."
   },
   "files": [
     "Fixups/WindowFixups.ts",
@@ -96,6 +98,7 @@
     "Controls/Grids/IGridEditing.ts",
     "Controls/Grids/GridEditing.ts",
     "Controls/Grids/GridShowMoreButton.ts",
+    "Controls/Grids/DefaultGridColumn.ts",
     "Controller.ts",
     "ControllerRegistry.ts",
     "LayoutType.ts",

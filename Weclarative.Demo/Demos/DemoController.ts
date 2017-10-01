@@ -17,6 +17,7 @@
             registrar("autoCompleteTextBox", this.autoCompleteTextBox);
             registrar("icon", this.icon);
             registrar("markDown", this.markDown);
+//            registrar("grid", this.grid);
         }
 
         home() {
@@ -57,6 +58,10 @@
 
         markDown() {
             return new Views.MarkDownView();
+        }
+
+        grid() {
+            return new Views.GridView();
         }
     }
 }

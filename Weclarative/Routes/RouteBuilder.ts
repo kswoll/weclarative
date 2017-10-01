@@ -10,8 +10,10 @@
 
         unpin() {
             const pin = this.pinning.pop();
-            while (this.parts.length > pin) {
-                this.parts.splice(this.parts.length - 1, 1);
+            if (pin) {
+                while (this.parts.length > pin) {
+                    this.parts.splice(this.parts.length - 1, 1);
+                }
             }
         }
 

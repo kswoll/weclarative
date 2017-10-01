@@ -24,7 +24,8 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>2.0</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.3</TypeScriptToolsVersion>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -219,6 +220,7 @@
     <TypeScriptCompile Include="Demos\Views\CheckBoxView.ts" />
     <TypeScriptCompile Include="Demos\Views\DemoLayout.ts" />
     <TypeScriptCompile Include="Demos\Views\DemoSidebar.ts" />
+    <TypeScriptCompile Include="Demos\Views\GridView.ts" />
     <TypeScriptCompile Include="Demos\Views\HomeView.ts" />
     <TypeScriptCompile Include="Demos\Views\HorizontalPanelView.ts" />
     <TypeScriptCompile Include="Demos\Views\HttpView.ts" />
@@ -339,7 +341,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>63133</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

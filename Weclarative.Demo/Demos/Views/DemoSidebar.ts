@@ -42,6 +42,10 @@
             const markDown = new Controls.Link("MarkDown");
             markDown.localAction = App.instance.demoController.markDown;
             this.add(markDown);
+
+            const grid = new Controls.Link("Grid");
+            grid.localAction = App.instance.demoController.grid;
+            this.add(grid);
         }
     }
 }

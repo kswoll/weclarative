@@ -1,12 +1,6 @@
 ﻿namespace Demos.Views {
     import MarkDown = Weclarative.Controls.MarkDown;
-    import AlignmentPanel = Weclarative.Controls.AlignmentPanel;
-    import Icon = Weclarative.Controls.Icon;
-    import IconType = Weclarative.Controls.IconType;
     import TitledPanel = Weclarative.Controls.TitledPanel;
-    import NameValuePanel = Weclarative.Controls.NameValuePanel;
-    import ListBox = Weclarative.Controls.ListBox;
-    import Enums = Weclarative.Utils.Enums;
     import FixedPanel = Weclarative.Controls.FixedPanel;
     import TextArea = Weclarative.Controls.TextArea;
 
@@ -46,7 +40,8 @@ class Foo {
 \`\`\`
 
 ### Blockquotes
-> If you prick us do we not bleed? If you tickle us do we not laugh? If you poison us do we not die? And if you wrong us shall we not revenge?
+> If you prick us do we not bleed? If you tickle us do we not laugh? If you poison us do we not die? And if you wrong
+us shall we not revenge?
 
 ### Tables
 | First Name       | Last Name       |
