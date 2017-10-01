@@ -17,7 +17,7 @@
             registrar("autoCompleteTextBox", this.autoCompleteTextBox);
             registrar("icon", this.icon);
             registrar("markDown", this.markDown);
-//            registrar("grid", this.grid);
+            registrar("grid", this.grid);
         }
 
         home() {

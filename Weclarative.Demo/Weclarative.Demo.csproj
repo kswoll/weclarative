@@ -141,21 +141,9 @@
     <Content Include="reset.css" />
     <Content Include="weclarative-demo.js" />
     <Content Include="weclarative.js" />
-    <Content Include="Weclarative\bin\Weclarative.dll" />
-    <Content Include="Weclarative\bin\Weclarative.pdb" />
-    <Content Include="Weclarative\obj\Debug\TypeScriptCompilerOutput.txt" />
-    <Content Include="Weclarative\obj\Debug\Weclarative.csproj.FileListAbsolute.txt" />
-    <Content Include="Weclarative\obj\Debug\Weclarative.dll" />
-    <Content Include="Weclarative\obj\Debug\Weclarative.pdb" />
-    <Content Include="Weclarative\Weclarative.csproj" />
-    <Content Include="Weclarative\Weclarative.csproj.user" />
-    <Content Include="Weclarative\weclarative.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Weclarative\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="Weclarative\obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="Weclarative\obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="web.config">
@@ -204,11 +192,6 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
     <Content Include="weclarative.js.map" />
-    <Content Include="Weclarative\obj\Debug\CoreCompileInputs.cache" />
-    <Content Include="Weclarative\obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <Content Include="Weclarative\obj\Debug\Weclarative.csprojResolveAssemblyReference.cache" />
-    <Content Include="Weclarative\tsconfig.json" />
-    <Content Include="Weclarative\weclarative.js.map" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Demos\DemoController.ts" />
@@ -229,87 +212,9 @@
     <TypeScriptCompile Include="Demos\Views\SidePanelView.ts" />
     <TypeScriptCompile Include="Demos\Views\VerticalPanelView.ts" />
     <TypeScriptCompile Include="Tests\TestController.ts" />
-    <TypeScriptCompile Include="Weclarative\Controller.ts" />
-    <TypeScriptCompile Include="Weclarative\ControllerRegistry.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\AlignmentPanel.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\AutoCompleteTextBox.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\Button.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\CenteredPanel.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\CheckBox.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\Control.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\FillPanel.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\FixedHeaderPanel.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\FixedPanel.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\FloatPanel.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\FloatPanelSide.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\FlowPanel.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\HorizontalAlignment.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\HorizontalPanel.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\HorizontalRule.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\Html.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\HtmlControl.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\Icon.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\IconType.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\Image.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\InlineText.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\KeyCode.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\LayeredPanel.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\Link.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\ListBox.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\ListView.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\MouseTrackingEngine.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\NameValuePanel.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\SidePanel.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\SlideDownHeaderPanel.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\TablePanel.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\TablePanelConstraint.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\TablePanelPoint.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\TablePanelWidth.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\TablePanelWidthStyle.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\TextArea.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\TextBlock.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\TextBox.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\TextBoxType.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\TitledPanel.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\VerticalAlignment.ts" />
-    <TypeScriptCompile Include="Weclarative\Controls\VerticalPanel.ts" />
-    <TypeScriptCompile Include="Weclarative\Fixups\WindowFixups.ts" />
-    <TypeScriptCompile Include="Weclarative\LayoutType.ts" />
-    <TypeScriptCompile Include="Weclarative\MvcApplication.ts" />
-    <TypeScriptCompile Include="Weclarative\Routes\IRouteConstraint.ts" />
-    <TypeScriptCompile Include="Weclarative\Routes\IRouteNode.ts" />
-    <TypeScriptCompile Include="Weclarative\Routes\IRoutePart.ts" />
-    <TypeScriptCompile Include="Weclarative\Routes\RouteBuilder.ts" />
-    <TypeScriptCompile Include="Weclarative\Routes\RouteData.ts" />
-    <TypeScriptCompile Include="Weclarative\Routes\RouteDefault.ts" />
-    <TypeScriptCompile Include="Weclarative\Routes\RouteEngine.ts" />
-    <TypeScriptCompile Include="Weclarative\Routes\RouteLiteral.ts" />
-    <TypeScriptCompile Include="Weclarative\Routes\RouteNode.ts" />
-    <TypeScriptCompile Include="Weclarative\Routes\RoutePart.ts" />
-    <TypeScriptCompile Include="Weclarative\Routes\RoutePath.ts" />
-    <TypeScriptCompile Include="Weclarative\Routes\RouteTree.ts" />
-    <TypeScriptCompile Include="Weclarative\Routes\RouteVariable.ts" />
-    <TypeScriptCompile Include="Weclarative\Utils\Animator.ts" />
-    <TypeScriptCompile Include="Weclarative\Utils\Arrays.ts" />
-    <TypeScriptCompile Include="Weclarative\Utils\Convert.ts" />
-    <TypeScriptCompile Include="Weclarative\Utils\Disposable.ts" />
-    <TypeScriptCompile Include="Weclarative\Utils\Elements.ts" />
-    <TypeScriptCompile Include="Weclarative\Utils\Events.ts" />
-    <TypeScriptCompile Include="Weclarative\Utils\Promises.ts" />
-    <TypeScriptCompile Include="Weclarative\Utils\Reflection.ts" />
-    <TypeScriptCompile Include="Weclarative\Utils\Strings.ts" />
-    <TypeScriptCompile Include="Weclarative\ViewContext.ts" />
-    <TypeScriptCompile Include="Weclarative\ViewRequest.ts" />
-    <TypeScriptCompile Include="Weclarative\Views\Layout.ts" />
-    <TypeScriptCompile Include="Weclarative\Views\View.ts" />
-    <TypeScriptCompile Include="Weclarative\weclarative.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Weclarative\obj\Debug\TempPE\" />
-    <Folder Include="Weclarative\obj\Release\TempPE\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
