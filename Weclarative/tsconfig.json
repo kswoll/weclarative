@@ -4,13 +4,11 @@
     "noEmitOnError": true,
     "strictNullChecks": true,
     "removeComments": false,
-    "sourceMap": true,
     "target": "es6",
     "outFile": "weclarative.js",
     "declaration": true,
-    "inlineSources":  true,
-    "sourceRoot": "./.",
-    "rootDir": "."
+    "inlineSourceMap": true,
+    "inlineSources": true
   },
   "files": [
     "Fixups/WindowFixups.ts",
