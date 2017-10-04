@@ -26,6 +26,7 @@
     <Content Include="weclarative.js" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Compositions\GridComposition.ts" />
     <TypeScriptCompile Include="Controller.ts" />
     <TypeScriptCompile Include="ControllerRegistry.ts" />
     <TypeScriptCompile Include="Controls\AlignmentPanel.ts" />
@@ -33,6 +34,7 @@
     <TypeScriptCompile Include="Controls\Button.ts" />
     <TypeScriptCompile Include="Controls\CenteredPanel.ts" />
     <TypeScriptCompile Include="Controls\CheckBox.ts" />
+    <TypeScriptCompile Include="Compositions\Composition.ts" />
     <TypeScriptCompile Include="Controls\ContentPanel.ts" />
     <TypeScriptCompile Include="Controls\Control.ts" />
     <TypeScriptCompile Include="Controls\FillPanel.ts" />
@@ -91,6 +93,7 @@
     <TypeScriptCompile Include="LayoutType.ts" />
     <TypeScriptCompile Include="Looks\DefaultGridLook.ts" />
     <TypeScriptCompile Include="Looks\DefaultLook.ts" />
+    <TypeScriptCompile Include="Looks\Look.ts" />
     <TypeScriptCompile Include="MvcApplication.ts" />
     <TypeScriptCompile Include="Utils\Animator.ts" />
     <TypeScriptCompile Include="Utils\Elements.ts" />

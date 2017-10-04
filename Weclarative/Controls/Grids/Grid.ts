@@ -1,41 +1,16 @@
 ﻿namespace Weclarative.Controls.Grids {
     import Arrays = Utils.Arrays;
-
-    /**
-     * Defines the HTML elements that make up the overall structure of the grid.  You can
-     * interact with this class to change how the grid looks.
-     */
-    export class GridComposition<T> {
-        readonly table: HTMLTableElement;
-        readonly thead: HTMLElement;
-        readonly tbody: HTMLElement;
-        readonly tfoot: HTMLElement;
-        readonly headerRow: GridRow<T>;
-        readonly footerRow: GridRow<T>;
-        readonly showMoreFoot: HTMLElement;
-        showMoreCell: HTMLTableCellElement | null;
-        showMoreRow: HTMLTableRowElement | null;
-        emptyRow: HTMLTableRowElement | null;
-        emptyCell: HTMLTableCellElement | null;
-        loadingRow: HTMLTableRowElement | null;
-        loadingCell: HTMLTableCellElement | null;
-
-        constructor(grid: Grid<T>) {
-            this.thead = document.createElement("thead");
-            this.tbody = document.createElement("tbody");
-            this.tfoot = document.createElement("tfoot");
-            this.showMoreFoot = document.createElement("tfoot");
-            this.headerRow = new GridRow<T>(grid);
-            this.footerRow = new GridRow<T>(grid);
-        }
-    }
+    import GridComposition = Compositions.GridComposition;
+    import DefaultLook = Looks.DefaultLook;
 
     export class Grid<T> extends Control {
         minSize: number;
 
         readonly columns = new Array<IGridColumn<T>>();
         readonly items = new Array<T>();
-        readonly composition = new GridComposition<T>(this);
+        readonly composition: GridComposition;
+        readonly headerRow: GridRow<T>;
+        readonly footerRow: GridRow<T>;
 
         private rows = new Map<T, GridRow<T>>();
         private headerCells = new Map<IGridColumn<T>, GridCell<T>>();
@@ -55,15 +30,20 @@
             super("table");
 
             this.style.overflow = "hidden";
+            this.composition = new GridComposition(this.node);
+            this.headerRow = new GridRow<T>(this);
+            this.footerRow = new GridRow<T>(this);
+
             this.node.appendChild(this.composition.thead);
             this.node.appendChild(this.composition.tbody);
             this.node.appendChild(this.composition.tfoot);
             this.node.appendChild(this.composition.showMoreFoot);
-            this.composition.thead.appendChild(this.composition.headerRow.node);
-            this.composition.tfoot.appendChild(this.composition.footerRow.node);
+            this.composition.thead.appendChild(this.headerRow.node);
+            this.composition.tfoot.appendChild(this.footerRow.node);
+
+            DefaultLook.grid.install(this.composition);
 
             this.isFooterVisible = false;
-            this.style.border = "1px black solid";
             this.style.borderRadius = "4px";
         }
 
@@ -72,17 +52,17 @@
         }
 
         get isHeaderVisible() {
-            return this.composition.headerRow.style.display != "none";
+            return this.headerRow.style.display != "none";
         }
         set isHeaderVisible(value: boolean) {
-            this.composition.headerRow.style.display = value ? "" : "none";
+            this.headerRow.style.display = value ? "" : "none";
         }
 
         get isFooterVisible() {
-            return this.composition.footerRow.style.display != "none";
+            return this.footerRow.style.display != "none";
         }
         set isFooterVisible(value: boolean) {
-            this.composition.footerRow.style.display = value ? "" : "none";
+            this.footerRow.style.display = value ? "" : "none";
         }
 
         get editing() {
@@ -284,10 +264,10 @@
             const composition = this.composition;
             this.columns.push(column);
             const headerCell = column.createHeaderCell();
-            composition.headerRow.add(headerCell);
+            this.headerRow.add(headerCell);
             this.headerCells.set(column, headerCell);
             const footerCell = column.createFooterCell();
-            composition.footerRow.add(footerCell);
+            this.footerRow.add(footerCell);
             this.footerCells.set(column, footerCell);
             if (composition.emptyCell)
                 composition.emptyCell.colSpan = this.columns.length;
@@ -303,10 +283,10 @@
             Arrays.remove(this.columns, column);
             const headerCell = this.headerCells.get(column) as GridCell<T>;
             this.headerCells.delete(column);
-            composition.headerRow.remove(headerCell);
+            this.headerRow.remove(headerCell);
             const footerCell = this.footerCells.get(column) as GridCell<T>;
             this.footerCells.delete(column);
-            composition.footerRow.remove(footerCell);
+            this.footerRow.remove(footerCell);
             if (composition.emptyCell)
                 composition.emptyCell.colSpan = this.columns.length;
         }
