@@ -1,54 +1,66 @@
 ﻿namespace Weclarative.Controls.Grids {
     import Arrays = Utils.Arrays;
 
+    /**
+     * Defines the HTML elements that make up the overall structure of the grid.  You can
+     * interact with this class to change how the grid looks.
+     */
+    export class GridComposition<T> {
+        readonly table: HTMLTableElement;
+        readonly thead: HTMLElement;
+        readonly tbody: HTMLElement;
+        readonly tfoot: HTMLElement;
+        readonly headerRow: GridRow<T>;
+        readonly footerRow: GridRow<T>;
+        readonly showMoreFoot: HTMLElement;
+        showMoreCell: HTMLTableCellElement | null;
+        showMoreRow: HTMLTableRowElement | null;
+        emptyRow: HTMLTableRowElement | null;
+        emptyCell: HTMLTableCellElement | null;
+        loadingRow: HTMLTableRowElement | null;
+        loadingCell: HTMLTableCellElement | null;
+
+        constructor(grid: Grid<T>) {
+            this.thead = document.createElement("thead");
+            this.tbody = document.createElement("tbody");
+            this.tfoot = document.createElement("tfoot");
+            this.showMoreFoot = document.createElement("tfoot");
+            this.headerRow = new GridRow<T>(grid);
+            this.footerRow = new GridRow<T>(grid);
+        }
+    }
+
     export class Grid<T> extends Control {
         minSize: number;
 
         readonly columns = new Array<IGridColumn<T>>();
         readonly items = new Array<T>();
+        readonly composition = new GridComposition<T>(this);
 
         private rows = new Map<T, GridRow<T>>();
         private headerCells = new Map<IGridColumn<T>, GridCell<T>>();
         private footerCells = new Map<IGridColumn<T>, GridCell<T>>();
 
-        private readonly table: HTMLTableElement;
-        private readonly thead: HTMLElement;
-        private readonly tbody: HTMLElement;
-        private readonly tfoot: HTMLElement;
-        private readonly headerRow = new GridRow<T>(this);
-        private readonly footerRow = new GridRow<T>(this);
-        private readonly showMoreFoot: HTMLElement;
-
         private _editing: IGridEditing<T>;
-        private showMoreCell: HTMLTableCellElement | null;
-        private showMoreRow: HTMLTableRowElement | null;
         private _showMoreButton: GridShowMoreButton<T>;
 
         private _empty: Control | null;
-        private emptyRow: HTMLTableRowElement | null;
-        private emptyCell: HTMLTableCellElement | null;
         private _isEmptyVisible: boolean;
 
         private _loading: Control | null;
-        private loadingRow: HTMLTableRowElement | null;
-        private loadingCell: HTMLTableCellElement | null;
         private _isLoading: boolean;
         private hasLoaded: boolean;
 
         constructor() {
             super("table");
 
-            this.thead = document.createElement("thead");
-            this.tbody = document.createElement("tbody");
-            this.tfoot = document.createElement("tfoot");
-            this.showMoreFoot = document.createElement("tfoot");
             this.style.overflow = "hidden";
-            this.node.appendChild(this.thead);
-            this.node.appendChild(this.tbody);
-            this.node.appendChild(this.tfoot);
-            this.node.appendChild(this.showMoreFoot);
-            this.thead.appendChild(this.headerRow.node);
-            this.tfoot.appendChild(this.footerRow.node);
+            this.node.appendChild(this.composition.thead);
+            this.node.appendChild(this.composition.tbody);
+            this.node.appendChild(this.composition.tfoot);
+            this.node.appendChild(this.composition.showMoreFoot);
+            this.composition.thead.appendChild(this.composition.headerRow.node);
+            this.composition.tfoot.appendChild(this.composition.footerRow.node);
 
             this.isFooterVisible = false;
             this.style.border = "1px black solid";
@@ -60,17 +72,17 @@
         }
 
         get isHeaderVisible() {
-            return this.headerRow.style.display != "none";
+            return this.composition.headerRow.style.display != "none";
         }
         set isHeaderVisible(value: boolean) {
-            this.headerRow.style.display = value ? "" : "none";
+            this.composition.headerRow.style.display = value ? "" : "none";
         }
 
         get isFooterVisible() {
-            return this.footerRow.style.display != "none";
+            return this.composition.footerRow.style.display != "none";
         }
         set isFooterVisible(value: boolean) {
-            this.footerRow.style.display = value ? "" : "none";
+            this.composition.footerRow.style.display = value ? "" : "none";
         }
 
         get editing() {
@@ -79,17 +91,18 @@
         set editing(value: IGridEditing<T>) {
             if (this._editing != value) {
                 this._editing = value;
+                const composition = this.composition;
                 if (value == null) {
-                    if (this.emptyCell) {
-                        this.emptyCell.colSpan = this.columns.length;
+                    if (composition.emptyCell) {
+                        composition.emptyCell.colSpan = this.columns.length;
                     }
                     for (const item of this.items) {
                         const row = this.rows.get(item) as GridRow<T>;
                         row.isEditable = true;
                     }
                 } else {
-                    if (this.emptyCell) {
-                        this.emptyCell.colSpan = this.columns.length + 1;
+                    if (composition.emptyCell) {
+                        composition.emptyCell.colSpan = this.columns.length + 1;
                     }
                     for (const item of this.items) {
                         const row = this.rows.get(item) as GridRow<T>;
@@ -100,27 +113,27 @@
         }
 
         get isShowMoreButtonVisible() {
-            return this.showMoreRow != null;
+            return this.composition.showMoreRow != null;
         }
         set isShowMoreButtonVisible(value: boolean) {
             if (this.isShowMoreButtonVisible != value) {
                 if (!value) {
-                    this.showMoreFoot.removeChild(this.showMoreRow as HTMLElement);
-                    this.showMoreCell = null;
-                    this.showMoreRow = null;
+                    this.composition.showMoreFoot.removeChild(this.composition.showMoreRow as HTMLElement);
+                    this.composition.showMoreCell = null;
+                    this.composition.showMoreRow = null;
                 }
             } else {
                 const showMoreRow = document.createElement("tr");
                 const showMoreCell = document.createElement("td");
-                this.showMoreRow = showMoreRow;
-                this.showMoreCell = showMoreCell;
+                this.composition.showMoreRow = showMoreRow;
+                this.composition.showMoreCell = showMoreCell;
                 showMoreCell.style.borderTop = "1px black solid";
                 showMoreCell.colSpan = this.columns.length;
                 showMoreRow.appendChild(showMoreCell);
                 const showMoreButton = new GridShowMoreButton<T>(this);
                 this._showMoreButton = showMoreButton;
                 showMoreCell.appendChild(showMoreButton.node);
-                this.showMoreFoot.appendChild(showMoreRow);
+                this.composition.showMoreFoot.appendChild(showMoreRow);
             }
         }
 
@@ -134,23 +147,23 @@
         set loading(value: Control | null) {
             if (this.loading != null) {
                 this.loading.node.remove();
-                (this.loadingRow as HTMLElement).remove();
+                (this.composition.loadingRow as HTMLElement).remove();
                 this.removeChild(this.loading);
             }
             this._loading = value;
             if (value) {
                 this.addChild(value);
-                if (this.loadingRow == null) {
-                    this.loadingRow = document.createElement("tr");
+                if (this.composition.loadingRow == null) {
+                    this.composition.loadingRow = document.createElement("tr");
                 }
-                if (this.loadingCell == null) {
+                if (this.composition.loadingCell == null) {
                     const loadingCell = document.createElement("td");
-                    this.loadingCell = loadingCell;
+                    this.composition.loadingCell = loadingCell;
                     loadingCell.colSpan = this.columns.length;
                     loadingCell.style.padding = "3px";
-                    (this.loadingRow as HTMLElement).appendChild(loadingCell);
+                    (this.composition.loadingRow as HTMLElement).appendChild(loadingCell);
                 }
-                (this.loadingCell as HTMLElement).appendChild(value.node);
+                (this.composition.loadingCell as HTMLElement).appendChild(value.node);
             }
         }
 
@@ -162,13 +175,13 @@
                 this._isLoading = value;
             }
             if (value) {
-                if (this.rows.size == 0 && this.emptyRow != null)
+                if (this.rows.size == 0 && this.composition.emptyRow != null)
                     this.isEmptyVisible = false;
-                this.tbody.appendChild(this.loadingRow as HTMLElement);
+                this.composition.tbody.appendChild(this.composition.loadingRow as HTMLElement);
                 this.hasLoaded = true;
             } else {
-                (this.loadingRow as HTMLElement).remove();
-                if (this.rows.size == 0 && this.emptyRow != null)
+                (this.composition.loadingRow as HTMLElement).remove();
+                if (this.rows.size == 0 && this.composition.emptyRow != null)
                     this.isEmptyVisible = true;
             }
         }
@@ -179,25 +192,25 @@
         set empty(value: Control | null) {
             if (this.empty) {
                 this.empty.node.remove();
-                (this.emptyRow as HTMLElement).remove();
+                (this.composition.emptyRow as HTMLElement).remove();
                 this.removeChild(this.empty);
             }
             this._empty = value;
             if (value) {
                 this.addChild(value);
-                if (this.emptyRow == null) {
-                    this.emptyRow = document.createElement("tr");
+                if (this.composition.emptyRow == null) {
+                    this.composition.emptyRow = document.createElement("tr");
                 }
-                if (this.emptyCell == null) {
+                if (this.composition.emptyCell == null) {
                     const emptyCell = document.createElement("td");
-                    this.emptyCell = emptyCell;
+                    this.composition.emptyCell = emptyCell;
                     emptyCell.colSpan = this.columns.length;
                     emptyCell.style.padding = "3px";
-                    (this.emptyRow as HTMLElement).appendChild(emptyCell);
+                    (this.composition.emptyRow as HTMLElement).appendChild(emptyCell);
                 }
-                (this.emptyCell as HTMLElement).appendChild(value.node);
+                (this.composition.emptyCell as HTMLElement).appendChild(value.node);
                 if (this.rows.size == 0 && !this.isLoading && this.hasLoaded) {
-                    this.tbody.appendChild(this.emptyRow as HTMLElement);
+                    this.composition.tbody.appendChild(this.composition.emptyRow as HTMLElement);
                 }
             }
         }
@@ -206,12 +219,13 @@
             return this._isEmptyVisible;
         }
         set isEmptyVisible(value: boolean) {
-            if (this._isEmptyVisible != value && this.emptyRow != null) {
+            const composition = this.composition;
+            if (this._isEmptyVisible != value && composition.emptyRow != null) {
                 this._isEmptyVisible = value;
                 if (value) {
-                    this.tbody.appendChild(this.emptyRow);
+                    composition.tbody.appendChild(composition.emptyRow);
                 } else {
-                    this.emptyRow.remove();
+                    composition.emptyRow.remove();
                 }
             }
         }
@@ -224,7 +238,7 @@
         }
 
         add(item: T) {
-            if (this.rows.size == 0 && this.emptyRow != null)
+            if (this.rows.size == 0 && this.composition.emptyRow != null)
                 this.isEmptyVisible = false;
 
             // Create new row
@@ -234,7 +248,7 @@
             if (this.rows.size % 2 == 1)
                 row.style.backgroundColor = "#F7F7FF";
             this.rows.set(item, row);
-            this.tbody.appendChild(row.node);
+            this.composition.tbody.appendChild(row.node);
 
             for (const column of this.columns) {
                 const cell = column.createCell(item);
@@ -251,7 +265,7 @@
             Arrays.remove(this.items, item);
             row.node.remove();
 
-            if (this.rows.size == 0 && this.emptyRow != null && !this.isLoading)
+            if (this.rows.size == 0 && this.composition.emptyRow != null && !this.isLoading)
                 this.isEmptyVisible = true;
         }
 
@@ -266,33 +280,35 @@
             return this.rows.get(item) as GridRow<T>;
         }
 
-        addColumn(column: IGridColumn<T>) {
+        addColumn<TColumn extends IGridColumn<T>>(column: TColumn) {
+            const composition = this.composition;
             this.columns.push(column);
             const headerCell = column.createHeaderCell();
-            this.headerRow.add(headerCell);
+            composition.headerRow.add(headerCell);
             this.headerCells.set(column, headerCell);
             const footerCell = column.createFooterCell();
-            this.footerRow.add(footerCell);
+            composition.footerRow.add(footerCell);
             this.footerCells.set(column, footerCell);
-            if (this.emptyCell)
-                this.emptyCell.colSpan = this.columns.length;
-            if (this.loadingCell)
-                this.loadingCell.colSpan = this.columns.length;
-            if (this.showMoreCell)
-                this.showMoreCell.colSpan = this.columns.length;
+            if (composition.emptyCell)
+                composition.emptyCell.colSpan = this.columns.length;
+            if (composition.loadingCell)
+                composition.loadingCell.colSpan = this.columns.length;
+            if (composition.showMoreCell)
+                composition.showMoreCell.colSpan = this.columns.length;
             return column;
         }
 
         removeColumn(column: IGridColumn<T>) {
+            const composition = this.composition;
             Arrays.remove(this.columns, column);
             const headerCell = this.headerCells.get(column) as GridCell<T>;
             this.headerCells.delete(column);
-            this.headerRow.remove(headerCell);
+            composition.headerRow.remove(headerCell);
             const footerCell = this.footerCells.get(column) as GridCell<T>;
             this.footerCells.delete(column);
-            this.footerRow.remove(footerCell);
-            if (this.emptyCell)
-                this.emptyCell.colSpan = this.columns.length;
+            composition.footerRow.remove(footerCell);
+            if (composition.emptyCell)
+                composition.emptyCell.colSpan = this.columns.length;
         }
     }
 }

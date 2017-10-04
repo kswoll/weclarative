@@ -1,16 +1,32 @@
 ﻿namespace Weclarative.Controls.Grids {
     export class DefaultGridColumn<T> implements IGridColumn<T> {
-        constructor(public readonly title: string, readonly cellProvider: (item: T) => string) {
+        private readonly footerCell: GridCell<T>;
+        private readonly footerTextBlock = new TextBlock();
+
+        constructor(
+            public readonly title: string,
+            private readonly cellProvider: (item: T) => string,
+            public readonly width?: string,
+            public footerText?: string)
+        {
+            this.footerCell = new GridCell<T>(this);
+            this.footerCell.content = this.footerTextBlock;
+            if (footerText) {
+                this.footerTextBlock.value = footerText;
+            }
         }
 
         createHeaderCell(): GridCell<T> {
             const cell = new GridCell<T>(this);
             cell.content = new TextBlock(this.title);
+            if (this.width) {
+                cell.style.width = this.width;
+            }
             return cell;
         }
 
         createFooterCell(): GridCell<T> {
-            return new GridCell<T>(this);
+            return this.footerCell;
         }
 
         createCell(item: T): ContentGridCell<T> {

@@ -14,9 +14,16 @@
             mainPanel.style.maxWidth = "800px";
 
             const grid = new Grid();
-            grid.addColumn(new DefaultGridColumn<TestRow>("First Name", x => x.firstName));
+            grid.style.width = "600px";
+            grid.addColumn(new DefaultGridColumn<TestRow>("First Name", x => x.firstName, "25%", "Test Footer"));
             grid.addColumn(new DefaultGridColumn<TestRow>("Last Name", x => x.lastName));
+            grid.isFooterVisible = true;
+
             grid.add(new TestRow("Kirk", "Woll"));
+            grid.add(new TestRow("Andrew", "Simpkins"));
+            grid.add(new TestRow("Carl", "Woll"));
+            grid.add(new TestRow("Lara", "Robinette"));
+
             mainPanel.add(grid);
 
             this.content = mainPanel;

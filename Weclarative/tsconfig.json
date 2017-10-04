@@ -97,6 +97,8 @@
     "Controls/Grids/GridEditing.ts",
     "Controls/Grids/GridShowMoreButton.ts",
     "Controls/Grids/DefaultGridColumn.ts",
+    "Looks/DefaultLook.ts",
+    "Looks/DefaultGridLook.ts",
     "Controller.ts",
     "ControllerRegistry.ts",
     "LayoutType.ts",

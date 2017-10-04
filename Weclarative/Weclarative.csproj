@@ -89,6 +89,8 @@
     <TypeScriptCompile Include="Fixups\CSSStyleDeclarationFixups.ts" />
     <TypeScriptCompile Include="Fixups\WindowFixups.ts" />
     <TypeScriptCompile Include="LayoutType.ts" />
+    <TypeScriptCompile Include="Looks\DefaultGridLook.ts" />
+    <TypeScriptCompile Include="Looks\DefaultLook.ts" />
     <TypeScriptCompile Include="MvcApplication.ts" />
     <TypeScriptCompile Include="Utils\Animator.ts" />
     <TypeScriptCompile Include="Utils\Elements.ts" />
