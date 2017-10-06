@@ -7,7 +7,8 @@
     "target": "es6",
     "emitBOM": false,
     "outFile": "weclarative-demo.js",
-    "inlineSourceMap": true,
+    "sourceMap":  true,
+//    "inlineSourceMap": true,
     "inlineSources": true
   },
   "files": [
