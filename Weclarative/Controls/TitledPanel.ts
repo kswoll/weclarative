@@ -6,7 +6,16 @@
         private _content: Control | null;
 
         constructor(title?: string | Control, content?: Control) {
-            super();
+            super("fieldset");
+
+            this.legend = document.createElement("legend");
+            this.contentDiv = document.createElement("div");
+
+            this.node.style.border = "2px threedface groove";
+            this.node.style.padding = "10px";
+            this.node.appendChild(this.legend);
+            this.node.appendChild(this.contentDiv);
+
             if (typeof(title) == typeof(""))
                 this.title = new InlineText(title as string);
             else
@@ -14,19 +23,6 @@
 
             if (content)
                 this.content = content;
-        }
-
-        createNode() {
-            this.legend = document.createElement("legend");
-            this.contentDiv = document.createElement("div");
-
-            const fieldSet = document.createElement("fieldset");
-            fieldSet.style.border = "2px threedface groove";
-            fieldSet.style.padding = "10px";
-            fieldSet.appendChild(this.legend);
-            fieldSet.appendChild(this.contentDiv);
-
-            return fieldSet;
         }
 
         get title() {

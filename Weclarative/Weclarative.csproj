@@ -35,6 +35,7 @@
     <TypeScriptCompile Include="Controls\CenteredPanel.ts" />
     <TypeScriptCompile Include="Controls\CheckBox.ts" />
     <TypeScriptCompile Include="Compositions\Composition.ts" />
+    <TypeScriptCompile Include="Controls\CompositeControl.ts" />
     <TypeScriptCompile Include="Controls\ContentPanel.ts" />
     <TypeScriptCompile Include="Controls\Control.ts" />
     <TypeScriptCompile Include="Controls\FillPanel.ts" />
@@ -91,7 +92,7 @@
     <TypeScriptCompile Include="Fixups\CSSStyleDeclarationFixups.ts" />
     <TypeScriptCompile Include="Fixups\WindowFixups.ts" />
     <TypeScriptCompile Include="LayoutType.ts" />
-    <TypeScriptCompile Include="Looks\DefaultGridLook.ts" />
+    <TypeScriptCompile Include="Looks\GridLook.ts" />
     <TypeScriptCompile Include="Looks\DefaultLook.ts" />
     <TypeScriptCompile Include="Looks\Look.ts" />
     <TypeScriptCompile Include="MvcApplication.ts" />

@@ -4,9 +4,11 @@
     "noEmitOnError": true,
     "strictNullChecks": true,
     "removeComments": false,
-    "sourceMap": true,
     "target": "es6",
-    "outFile": "weclarative-demo.js"
+    "emitBOM": false,
+    "outFile": "weclarative-demo.js",
+    "inlineSourceMap": true,
+    "inlineSources": true
   },
   "files": [
     "weclarative.d.ts",

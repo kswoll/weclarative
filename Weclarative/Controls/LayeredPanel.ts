@@ -9,7 +9,18 @@
         private cell: HTMLElement;
 
         constructor() {
-            super();
+            super("table");
+
+            const row = document.createElement("tr");
+            this.cell = document.createElement("td");
+            this.cell.style.verticalAlign = "middle";
+            this.cell.style.position = "relative";
+            this.cell.style.zIndex = "-1";
+            this.container = document.createElement("div");
+
+            this.cell.appendChild(this.container);
+            row.appendChild(this.cell);
+            this.node.appendChild(row);
         }
 
         get background() {
@@ -57,23 +68,6 @@
             this.removeChild(layer);
             Arrays.remove(this.layers, layer);
             Arrays.remove(this.wrappers, wrapper);
-        }
-
-        createNode() {
-            const table = document.createElement("table");
-
-            const row = document.createElement("tr");
-            this.cell = document.createElement("td");
-            this.cell.style.verticalAlign = "middle";
-            this.cell.style.position = "relative";
-            this.cell.style.zIndex = "-1";
-            this.container = document.createElement("div");
-
-            this.cell.appendChild(this.container);
-            row.appendChild(this.cell);
-            table.appendChild(row);
-
-            return table;
         }
     }
 }

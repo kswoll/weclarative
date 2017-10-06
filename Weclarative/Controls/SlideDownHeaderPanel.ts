@@ -15,9 +15,7 @@
 
         constructor() {
             super();
-        }
 
-        createNode() {
             this.headerDiv = document.createElement("div");
             this.headerDiv.style.position = "absolute";
             this.headerDiv.style.width = "100%";
@@ -30,11 +28,8 @@
 
             this.contentDiv = document.createElement("div");
 
-            const result = document.createElement("div");
-            result.appendChild(this.headerContainerDiv);
-            result.appendChild(this.contentDiv);
-
-            return result;
+            this.node.appendChild(this.headerContainerDiv);
+            this.node.appendChild(this.contentDiv);
         }
 
         get header() {

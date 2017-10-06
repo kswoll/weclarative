@@ -1,7 +1,7 @@
 ﻿namespace Weclarative.Controls {
     export class HtmlControl extends Control {
         constructor(node: HTMLElement) {
-            super(null, node);
+            super(node);
         }
 
         add(child: Control) {
@@ -13,5 +13,5 @@
             this.removeChild(child);
             child.node.remove();
         }
-    }    
+    }
 }

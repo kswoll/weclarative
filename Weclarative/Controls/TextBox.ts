@@ -1,5 +1,4 @@
 ﻿namespace Weclarative.Controls {
-    import IEventHandler = Utils.IEventHandler;
     import EventHandler = Utils.EventHandler;
 
     export class TextBox extends Control {
@@ -7,7 +6,11 @@
         private inputElement: HTMLInputElement;
 
         constructor() {
-            super();
+            super("input");
+
+            this.node.setAttribute("type", "text");
+            this.node.addEventListener("change", evt => this.onJsChanged(evt));
+            this.inputElement = this.node as HTMLInputElement;
         }
 
         get type() {
@@ -46,14 +49,6 @@
                 this.node.setAttribute("maxlength", value.toString());
             else
                 this.node.removeAttribute("maxlength");
-        }
-
-        createNode() {
-            const textBox = document.createElement("input");
-            textBox.setAttribute("type", "text");
-            textBox.addEventListener("change", evt => this.onJsChanged(evt));
-            this.inputElement = textBox;
-            return textBox;
         }
 
         get onChanged() {

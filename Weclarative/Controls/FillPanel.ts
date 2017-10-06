@@ -7,16 +7,13 @@
 
         constructor(content?: Control) {
             super();
+
+            this.node.style.display = "flex";
+            this.node.style.flexDirection = "column";
+            this.node.style.alignItems = "stretch";
+
             if (content)
                 this.content = content;
-        }
-
-        createNode() {
-            const container = super.createNode();
-            container.style.display = "flex";
-            container.style.flexDirection = "column";
-            container.style.alignItems = "stretch";
-            return container;
         }
 
         get content() {

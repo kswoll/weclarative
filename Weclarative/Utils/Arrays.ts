@@ -35,5 +35,10 @@
             if (index != -1)
                 array.splice(index, 1);
         }
+
+        static removeAt<T>(array: Array<T>, index: number) {
+            if (index != -1)
+                array.splice(index, 1);
+        }
     }
 }

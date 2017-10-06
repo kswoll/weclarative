@@ -1,4 +1,4 @@
-﻿namespace Demos.Views {
+namespace Demos.Views {
     import Grid = Weclarative.Controls.Grids.Grid;
     import DefaultGridColumn = Weclarative.Controls.Grids.DefaultGridColumn;
 
@@ -7,7 +7,6 @@
             super();
 
             this.title = "Weclarative Demo - GridView";
-
             const mainPanel = new VerticalPanel();
             mainPanel.style.padding = "10px";
             mainPanel.spacing = 10;

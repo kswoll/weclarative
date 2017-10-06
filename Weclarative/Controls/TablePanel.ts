@@ -10,7 +10,7 @@
         private _horizontalCellSpacing: number;
 
         constructor(...columnWidths: TablePanelWidth[]) {
-            super();
+            super("table");
             this.columnWidths = columnWidths;
             this.defaultConstraint = new TablePanelConstraint();
 
@@ -83,11 +83,6 @@
                         cell.style.paddingBottom = this.verticalCellSpacing + "px";
                 }
             }
-        }
-
-        createNode() {
-            this.table = document.createElement("table");
-            return this.table;
         }
 
         getNextEmptyCell() {

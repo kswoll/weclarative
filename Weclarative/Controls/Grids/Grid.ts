@@ -2,19 +2,20 @@
     import Arrays = Utils.Arrays;
     import GridComposition = Compositions.GridComposition;
     import DefaultLook = Looks.DefaultLook;
+    import GridLook = Looks.GridLook;
 
-    export class Grid<T> extends Control {
+    export class Grid<T> extends CompositeControl<GridComposition, GridLook> {
         minSize: number;
 
         readonly columns = new Array<IGridColumn<T>>();
         readonly items = new Array<T>();
-        readonly composition: GridComposition;
         readonly headerRow: GridRow<T>;
         readonly footerRow: GridRow<T>;
 
         private rows = new Map<T, GridRow<T>>();
         private headerCells = new Map<IGridColumn<T>, GridCell<T>>();
         private footerCells = new Map<IGridColumn<T>, GridCell<T>>();
+        private isBatchUpdateEnabled: boolean;
 
         private _editing: IGridEditing<T>;
         private _showMoreButton: GridShowMoreButton<T>;
@@ -27,13 +28,12 @@
         private hasLoaded: boolean;
 
         constructor() {
-            super("table");
+            super(new GridComposition(), "table");
 
-            this.style.overflow = "hidden";
-            this.composition = new GridComposition(this.node);
             this.headerRow = new GridRow<T>(this);
             this.footerRow = new GridRow<T>(this);
 
+            this.style.overflow = "hidden";
             this.node.appendChild(this.composition.thead);
             this.node.appendChild(this.composition.tbody);
             this.node.appendChild(this.composition.tfoot);
@@ -41,10 +41,7 @@
             this.composition.thead.appendChild(this.headerRow.node);
             this.composition.tfoot.appendChild(this.footerRow.node);
 
-            DefaultLook.grid.install(this.composition);
-
             this.isFooterVisible = false;
-            this.style.borderRadius = "4px";
         }
 
         setEditing(initialValueProvider: () => T) {
@@ -225,25 +222,30 @@
             const row = new GridRow<T>(this, item);
             if (this.editing != null)
                 row.isEditable = true;
-            if (this.rows.size % 2 == 1)
-                row.style.backgroundColor = "#F7F7FF";
             this.rows.set(item, row);
-            this.composition.tbody.appendChild(row.node);
 
             for (const column of this.columns) {
                 const cell = column.createCell(item);
                 row.add(cell);
             }
+
+            row.index = this.items.length;
             this.addChild(row);
             this.items.push(item);
+            this.composition.tbody.appendChild(row.node);
         }
 
         remove(item: T) {
             const row = this.rows.get(item) as GridRow<T>;
             this.rows.delete(item);
             this.removeChild(row);
-            Arrays.remove(this.items, item);
+            Arrays.removeAt(this.items, row.index);
             row.node.remove();
+
+            // Update the index of all subsequent rows
+            if (!this.isBatchUpdateEnabled) {
+                this.updateRowIndices(row.index);
+            }
 
             if (this.rows.size == 0 && this.composition.emptyRow != null && !this.isLoading)
                 this.isEmptyVisible = true;
@@ -256,12 +258,19 @@
             }
         }
 
+        updateRowIndices(start = 0, end = this.items.length) {
+            for (var i = 0; i < this.items.length; i++) {
+                const item = this.items[i];
+                const row = this.rows.get(item) as GridRow<T>;
+                row.index = i;
+            }
+        }
+
         getRow(item: T) {
             return this.rows.get(item) as GridRow<T>;
         }
 
         addColumn<TColumn extends IGridColumn<T>>(column: TColumn) {
-            const composition = this.composition;
             this.columns.push(column);
             const headerCell = column.createHeaderCell();
             this.headerRow.add(headerCell);
@@ -269,17 +278,11 @@
             const footerCell = column.createFooterCell();
             this.footerRow.add(footerCell);
             this.footerCells.set(column, footerCell);
-            if (composition.emptyCell)
-                composition.emptyCell.colSpan = this.columns.length;
-            if (composition.loadingCell)
-                composition.loadingCell.colSpan = this.columns.length;
-            if (composition.showMoreCell)
-                composition.showMoreCell.colSpan = this.columns.length;
+            this.updateColSpan();
             return column;
         }
 
         removeColumn(column: IGridColumn<T>) {
-            const composition = this.composition;
             Arrays.remove(this.columns, column);
             const headerCell = this.headerCells.get(column) as GridCell<T>;
             this.headerCells.delete(column);
@@ -287,8 +290,19 @@
             const footerCell = this.footerCells.get(column) as GridCell<T>;
             this.footerCells.delete(column);
             this.footerRow.remove(footerCell);
+            this.updateColSpan();
+        }
+
+        private updateColSpan() {
+            const composition = this.composition;
             if (composition.emptyCell)
                 composition.emptyCell.colSpan = this.columns.length;
+            if (composition.loadingCell)
+                composition.loadingCell.colSpan = this.columns.length;
+            if (composition.showMoreCell)
+                composition.showMoreCell.colSpan = this.columns.length;
         }
     }
+
+    DefaultLook.register(Grid.name, new GridLook());
 }

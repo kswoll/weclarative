@@ -2,17 +2,22 @@
     import EventHandler = Utils.EventHandler;
     import IEventHandler = Utils.IEventHandler;
     import Elements = Utils.Elements;
+    import Look = Looks.Look;
+    import DefaultLook = Looks.DefaultLook;
 
-    export class Control {
+    export class Control<TLook extends Look = Look> {
         private static mouseTrackingEngine = new MouseTrackingEngine();
 
-        public tagName: string;
+        public readonly node: HTMLElement;
+
         public associatedLabel: Control;
 
-        private children: Array<Control>;
+        private readonly children: Array<Control>;
+
+        private _isInitialized: boolean;
+        private _look: TLook;
         private _isAttachedToDom: boolean;
         private _view: Views.View | null;
-        private _node: HTMLElement;
         private _style: CSSStyleDeclaration;
         private _parent: Control | null;
         private _attachedToDom: EventHandler<void> | null;
@@ -27,15 +32,36 @@
         private _onKeyUp: EventHandler<KeyboardEvent> | null;
         private _onKeyPress: EventHandler<KeyboardEvent> | null;
 
-        constructor(tagName: string | null = "div", node: HTMLElement | null = null) {
-            this.tagName = tagName as string;
+        constructor(node: string | HTMLElement | null = "div") {
             this.children = new Array<Control>();
-            if (node != null) {
+            if (node instanceof HTMLElement) {
                 this.node = node;
                 this._isAttachedToDom = true;
-            } else {
-                this.node = this.createNode();
+            } else if (node != null) {
+                this.node = document.createElement(node);
             }
+
+            (this.node as any).$control = this;
+            this.node.setAttribute("data-class-name", this.constructor.name);
+
+            this.look = DefaultLook.get(this.constructor.name) as TLook;
+        }
+
+        get look() {
+            return this._look;
+        }
+        set look(value: TLook) {
+            if (this._isInitialized)
+                throw new Error("Cannot set the look of a control after it has been initialized");
+            this._look = value;
+        }
+
+        initialize() {
+        }
+
+        private createNode(tagName: string): HTMLElement {
+            const node = document.createElement(tagName);
+            return node;
         }
 
         get isAttachedToDom() {
@@ -62,15 +88,6 @@
             return this._detachedFromDom as EventHandler<void>;
         }
 
-        get node(): HTMLElement {
-            return this._node;
-        }
-        set node(value: HTMLElement) {
-            this._node = value;
-            (this.node as any).$control = this;
-            this.node.setAttribute("data-class-name", this.constructor.name);
-        }
-
         get view(): Views.View {
             if (this._view != null)
                 return this._view;
@@ -90,7 +107,7 @@
         get onClick(): IEventHandler<MouseEvent> {
             if (this._onClick == null) {
                 this._onClick = new EventHandler<MouseEvent>();
-                this.node.addEventListener("click", (evt) => this.onJsClick(evt));
+                this.node.addEventListener("click", evt => this.onJsClick(evt));
             }
             return this._onClick as IEventHandler<MouseEvent>;
         }
@@ -213,17 +230,14 @@
             }
         }
 
-        protected createNode(): HTMLElement {
-            const node = document.createElement(this.tagName);
-            return node;
-        }
-
         protected addChild(child: Control)
         {
             if (child.parent == this)
                 throw new Error("The speciifed child is already present in this container");
             this.children.push(child);
             child._parent = this;
+            if (!child._isInitialized)
+                child.initialize();
             child.onAdded();
         }
 

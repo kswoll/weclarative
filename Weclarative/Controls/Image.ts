@@ -3,7 +3,10 @@
 
     export class Image extends Control {
         constructor(source?: string, width?: number, height?: number, highlightedSource?: string, highlightColor?: string) {
-            super();
+            super("img");
+
+            this.node.style.display = "block";
+
             if (source)
                 this.source = source;
             if (width)
@@ -58,12 +61,6 @@
                 this.node.setAttribute("src", value);
             else
                 this.node.removeAttribute("src");
-        }
-
-        createNode() {
-            const node = document.createElement("img");
-            node.style.display = "block";
-            return node;
         }
     }
 }

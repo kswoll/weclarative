@@ -6,7 +6,11 @@
         private _localHref: string | null;
 
         constructor(content?: string | Control) {
-            super();
+            super("a");
+
+            this.node.setAttribute("href", "javascript:void(0);");
+            this.node.style.display = "inline-block";
+
             if (content as string) {
                 this.text = content as string;
             } else if (content instanceof Control) {
@@ -43,13 +47,6 @@
         private localHrefClick(evt: MouseEvent) {
             evt.preventDefault();
             this.view.viewContext.controller.application.open(this.localHref as string);
-        }
-
-        createNode() {
-            const a = document.createElement("a");
-            a.setAttribute("href", "javascript:void(0);");
-            a.style.display = "inline-block";
-            return a;
         }
 
         get text() {

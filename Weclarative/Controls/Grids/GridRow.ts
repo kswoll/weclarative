@@ -15,6 +15,7 @@
         private _deleteLink: Link | null;
         private _addLink: Link | null;
         private _isEditable: boolean;
+        private _index: number;
         private actionsCell: HTMLElement | null;
         private actionsDiv: HTMLElement | null;
 
@@ -27,17 +28,31 @@
         get editLink() {
             return this._editLink;
         }
+
         get saveLink() {
             return this._saveLink;
         }
+
         get cancelLink() {
             return this._cancelLink;
         }
+
         get deleteLink() {
             return this._deleteLink;
         }
+
         get addLink() {
             return this._addLink;
+        }
+
+        get index() {
+            return this._index;
+        }
+        set index(value: number) {
+            if (this._index != value) {
+                this._index = value;
+                this.grid.look.rowIndexChanged(this);
+            }
         }
 
         private mouseEntered() {
@@ -81,12 +96,11 @@
                         this.actionsDiv = actionsDiv;
                         actionsCell.appendChild(actionsDiv);
 
-                        const editLink = new Link(new Icon(IconType.Edit));
-                        const saveLink = new Link(new Icon(IconType.Save));
-                        const cancelLink = new Link(new Icon(IconType.Undo));
-                        const deleteLink = new Link(new Icon(IconType.Remove));
-                        const addLink = new Link(new Icon(IconType.Plus));
-                        [this._editLink, this._saveLink, this._cancelLink, this._deleteLink, this._addLink] = [editLink, saveLink, cancelLink, deleteLink, addLink];
+                        const editLink = this._editLink = new Link(new Icon(IconType.Edit));
+                        const saveLink = this._saveLink = new Link(new Icon(IconType.Save));
+                        const cancelLink = this._cancelLink = new Link(new Icon(IconType.Undo));
+                        const deleteLink = this._deleteLink = new Link(new Icon(IconType.Remove));
+                        const addLink = this._addLink = new Link(new Icon(IconType.Plus));
                         this.addChild(editLink);
                         this.addChild(saveLink);
                         this.addChild(cancelLink);

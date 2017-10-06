@@ -11,7 +11,11 @@
         private _onChanged: EventHandler<void> | null;
 
         constructor(textProvider?: (item: T) => string, valueProvider?: (item: T) => string) {
-            super();
+            super("select");
+
+            this.node.addEventListener("change", evt => this.onJsChanged(evt));
+            this.node.setAttribute("size", "2");
+
             this.textProvider = textProvider || ((x: T) => x.toString());
             this.valueProvider = valueProvider || ((x: T) => x.toString());
             this.selectElement = this.node as HTMLSelectElement;
@@ -28,13 +32,6 @@
         }
         set isDropDown(value: boolean) {
             this.node.setAttribute("size", value ? "1" : "2");
-        }
-
-        createNode() {
-            const listbox = document.createElement("select");
-            listbox.addEventListener("change", evt => this.onJsChanged(evt));
-            listbox.setAttribute("size", "2");
-            return listbox;
         }
 
         add(item: T) {
