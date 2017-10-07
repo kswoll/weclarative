@@ -254,7 +254,7 @@
         }
 
         clear() {
-            for (let i = this.items.length; i >= 0; i--) {
+            for (let i = this.items.length - 1; i >= 0; i--) {
                 const item = this.items[i];
                 this.remove(item);
             }

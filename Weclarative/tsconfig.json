@@ -68,6 +68,7 @@
         "Controls/Html.ts",
         "Controls/HtmlControl.ts",
         "Controls/Icon.ts",
+        "Controls/IconSize.ts",
         "Controls/Image.ts",
         "Controls/InlineText.ts",
         "Controls/KeyCode.ts",

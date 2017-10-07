@@ -5,8 +5,14 @@ namespace Demos.Views {
     import NameValuePanel = Weclarative.Controls.NameValuePanel;
     import CheckBox = Weclarative.Controls.CheckBox;
     import TextBlock = Weclarative.Controls.TextBlock;
+    import Icon = Weclarative.Controls.Icon;
+    import IconType = Weclarative.Controls.IconType;
+    import IconSize = Weclarative.Controls.IconSize;
+    import Button = Weclarative.Controls.Button;
 
     export class GridView extends BaseView {
+        private grid = new Grid();
+
         constructor() {
             super();
 
@@ -16,36 +22,62 @@ namespace Demos.Views {
             mainPanel.spacing = 10;
             mainPanel.style.maxWidth = "800px";
 
-            const grid = new Grid();
-            grid.style.width = "600px";
-            grid.addColumn(new DefaultGridColumn<TestRow>("First Name", x => x.firstName, "25%", "Test Footer"));
-            grid.addColumn(new DefaultGridColumn<TestRow>("Last Name", x => x.lastName));
-            grid.isFooterVisible = true;
-            grid.showMoreButton.onClick.add(() => alert("You clicked on the button!"));
-            grid.loading = new TextBlock("Loading...");
+            this.grid.style.width = "600px";
+            this.grid.addColumn(new DefaultGridColumn<TestRow>("First Name", x => x.firstName, "25%", "Test Footer"));
+            this.grid.addColumn(new DefaultGridColumn<TestRow>("Last Name", x => x.lastName));
+            this.grid.isFooterVisible = true;
+            this.grid.showMoreButton.onClick.add(() => alert("You clicked on the button!"));
 
-            grid.add(new TestRow("Kirk", "Woll"));
-            grid.add(new TestRow("Andrew", "Simpkins"));
-            grid.add(new TestRow("Carl", "Woll"));
-            grid.add(new TestRow("Lara", "Robinette"));
+            const loading = new Icon(IconType.Spinner);
+            loading.isSpinning = true;
+            loading.size = IconSize.TwoX;
+            loading.style.padding = "20px";
+            this.grid.loading = new CenteredPanel(loading);
+
+            this.grid.empty = new TextBlock("No items! Perhaps you should add some, hmm?");
 
             const settingsPanel = new NameValuePanel();
 
             const enableShowMoreButton = new CheckBox();
-            enableShowMoreButton.onChanged.add(() => grid.isShowMoreButtonVisible = enableShowMoreButton.isChecked);
+            enableShowMoreButton.onChanged.add(() => this.grid.isShowMoreButtonVisible = enableShowMoreButton.isChecked);
             settingsPanel.addPair("Enable Show More Button", enableShowMoreButton);
 
             const enableLoading = new CheckBox();
-            enableLoading.onChanged.add(() => grid.isLoading = enableLoading.isChecked);
+            enableLoading.onChanged.add(() => this.grid.isLoading = enableLoading.isChecked);
             settingsPanel.addPair("Enable Loading Display", enableLoading);
+
+            const buttons = new HorizontalPanel();
+
+            const clearButton = new Button("Clear");
+            clearButton.onClick.add(() => this.clear());
+
+            const populateButton = new Button("Populate");
+            populateButton.onClick.add(() => this.populate());
+
+            buttons.add(clearButton);
+            buttons.add(populateButton);
 
             const controlPanel = new TitledPanel("Settings");
             controlPanel.content = settingsPanel;
 
             mainPanel.add(controlPanel);
-            mainPanel.add(grid);
+            mainPanel.add(this.grid);
+            mainPanel.add(buttons);
+
+            this.populate();
 
             this.content = mainPanel;
+        }
+
+        clear() {
+            this.grid.clear();
+        }
+
+        populate() {
+            this.grid.add(new TestRow("Kirk", "Woll"));
+            this.grid.add(new TestRow("Andrew", "Simpkins"));
+            this.grid.add(new TestRow("Carl", "Woll"));
+            this.grid.add(new TestRow("Lara", "Robinette"));
         }
     }
 

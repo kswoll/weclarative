@@ -61,6 +61,7 @@
     <TypeScriptCompile Include="Controls\Html.ts" />
     <TypeScriptCompile Include="Controls\HtmlControl.ts" />
     <TypeScriptCompile Include="Controls\Icon.ts" />
+    <TypeScriptCompile Include="Controls\IconSize.ts" />
     <TypeScriptCompile Include="Controls\IconType.ts" />
     <TypeScriptCompile Include="Controls\Image.ts" />
     <TypeScriptCompile Include="Controls\InlineText.ts" />

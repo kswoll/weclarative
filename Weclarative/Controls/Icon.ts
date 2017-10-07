@@ -1,45 +1,76 @@
 ﻿namespace Weclarative.Controls {
-    import Arrays = Utils.Arrays;
     import Strings = Utils.Strings;
 
     export class Icon extends Control {
+        private _isSpinning = false;
+        private _size = IconSize.Normal;
+        private _source = IconType.None;
+
         constructor(source?: IconType) {
             super("i");
             this.source = source || IconType.None;
         }
 
+        updateClass() {
+            const classes = new Array<string>();
+
+            if (this._isSpinning)
+                classes.push("fa-spin");
+
+            switch (this._size) {
+                case IconSize.Large:
+                    classes.push("fa-lg");
+                    break;
+                case IconSize.TwoX:
+                    classes.push("fa-2x");
+                    break;
+                case IconSize.ThreeX:
+                    classes.push("fa-3x");
+                    break;
+                case IconSize.FourX:
+                    classes.push("fa-4x");
+                    break;
+                case IconSize.FiveX:
+                    classes.push("fa-5x");
+                    break;
+            }
+
+            if (this._source != IconType.None) {
+                const slug = Strings.camelCaseToSlug(Strings.decapitalize(IconType[this._source]), "-");
+                classes.push(`fa fa-${slug}`);
+            }
+
+            this.node.className = classes.join(" ");
+        }
+
         get isSpinning() {
-            return this.node.className.split(" ").indexOf("fa-spin") != -1;
+            return this._isSpinning;
         }
         set isSpinning(value: boolean) {
-            const classes = this.node.className.split(" ");
-            const hasSpin = classes.indexOf("fa-spin") != -1;
-            if (value) {
-                if (!hasSpin)
-                    this.node.className += " " + "fa-spin";
-            } else {
-                if (hasSpin) {
-                    Arrays.remove(classes, "fa-spin");
-                    this.node.className = classes.join(" ");
-                }
+            if (this._isSpinning != value) {
+                this._isSpinning = value;
+                this.updateClass();
+            }
+        }
+
+        get size() {
+            return this._size;
+        }
+        set size(value: IconSize) {
+            if (this._size != value) {
+                this._size = value;
+                this.updateClass();
             }
         }
 
         get source() {
-            if (this.node.className == null)
-                return IconType.None;
-            const parts = this.node.className.split(" ");
-            Arrays.remove(parts, "fa");
-            if (parts.length > 1)
-                return IconType.None;
-            const part = parts[0];
-
-            const slug = Strings.slugToCamelCase(part);
-            return (IconType as any)[slug] as IconType;
+            return this._source;
         }
         set source(value: IconType) {
-            const slug = Strings.camelCaseToSlug(Strings.decapitalize(IconType[value]), "-");
-            this.node.className = `fa fa-${slug}`;
+            if (this._source != value) {
+                this._source = value;
+                this.updateClass();
+            }
         }
     }
 }
