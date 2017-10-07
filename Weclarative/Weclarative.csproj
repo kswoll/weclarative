@@ -52,7 +52,7 @@
     <TypeScriptCompile Include="Controls\Grids\GridEditing.ts" />
     <TypeScriptCompile Include="Controls\Grids\GridRow.ts" />
     <TypeScriptCompile Include="Controls\Grids\GridShowMoreButton.ts" />
-    <TypeScriptCompile Include="Controls\Grids\IGridColumn.ts" />
+    <TypeScriptCompile Include="Controls\Grids\GridColumn.ts" />
     <TypeScriptCompile Include="Controls\Grids\IGridEditing.ts" />
     <TypeScriptCompile Include="Controls\Grids\IGridEditor.ts" />
     <TypeScriptCompile Include="Controls\HorizontalAlignment.ts" />

@@ -16,7 +16,13 @@
 
         rowIndexChanged<T>(row: GridRow<T>) {
             if (row.index % 2 == 1)
-                row.style.backgroundColor = "red";
+                row.style.backgroundColor = "#F7F7FF";
+        }
+
+        styleHeaderCell(cell: HTMLTableCellElement) {
+            cell.style.backgroundColor = "black";
+            cell.style.color = "white";
+            cell.style.fontWeight = "bold";
         }
     }
 }

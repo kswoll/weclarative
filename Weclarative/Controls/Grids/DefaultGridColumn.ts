@@ -1,5 +1,5 @@
 ﻿namespace Weclarative.Controls.Grids {
-    export class DefaultGridColumn<T> implements IGridColumn<T> {
+    export class DefaultGridColumn<T> extends Grids.GridColumn<T> {
         private readonly footerCell: GridCell<T>;
         private readonly footerTextBlock = new TextBlock();
 
@@ -9,6 +9,7 @@
             public readonly width?: string,
             public footerText?: string)
         {
+            super();
             this.footerCell = new GridCell<T>(this);
             this.footerCell.content = this.footerTextBlock;
             if (footerText) {
@@ -16,7 +17,7 @@
             }
         }
 
-        createHeaderCell(): GridCell<T> {
+        protected createHeaderCell(): GridCell<T> {
             const cell = new GridCell<T>(this);
             cell.content = new TextBlock(this.title);
             if (this.width) {

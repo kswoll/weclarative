@@ -7,14 +7,14 @@
     export class Grid<T> extends CompositeControl<GridComposition, GridLook> {
         minSize: number;
 
-        readonly columns = new Array<IGridColumn<T>>();
+        readonly columns = new Array<Controls.Grids.GridColumn<T>>();
         readonly items = new Array<T>();
         readonly headerRow: GridRow<T>;
         readonly footerRow: GridRow<T>;
 
         private rows = new Map<T, GridRow<T>>();
-        private headerCells = new Map<IGridColumn<T>, GridCell<T>>();
-        private footerCells = new Map<IGridColumn<T>, GridCell<T>>();
+        private headerCells = new Map<Controls.Grids.GridColumn<T>, GridCell<T>>();
+        private footerCells = new Map<Controls.Grids.GridColumn<T>, GridCell<T>>();
         private isBatchUpdateEnabled: boolean;
 
         private _editing: IGridEditing<T>;
@@ -98,19 +98,18 @@
                     this.composition.showMoreFoot.removeChild(this.composition.showMoreRow as HTMLElement);
                     this.composition.showMoreCell = null;
                     this.composition.showMoreRow = null;
+                } else {
+                    const showMoreRow = document.createElement("tr");
+                    const showMoreCell = document.createElement("td");
+                    this.composition.showMoreRow = showMoreRow;
+                    this.composition.showMoreCell = showMoreCell;
+                    showMoreCell.style.borderTop = "1px black solid";
+                    showMoreCell.colSpan = this.columns.length;
+                    showMoreRow.appendChild(showMoreCell);
+                    const showMoreButton = this._showMoreButton = new GridShowMoreButton<T>(this);
+                    showMoreCell.appendChild(showMoreButton.node);
+                    this.composition.showMoreFoot.appendChild(showMoreRow);
                 }
-            } else {
-                const showMoreRow = document.createElement("tr");
-                const showMoreCell = document.createElement("td");
-                this.composition.showMoreRow = showMoreRow;
-                this.composition.showMoreCell = showMoreCell;
-                showMoreCell.style.borderTop = "1px black solid";
-                showMoreCell.colSpan = this.columns.length;
-                showMoreRow.appendChild(showMoreCell);
-                const showMoreButton = new GridShowMoreButton<T>(this);
-                this._showMoreButton = showMoreButton;
-                showMoreCell.appendChild(showMoreButton.node);
-                this.composition.showMoreFoot.appendChild(showMoreRow);
             }
         }
 
@@ -270,9 +269,10 @@
             return this.rows.get(item) as GridRow<T>;
         }
 
-        addColumn<TColumn extends IGridColumn<T>>(column: TColumn) {
+        addColumn<TColumn extends Grids.GridColumn<T>>(column: TColumn) {
+            (column as any).$grid = this;
             this.columns.push(column);
-            const headerCell = column.createHeaderCell();
+            const headerCell = column.headerCell;
             this.headerRow.add(headerCell);
             this.headerCells.set(column, headerCell);
             const footerCell = column.createFooterCell();
@@ -282,7 +282,7 @@
             return column;
         }
 
-        removeColumn(column: IGridColumn<T>) {
+        removeColumn(column: Grids.GridColumn<T>) {
             Arrays.remove(this.columns, column);
             const headerCell = this.headerCells.get(column) as GridCell<T>;
             this.headerCells.delete(column);
