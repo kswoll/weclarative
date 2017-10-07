@@ -7,18 +7,18 @@
     export class Grid<T> extends CompositeControl<GridComposition, GridLook> {
         minSize: number;
 
-        readonly columns = new Array<Controls.Grids.GridColumn<T>>();
+        readonly columns = new Array<Grids.GridColumn<T>>();
         readonly items = new Array<T>();
-        readonly headerRow: GridRow<T>;
-        readonly footerRow: GridRow<T>;
+        readonly headerRow = new GridRow<T>(this);
+        readonly footerRow = new GridRow<T>(this);
+        readonly showMoreButton = new GridShowMoreButton<T>(this);
 
         private rows = new Map<T, GridRow<T>>();
-        private headerCells = new Map<Controls.Grids.GridColumn<T>, GridCell<T>>();
-        private footerCells = new Map<Controls.Grids.GridColumn<T>, GridCell<T>>();
-        private isBatchUpdateEnabled: boolean;
+        private headerCells = new Map<Grids.GridColumn<T>, GridCell<T>>();
+        private footerCells = new Map<Grids.GridColumn<T>, GridCell<T>>();
+        private isBatchUpdateEnabled: number;
 
         private _editing: IGridEditing<T>;
-        private _showMoreButton: GridShowMoreButton<T>;
 
         private _empty: Control | null;
         private _isEmptyVisible: boolean;
@@ -30,16 +30,15 @@
         constructor() {
             super(new GridComposition(), "table");
 
-            this.headerRow = new GridRow<T>(this);
-            this.footerRow = new GridRow<T>(this);
-
             this.style.overflow = "hidden";
             this.node.appendChild(this.composition.thead);
             this.node.appendChild(this.composition.tbody);
+            this.node.appendChild(this.composition.loading);
             this.node.appendChild(this.composition.tfoot);
-            this.node.appendChild(this.composition.showMoreFoot);
             this.composition.thead.appendChild(this.headerRow.node);
             this.composition.tfoot.appendChild(this.footerRow.node);
+            this.composition.loading.appendChild(this.composition.loadingRow);
+            this.composition.loading.style.display = "none";
 
             this.isFooterVisible = false;
         }
@@ -95,7 +94,7 @@
         set isShowMoreButtonVisible(value: boolean) {
             if (this.isShowMoreButtonVisible != value) {
                 if (!value) {
-                    this.composition.showMoreFoot.removeChild(this.composition.showMoreRow as HTMLElement);
+                    this.composition.tfoot.removeChild(this.composition.showMoreRow as HTMLElement);
                     this.composition.showMoreCell = null;
                     this.composition.showMoreRow = null;
                 } else {
@@ -103,18 +102,13 @@
                     const showMoreCell = document.createElement("td");
                     this.composition.showMoreRow = showMoreRow;
                     this.composition.showMoreCell = showMoreCell;
-                    showMoreCell.style.borderTop = "1px black solid";
+                    this.look.styleShowMoreCell(showMoreCell);
                     showMoreCell.colSpan = this.columns.length;
                     showMoreRow.appendChild(showMoreCell);
-                    const showMoreButton = this._showMoreButton = new GridShowMoreButton<T>(this);
-                    showMoreCell.appendChild(showMoreButton.node);
-                    this.composition.showMoreFoot.appendChild(showMoreRow);
+                    showMoreCell.appendChild(this.showMoreButton.node);
+                    this.composition.tfoot.appendChild(showMoreRow);
                 }
             }
-        }
-
-        get showMoreButton() {
-            return this._showMoreButton;
         }
 
         get loading() {
@@ -123,21 +117,18 @@
         set loading(value: Control | null) {
             if (this.loading != null) {
                 this.loading.node.remove();
-                (this.composition.loadingRow as HTMLElement).remove();
+                this.composition.loadingRow.remove();
                 this.removeChild(this.loading);
             }
             this._loading = value;
             if (value) {
                 this.addChild(value);
-                if (this.composition.loadingRow == null) {
-                    this.composition.loadingRow = document.createElement("tr");
-                }
                 if (this.composition.loadingCell == null) {
                     const loadingCell = document.createElement("td");
                     this.composition.loadingCell = loadingCell;
                     loadingCell.colSpan = this.columns.length;
                     loadingCell.style.padding = "3px";
-                    (this.composition.loadingRow as HTMLElement).appendChild(loadingCell);
+                    this.composition.loadingRow.appendChild(loadingCell);
                 }
                 (this.composition.loadingCell as HTMLElement).appendChild(value.node);
             }
@@ -149,16 +140,18 @@
         set isLoading(value: boolean) {
             if (this._isLoading != value) {
                 this._isLoading = value;
-            }
-            if (value) {
-                if (this.rows.size == 0 && this.composition.emptyRow != null)
-                    this.isEmptyVisible = false;
-                this.composition.tbody.appendChild(this.composition.loadingRow as HTMLElement);
-                this.hasLoaded = true;
-            } else {
-                (this.composition.loadingRow as HTMLElement).remove();
-                if (this.rows.size == 0 && this.composition.emptyRow != null)
-                    this.isEmptyVisible = true;
+                if (value) {
+                    if (this.rows.size == 0 && this.composition.emptyRow != null)
+                        this.isEmptyVisible = false;
+                    this.composition.tbody.style.display = "none";
+                    this.composition.loading.style.display = "";
+                    this.hasLoaded = true;
+                } else {
+                    this.composition.tbody.style.display = "";
+                    this.composition.loading.style.display = "none";
+                    if (this.rows.size == 0 && this.composition.emptyRow != null)
+                        this.isEmptyVisible = true;
+                }
             }
         }
 
@@ -242,12 +235,22 @@
             row.node.remove();
 
             // Update the index of all subsequent rows
-            if (!this.isBatchUpdateEnabled) {
+            if (this.isBatchUpdateEnabled == 0) {
                 this.updateRowIndices(row.index);
             }
 
             if (this.rows.size == 0 && this.composition.emptyRow != null && !this.isLoading)
                 this.isEmptyVisible = true;
+        }
+
+        beginUpdate() {
+            this.isBatchUpdateEnabled++;
+        }
+
+        endUpdate() {
+            this.isBatchUpdateEnabled--;
+            if (this.isBatchUpdateEnabled == 0)
+                this.updateRowIndices();
         }
 
         clear() {
@@ -275,7 +278,7 @@
             const headerCell = column.headerCell;
             this.headerRow.add(headerCell);
             this.headerCells.set(column, headerCell);
-            const footerCell = column.createFooterCell();
+            const footerCell = column.footerCell;
             this.footerRow.add(footerCell);
             this.footerCells.set(column, footerCell);
             this.updateColSpan();

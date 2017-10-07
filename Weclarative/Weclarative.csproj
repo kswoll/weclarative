@@ -95,6 +95,7 @@
     <TypeScriptCompile Include="Looks\GridLook.ts" />
     <TypeScriptCompile Include="Looks\DefaultLook.ts" />
     <TypeScriptCompile Include="Looks\Look.ts" />
+    <TypeScriptCompile Include="Looks\TitledPanelLook.ts" />
     <TypeScriptCompile Include="MvcApplication.ts" />
     <TypeScriptCompile Include="Utils\Animator.ts" />
     <TypeScriptCompile Include="Utils\Elements.ts" />

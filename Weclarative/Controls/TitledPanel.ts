@@ -1,18 +1,20 @@
 ﻿namespace Weclarative.Controls {
-    export class TitledPanel extends Control {
+    import Composition = Compositions.Composition;
+    import DefaultLook = Looks.DefaultLook;
+    import TitledPanelLook = Looks.TitledPanelLook;
+
+    export class TitledPanel extends CompositeControl {
         private _title: Control | null;
         private legend: HTMLElement;
         private contentDiv: HTMLElement;
         private _content: Control | null;
 
         constructor(title?: string | Control, content?: Control) {
-            super("fieldset");
+            super(new Composition(), "fieldset");
 
             this.legend = document.createElement("legend");
             this.contentDiv = document.createElement("div");
 
-            this.node.style.border = "2px threedface groove";
-            this.node.style.padding = "10px";
             this.node.appendChild(this.legend);
             this.node.appendChild(this.contentDiv);
 
@@ -23,6 +25,8 @@
 
             if (content)
                 this.content = content;
+
+            this.look.install(this.composition);
         }
 
         get title() {
@@ -65,4 +69,6 @@
                 this.node.setAttribute("disabled", "true");
         }
     }
+
+    DefaultLook.register(TitledPanel.name, new TitledPanelLook());
 }

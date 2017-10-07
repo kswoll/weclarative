@@ -212,6 +212,7 @@
     <TypeScriptCompile Include="Demos\Views\SidePanelView.ts" />
     <TypeScriptCompile Include="Demos\Views\VerticalPanelView.ts" />
     <TypeScriptCompile Include="Tests\TestController.ts" />
+    <TypeScriptCompile Include="weclarative.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

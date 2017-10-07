@@ -155,7 +155,7 @@
         get onMouseUp() {
             if (this._onMouseUp == null) {
                 this._onMouseUp = new EventHandler<MouseEvent>();
-                this.node.addEventListener("mousedown", evt => this.onJsMouseUp(evt));
+                this.node.addEventListener("mouseup", evt => this.onJsMouseUp(evt));
             }
             return this._onMouseUp as IEventHandler<MouseEvent>;
         }

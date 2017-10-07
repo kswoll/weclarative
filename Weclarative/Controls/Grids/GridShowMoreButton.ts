@@ -1,21 +1,18 @@
 ﻿namespace Weclarative.Controls.Grids {
     export class GridShowMoreButton<T> extends Control {
-        private readonly downArrow = new Icon(IconType.AngleDoubleDown);
-        private _defaultBackgroundColor = "#DDECF7";
-        private _highlightBackgroundColor = "#326993";
+        public readonly icon = new Icon();
+
+        private _defaultBackgroundColor: string;
+        private _highlightBackgroundColor: string;
 
         constructor(private readonly grid: Grid<T>) {
             super();
 
-            this.style.textAlign = "center";
-            this.style.backgroundColor = this.defaultBackgroundColor;
-            this.style.border = "1px black solid";
-            this.style.borderBottomLeftRadius = "3px";
-            this.style.borderBottomRightRadius = "3px";
-            this.style.userSelect = "none";
-            this.node.appendChild(this.node);
+            grid.look.styleShowMoreButton(this);
 
-            this.addChild(this.downArrow);
+            this.node.appendChild(this.icon.node);
+
+            this.addChild(this.icon);
 
             this.onMouseDown.add(() => this.mouseDown());
             this.onMouseUp.add(() => this.mouseUp());

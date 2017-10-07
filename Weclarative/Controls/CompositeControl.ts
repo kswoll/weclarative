@@ -2,7 +2,7 @@
     import Composition = Compositions.Composition;
     import Look = Looks.Look;
 
-    export class CompositeControl<TComposition extends Composition, TLook extends Look> extends Control<TLook> {
+    export class CompositeControl<TComposition extends Composition = Composition, TLook extends Look = Look> extends Control<TLook> {
         readonly composition: TComposition;
 
         constructor(composition: TComposition, node: string | HTMLElement | null = "div") {

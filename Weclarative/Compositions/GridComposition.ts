@@ -8,14 +8,14 @@
     export class GridComposition extends Composition<HTMLTableElement> {
         readonly thead: HTMLElement = document.createElement("thead");
         readonly tbody: HTMLElement = document.createElement("tbody");
+        readonly loading: HTMLElement = document.createElement("tbody");
         readonly tfoot: HTMLElement = document.createElement("tfoot");
-        readonly showMoreFoot: HTMLElement = document.createElement("tfoot");
+        readonly loadingRow = document.createElement("tr");
 
         showMoreCell: HTMLTableCellElement | null;
         showMoreRow: HTMLTableRowElement | null;
         emptyRow: HTMLTableRowElement | null;
         emptyCell: HTMLTableCellElement | null;
-        loadingRow: HTMLTableRowElement | null;
         loadingCell: HTMLTableCellElement | null;
     }
 }

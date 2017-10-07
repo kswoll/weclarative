@@ -2,10 +2,10 @@
     export class TablePanel extends Control {
         defaultConstraint: TablePanelConstraint;
 
-        private table: HTMLElement;
-        private columnWidths: Array<TablePanelWidth>;
-        private rows = new Array<HTMLElement>();
-        private cells = new Array<Array<Control>>();
+        private readonly columnWidths: Array<TablePanelWidth>;
+        private readonly rows = new Array<HTMLElement>();
+        private readonly cells = new Array<Array<Control>>();
+
         private _verticalCellSpacing: number;
         private _horizontalCellSpacing: number;
 
@@ -14,8 +14,8 @@
             this.columnWidths = columnWidths;
             this.defaultConstraint = new TablePanelConstraint();
 
-            const totalNumberOfWeights = this.columnWidths.filter(x => x.style == TablePanelWidthStyle.Weight).map(x => x.value).reduce((a, b) => a + b, 0);
-            const totalPercent = this.columnWidths.filter(x => x.style == TablePanelWidthStyle.Percent).map(x => x.value).reduce((a, b) => a + b, 0);
+            const totalNumberOfWeights = this.columnWidths.filter(x => +x.style == TablePanelWidthStyle.Weight).map(x => x.value).reduce((a, b) => a + b, 0);
+            const totalPercent = this.columnWidths.filter(x => +x.style == TablePanelWidthStyle.Percent).map(x => x.value).reduce((a, b) => a + b, 0);
             const percentAvailableToWeights = 100 - totalPercent;
             if (percentAvailableToWeights < 0)
                 throw new Error("Total amount of percent specified is greater than 100");
@@ -26,7 +26,7 @@
             const colGroup = document.createElement("colgroup");
             for (let width of this.columnWidths) {
                 const col = document.createElement("col");
-                switch (width.style) {
+                switch (+width.style) {
                     case TablePanelWidthStyle.Pixels:
                         col.style.width = width.value + "px";
                         break;
@@ -42,7 +42,7 @@
                 }
                 colGroup.appendChild(col);
             }
-            this.table.appendChild(colGroup);
+            this.node.appendChild(colGroup);
         }
 
         get verticalCellSpacing() {
@@ -152,7 +152,7 @@
                         while (this.cells.length <= row) {
                             this.cells.push(new Array<Control>(this.columnWidths.length));
                             const newRow = document.createElement("tr");
-                            this.table.appendChild(newRow);
+                            this.node.appendChild(newRow);
                             this.rows.push(newRow);
                         }
                         if (this.cells[row][col] != null)
