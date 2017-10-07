@@ -42,5 +42,14 @@
             button.style.backgroundColor = button.defaultBackgroundColor;
             button.style.userSelect = "none";
         }
+
+        styleEmptyCell(cell: HTMLTableDataCellElement) {
+            cell.style.padding = "3px";
+        }
+
+        styleCell(cell: HTMLElement) {
+            cell.style.fontSize = "80%";
+            cell.style.padding = "4px";
+        }
     }
 }

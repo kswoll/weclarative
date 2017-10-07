@@ -172,9 +172,10 @@
                 }
                 if (this.composition.emptyCell == null) {
                     const emptyCell = document.createElement("td");
+                    this.look.styleCell(emptyCell);
                     this.composition.emptyCell = emptyCell;
                     emptyCell.colSpan = this.columns.length;
-                    emptyCell.style.padding = "3px";
+                    this.look.styleEmptyCell(emptyCell);
                     (this.composition.emptyRow as HTMLElement).appendChild(emptyCell);
                 }
                 (this.composition.emptyCell as HTMLElement).appendChild(value.node);

@@ -10,8 +10,7 @@
             this.body = document.createElement("div");
             this.node.appendChild(this.body);
 
-            this.style.fontSize = "80%";
-            this.style.padding = "4px";
+            column.grid.look.styleCell(this.node);
         }
 
         get content() {
