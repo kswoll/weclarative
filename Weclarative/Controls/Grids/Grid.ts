@@ -4,27 +4,31 @@
     import DefaultLook = Looks.DefaultLook;
     import GridLook = Looks.GridLook;
 
+    /**
+     * Provides a facility to render data in a table with columns, headers, optional footers,
+     * and various other features to handle situations such as requesting more data, an empty
+     * state, and a loading indicator for when waiting for asynchronous data to arrive.
+     */
     export class Grid<T> extends CompositeControl<GridComposition, GridLook> {
         minSize: number;
 
-        readonly columns = new Array<Grids.GridColumn<T>>();
+        readonly columns = new Array<IGridColumn<T>>();
         readonly items = new Array<T>();
         readonly headerRow = new GridRow<T>(this);
         readonly footerRow = new GridRow<T>(this);
         readonly showMoreButton = new GridShowMoreButton<T>(this);
 
         private rows = new Map<T, GridRow<T>>();
-        private headerCells = new Map<Grids.GridColumn<T>, GridCell<T>>();
-        private footerCells = new Map<Grids.GridColumn<T>, GridCell<T>>();
-        private isBatchUpdateEnabled: number;
+        private headerCells = new Map<IGridColumn<T>, GridCell<T>>();
+        private footerCells = new Map<IGridColumn<T>, GridCell<T>>();
+        private batchUpdateDepth: number;
 
         private _editing: IGridEditing<T>;
-
         private _empty: Control | null;
         private _isEmptyVisible: boolean;
-
         private _loading: Control | null;
         private _isLoading: boolean;
+
         private hasLoaded: boolean;
 
         constructor() {
@@ -220,6 +224,8 @@
             for (const column of this.columns) {
                 const cell = column.createCell(item);
                 row.add(cell);
+
+                column.rowAdded(item);
             }
 
             row.index = this.items.length;
@@ -235,8 +241,12 @@
             Arrays.removeAt(this.items, row.index);
             row.node.remove();
 
+            for (const column of this.columns) {
+                column.rowRemoved(item);
+            }
+
             // Update the index of all subsequent rows
-            if (this.isBatchUpdateEnabled == 0) {
+            if (this.batchUpdateDepth == 0) {
                 this.updateRowIndices(row.index);
             }
 
@@ -245,13 +255,17 @@
         }
 
         beginUpdate() {
-            this.isBatchUpdateEnabled++;
+            this.batchUpdateDepth++;
         }
 
         endUpdate() {
-            this.isBatchUpdateEnabled--;
-            if (this.isBatchUpdateEnabled == 0)
-                this.updateRowIndices();
+            this.batchUpdateDepth--;
+            if (this.batchUpdateDepth == 0)
+                this.update();
+        }
+
+        get isBatchUpdateEnabled() {
+            return this.batchUpdateDepth > 0;
         }
 
         clear() {
@@ -261,8 +275,16 @@
             }
         }
 
-        updateRowIndices(start = 0, end = this.items.length) {
-            for (var i = 0; i < this.items.length; i++) {
+        private update() {
+            this.updateRowIndices();
+
+            for (const column of this.columns) {
+                column.update();
+            }
+        }
+
+        private updateRowIndices(start = 0, end = this.items.length) {
+            for (let i = 0; i < this.items.length; i++) {
                 const item = this.items[i];
                 const row = this.rows.get(item) as GridRow<T>;
                 row.index = i;
@@ -273,7 +295,14 @@
             return this.rows.get(item) as GridRow<T>;
         }
 
-        addColumn<TColumn extends Grids.GridColumn<T>>(column: TColumn) {
+        addColumn<TValue>(
+            type: ColumnType<TValue>,
+            title: string | Control,
+            valueProvider: (item: T) => TValue,
+            width?: string,
+            footerProvider?: (aggregates: FooterProvider<TValue>) => ColumnFooter<TValue>)
+        {
+            const column = new GridColumn<T, TValue>(this, type, title, valueProvider, width, footerProvider);
             (column as any).$grid = this;
             this.columns.push(column);
             const headerCell = column.headerCell;
@@ -286,8 +315,26 @@
             return column;
         }
 
-        removeColumn(column: Grids.GridColumn<T>) {
-            Arrays.remove(this.columns, column);
+        addStringColumn(
+            title: string | Control,
+            valueProvider: (item: T) => string,
+            width?: string,
+            footerProvider?: (aggregates: FooterProvider<string>) => ColumnFooter<string>)
+        {
+            return this.addColumn(ColumnTypes.stringColumnType, title, valueProvider, width, footerProvider);
+        }
+
+        addNumberColumn(
+            title: string | Control,
+            valueProvider: (item: T) => number,
+            width?: string,
+            footerProvider?: (aggregates: FooterProvider<number>) => ColumnFooter<number>)
+        {
+            return this.addColumn(ColumnTypes.numberColumnType, title, valueProvider, width, footerProvider);
+        }
+
+        removeColumn<TValue>(column: GridColumn<T, TValue>) {
+            Arrays.remove<IGridColumn<T>>(this.columns, column);
             const headerCell = this.headerCells.get(column) as GridCell<T>;
             this.headerCells.delete(column);
             this.headerRow.remove(headerCell);

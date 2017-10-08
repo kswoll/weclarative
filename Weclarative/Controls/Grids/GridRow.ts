@@ -5,7 +5,7 @@
     export class GridRow<T> extends Control {
         private readonly cells = new Array<GridCell<T>>();
         private readonly row: HTMLTableRowElement;
-        private readonly editors = new Map<Controls.Grids.GridColumn<T>, Control>();
+        private readonly editors = new Map<IGridColumn<T>, Control>();
         private readonly callMouseEntered = () => this.mouseEntered();
         private readonly callMouseExited = () => this.mouseExited();
 

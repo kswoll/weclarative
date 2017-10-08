@@ -1,6 +1,5 @@
 namespace Demos.Views {
     import Grid = Weclarative.Controls.Grids.Grid;
-    import DefaultGridColumn = Weclarative.Controls.Grids.DefaultGridColumn;
     import TitledPanel = Weclarative.Controls.TitledPanel;
     import NameValuePanel = Weclarative.Controls.NameValuePanel;
     import CheckBox = Weclarative.Controls.CheckBox;
@@ -9,9 +8,10 @@ namespace Demos.Views {
     import IconType = Weclarative.Controls.IconType;
     import IconSize = Weclarative.Controls.IconSize;
     import Button = Weclarative.Controls.Button;
+    import ContentProviders = Weclarative.Controls.Grids.ContentProviders;
 
     export class GridView extends BaseView {
-        private grid = new Grid();
+        private grid = new Grid<TestRow>();
 
         constructor() {
             super();
@@ -20,11 +20,13 @@ namespace Demos.Views {
             const mainPanel = new VerticalPanel();
             mainPanel.style.padding = "10px";
             mainPanel.spacing = 10;
-            mainPanel.style.maxWidth = "800px";
+            mainPanel.style.maxWidth = "600px";
 
-            this.grid.style.width = "600px";
-            this.grid.addColumn(new DefaultGridColumn<TestRow>("First Name", x => x.firstName, "25%", "Test Footer"));
-            this.grid.addColumn(new DefaultGridColumn<TestRow>("Last Name", x => x.lastName));
+            this.grid.style.width = "100%";
+
+            this.grid.addStringColumn("First Name", x => x.firstName, "25%",
+                x => x.simple(x.aggregates.count, ContentProviders.numbers));
+            this.grid.addStringColumn("Last Name", x => x.lastName);
             this.grid.isFooterVisible = true;
             this.grid.showMoreButton.onClick.add(() => alert("You clicked on the button!"));
 

@@ -4,7 +4,7 @@
 
         private _control: Control | null;
 
-        constructor(column: Grids.GridColumn<T>, tagName?: string) {
+        constructor(column: IGridColumn<T>, tagName?: string) {
             super(tagName || "td");
 
             this.body = document.createElement("div");

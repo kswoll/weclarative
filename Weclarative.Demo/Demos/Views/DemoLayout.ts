@@ -6,6 +6,7 @@
     import HorizontalAlignment = Controls.HorizontalAlignment;
     import VerticalAlignment = Controls.VerticalAlignment;
     import AlignmentPanel = Weclarative.Controls.AlignmentPanel;
+    import TextBlock = Weclarative.Controls.TextBlock;
 
     export class DemoLayout extends Layout {
         static type = new LayoutType(DemoLayout.name, () => new DemoLayout());
@@ -16,7 +17,7 @@
 
         constructor() {
             super();
-            
+
             this.headerPanel.verticalAlignment = VerticalAlignment.Top;
             this.leftPanel.verticalAlignment = VerticalAlignment.Top;
             this.leftPanel.style.width = "250px";
@@ -30,7 +31,9 @@
             mainPanel.center = this.contentPanel;
             mainPanel.style.height = "100%";
 
-            const header = AlignmentPanel.Left(new Controls.TextBlock("Weclarative Demo"));
+            const title = new TextBlock("Weclarative Demo");
+            title.style.fontWeight = "bold";
+            const header = AlignmentPanel.Left(title);
             header.style.backgroundColor = "black";
             header.style.padding = "5px";
             header.style.color = "white";

@@ -4,6 +4,7 @@
     import GridRow = Controls.Grids.GridRow;
     import GridShowMoreButton = Controls.Grids.GridShowMoreButton;
     import IconType = Controls.IconType;
+    import GridCell = Controls.Grids.GridCell;
 
     export class GridLook extends Look {
         install(composition: Composition) {
@@ -24,6 +25,10 @@
             cell.style.backgroundColor = "black";
             cell.style.color = "white";
             cell.style.fontWeight = "bold";
+        }
+
+        styleHeaderCellForSorting<T>(cell: GridCell<T>) {
+            cell.node.style.cursor = "pointer";
         }
 
         styleFooterCell(cell: HTMLTableCellElement) {
