@@ -5,6 +5,7 @@
     import GridShowMoreButton = Controls.Grids.GridShowMoreButton;
     import IconType = Controls.IconType;
     import GridCell = Controls.Grids.GridCell;
+    import Link = Controls.Link;
 
     export class GridLook extends Look {
         install(composition: Composition) {
@@ -27,6 +28,57 @@
             cell.style.backgroundColor = "black";
             cell.style.color = "white";
             cell.style.fontWeight = "bold";
+        }
+
+        styleActionHeaderCell(cell: HTMLTableCellElement) {
+            this.styleHeaderCell(cell);
+
+            cell.style.textAlign = "right";
+            cell.style.paddingRight = "5px";
+        }
+
+        styleRowMouseEnter<T>(row: GridRow<T>) {
+            if (row == row.grid.headerRow) {
+                (row.grid.addLink as Link).style.color = "white";
+            }
+            else if (row.actionsCell) {
+                (row.editLink as Link).style.color = "black";
+                (row.saveLink as Link).style.color = "black";
+                (row.cancelLink as Link).style.color = "black";
+                (row.deleteLink as Link).style.color = "black";
+            }
+        }
+
+        styleRowMouseExited<T>(row: GridRow<T>) {
+            if (row == row.grid.headerRow) {
+                (row.grid.addLink as Link).style.color = "darkgray";
+            }
+            else if (row.actionsCell) {
+                (row.editLink as Link).style.color = "lightgray";
+                (row.saveLink as Link).style.color = "lightgray";
+                (row.cancelLink as Link).style.color = "lightgray";
+                (row.deleteLink as Link).style.color = "lightgray";
+            }
+        }
+
+        styleActionLinks<T>(row: GridRow<T>) {
+            const actionsDiv = row.actionsDiv as HTMLElement;
+            actionsDiv.style.whiteSpace = "nowrap";
+            actionsDiv.style.paddingRight = "5px";
+
+            const editLink = row.editLink as Link;
+            const saveLink = row.saveLink as Link;
+            const cancelLink = row.cancelLink as Link;
+            const deleteLink = row.deleteLink as Link;
+
+            editLink.style.paddingLeft = "10px";
+            editLink.style.color = "lightgray";
+            saveLink.style.paddingLeft = "10px";
+            saveLink.style.color = "lightgray";
+            cancelLink.style.paddingLeft = "10px";
+            cancelLink.style.color = "lightgray";
+            deleteLink.style.paddingLeft = "10px";
+            deleteLink.style.color = "lightgray";
         }
 
         styleHeaderCellForSorting<T>(cell: GridCell<T>) {

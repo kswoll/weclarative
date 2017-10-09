@@ -10,7 +10,7 @@
      * state, and a loading indicator for when waiting for asynchronous data to arrive.
      */
     export class Grid<T> extends CompositeControl<GridComposition, GridLook> {
-        minSize: number;
+        minSize = 0;
 
         readonly columns = new Array<IGridColumn<T>>();
         readonly items = new Array<T>();
@@ -30,6 +30,7 @@
         private _isEmptyVisible: boolean;
         private _loading: Control | null;
         private _isLoading: boolean;
+        private _addLink: Link | null;
 
         private hasLoaded: boolean;
 
@@ -70,6 +71,10 @@
             this.editing = new GridEditing<T>(initialValueProvider);
         }
 
+        get addLink() {
+            return this._addLink;
+        }
+
         get isHeaderVisible() {
             return this.headerRow.style.display != "none";
         }
@@ -97,6 +102,8 @@
                     (this.composition.actionFooterCell as HTMLTableCellElement).remove();
                     this.composition.actionFooterCell = null;
 
+                    this._addLink = null;
+
                     if (composition.emptyCell) {
                         composition.emptyCell.colSpan = this.columns.length;
                     }
@@ -107,7 +114,18 @@
                 } else {
                     const actionHeaderCell = this.composition.actionHeaderCell = document.createElement("td");
                     actionHeaderCell.style.width = "1px";
-                    this.look.styleHeaderCell(actionHeaderCell);
+                    this.look.styleActionHeaderCell(actionHeaderCell);
+
+                    const addLink = this._addLink = new Link(new Icon(IconType.Plus));
+                    actionHeaderCell.appendChild(addLink.node);
+                    addLink.style.paddingLeft = "10px";
+                    addLink.style.color = "darkgray";
+                    addLink.onClick.add(() => {
+                        this.add(this.editing.createInitialValue());
+                        const row = this.getRow(this.items[this.items.length - 1]);
+                        row.edit();
+                    });
+
                     this.headerRow.node.appendChild(actionHeaderCell);
 
                     const actionFooterCell = this.composition.actionFooterCell = document.createElement("td");
