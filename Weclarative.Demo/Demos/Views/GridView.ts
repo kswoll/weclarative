@@ -9,7 +9,6 @@ namespace Demos.Views {
     import IconSize = Weclarative.Controls.IconSize;
     import Button = Weclarative.Controls.Button;
     import ContentProviders = Weclarative.Controls.Grids.ContentProviders;
-    import Link = Weclarative.Controls.Link;
     import GridEditing = Weclarative.Controls.Grids.GridEditing;
 
     export class GridView extends BaseView {
@@ -26,11 +25,24 @@ namespace Demos.Views {
 
             this.grid.style.width = "100%";
 
-            this.grid.addEditableStringColumn("First Name", x => x.firstName, (x, value) => x.firstName = value, "25%",
-                x => x.footer(x.aggregates.count, ContentProviders.numbers));
-            this.grid.addEditableStringColumn("Last Name", x => x.lastName, (x, value) => x.lastName = value);
-            this.grid.addEditableNumberColumn("Age", x => x.age, (x, value) => x.age = value, undefined,
-                x => x.footer(x.aggregates.average, ContentProviders.numbers, x => x.toFixed(1)));
+            this.grid.addStringColumn({
+                title: "First Name",
+                getValue: x => x.firstName,
+                setValue: (x, value) => x.firstName = value,
+                width: "25%",
+                footer: x => x.footer(x.aggregates.count, ContentProviders.numbers)
+            });
+            this.grid.addStringColumn({
+                title: "Last Name",
+                getValue: x => x.lastName,
+                setValue: (x, value) => x.lastName = value
+            });
+            this.grid.addNumberColumn({
+                title: "Age",
+                getValue: x => x.age,
+                setValue: (x, value) => x.age = value,
+                footer: x => x.footer(x.aggregates.average, ContentProviders.numbers, x => x.toFixed(1))
+            });
 /*
             this.grid.addControlColumn(
                 "",

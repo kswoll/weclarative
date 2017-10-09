@@ -365,15 +365,10 @@
 
         addColumn<TValue>(
             type: ColumnType<TValue>,
-            title: string | Control,
-            valueProvider: (item: T) => TValue,
-            valueCommitter?: (item: T, value: TValue) => void,
-            width?: string,
-            footerProvider?: (aggregates: FooterProvider<TValue>) => ColumnFooter<TValue>,
-            contentProvider?: (item: T) => IContentProvider)
+            options: GridColumnOptions<T, TValue>)
         {
-            const column = new GridColumn<T, TValue>(this, type, title, valueProvider, valueCommitter, width,
-                footerProvider, contentProvider);
+            const column = new GridColumn<T, TValue>(this, type, options.title, options.getValue,
+                options.setValue, options.width, options.footer, options.content);
             this.columns.push(column);
             const headerCell = column.headerCell;
             this.headerRow.add(headerCell);
@@ -385,53 +380,24 @@
             return column;
         }
 
-        addStringColumn(
-            title: string | Control,
-            valueProvider: (item: T) => string,
-            width?: string,
-            footerProvider?: (aggregates: FooterProvider<string>) => ColumnFooter<string>)
+        addStringColumn(options: GridColumnOptions<T, string>)
         {
-            return this.addEditableStringColumn(title, valueProvider, undefined, width, footerProvider);
+            return this.addColumn(ColumnTypes.stringColumnType, options);
+                /*title, valueProvider, undefined, width, footerProvider);*/
         }
 
-        addEditableStringColumn(
-            title: string | Control,
-            valueProvider: (item: T) => string,
-            valueCommitter?: (item: T, value: string) => void,
-            width?: string,
-            footerProvider?: (aggregates: FooterProvider<string>) => ColumnFooter<string>)
+        addNumberColumn(options: GridColumnOptions<T, number>)
         {
-            return this.addColumn(ColumnTypes.stringColumnType, title, valueProvider, valueCommitter, width, footerProvider);
-        }
-
-        addNumberColumn(
-            title: string | Control,
-            valueProvider: (item: T) => number,
-            width?: string,
-            footerProvider?: (aggregates: FooterProvider<number>) => ColumnFooter<number>)
-        {
-            return this.addEditableNumberColumn(title, valueProvider, undefined, width, footerProvider);
-        }
-
-        addEditableNumberColumn(
-            title: string | Control,
-            valueProvider: (item: T) => number,
-            valueCommitter?: (item: T, value: number) => void,
-            width?: string,
-            footerProvider?: (aggregates: FooterProvider<number>) => ColumnFooter<number>)
-        {
-            return this.addColumn(ColumnTypes.numberColumnType, title, valueProvider, valueCommitter, width, footerProvider);
+            return this.addColumn(ColumnTypes.numberColumnType, options);
         }
 
         addControlColumn(
             title: string | Control,
             controlProvider: (item: T) => Control,
-            width?: string,
-            footerProvider?: (aggregates: FooterProvider<void>) => ColumnFooter<void>)
+            options: GridColumnOptions<T, void>)
         {
-            return this.addColumn(
-                ColumnTypes.controlColumnType, title, item => undefined, undefined, width, footerProvider,
-                item => new ContentProvider(() => controlProvider(item), () => { }));
+            options.content = item => new ContentProvider(() => controlProvider(item), () => { });
+            return this.addColumn(ColumnTypes.controlColumnType, options);
         }
 
         removeColumn<TValue>(column: GridColumn<T, TValue>) {

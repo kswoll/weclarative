@@ -52,6 +52,7 @@
     <TypeScriptCompile Include="Controls\Grids\FooterProvider.ts" />
     <TypeScriptCompile Include="Controls\Grids\Grid.ts" />
     <TypeScriptCompile Include="Controls\Grids\GridCell.ts" />
+    <TypeScriptCompile Include="Controls\Grids\GridColumnOptions.ts" />
     <TypeScriptCompile Include="Controls\Grids\GridEditing.ts" />
     <TypeScriptCompile Include="Controls\Grids\GridRow.ts" />
     <TypeScriptCompile Include="Controls\Grids\GridShowMoreButton.ts" />
@@ -139,6 +140,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="weclarative.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Props\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

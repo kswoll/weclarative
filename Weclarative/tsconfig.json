@@ -106,6 +106,7 @@
         "Controls/Grids/ColumnAggregate.ts",
         "Controls/Grids/ColumnFooter.ts",
         "Controls/Grids/FooterProvider.ts",
+        "Controls/Grids/GridColumnOptions.ts",
         "Controls/Grids/GridColumn.ts",
         "Controls/Grids/ContentGridCell.ts",
         "Controls/Grids/DataGrid.ts",
