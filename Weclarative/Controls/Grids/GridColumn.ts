@@ -31,8 +31,14 @@
 
             this.width = width || null;
 
-            if (type.sorter) {
+            const sorter = type.sorter;
+            if (sorter) {
                 this.grid.look.styleHeaderCellForSorting(this.headerCell);
+
+                this.headerCell.onClick.add(() => {
+                    grid.items.sort((a, b) => sorter(valueProvider(a), valueProvider(b)));
+                    grid.resort();
+                });
             }
         }
 
@@ -70,7 +76,7 @@
         rowRemoved(item: TItem) {
             if (this.footer) {
                 const value = this.valueProvider(item);
-                this.footer.aggregate.added(value);
+                this.footer.aggregate.removed(value);
                 if (!this.grid.isBatchUpdateEnabled)
                     this.updateFooter();
             }

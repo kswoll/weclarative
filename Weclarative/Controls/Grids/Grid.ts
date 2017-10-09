@@ -275,6 +275,15 @@
             }
         }
 
+        resort() {
+            for (let i = 0; i < this.items.length; i++) {
+                const item = this.items[i];
+                const row = this.rows.get(item) as GridRow<T>;
+                row.index = i;
+                this.composition.tbody.appendChild(row.node);
+            }
+        }
+
         private update() {
             this.updateRowIndices();
 

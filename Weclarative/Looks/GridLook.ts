@@ -19,6 +19,8 @@
         rowIndexChanged<T>(row: GridRow<T>) {
             if (row.index % 2 == 1)
                 row.style.backgroundColor = "#F7F7FF";
+            else
+                row.style.backgroundColor = "inherit";
         }
 
         styleHeaderCell(cell: HTMLTableCellElement) {
