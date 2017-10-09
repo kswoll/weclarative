@@ -11,6 +11,7 @@
             title: string | Control,
             private readonly valueProvider: (item: TItem) => TValue,
             private readonly valueCommitter?: (item: TItem, value: TValue) => void,
+            private readonly valueChanged?: (subscriber: (oldValue: TValue, newValue: TValue) => void) => void,
             width?: string,
             footerProvider?: (aggregates: FooterProvider<TValue>) => ColumnFooter<TValue>,
             private readonly contentProvider?: (item: TItem) => IContentProvider)
@@ -38,6 +39,16 @@
                 this.headerCell.onMouseDown.add(e => {
                     if (e.detail > 1)
                         e.preventDefault();
+                });
+            }
+
+            if (valueChanged) {
+                valueChanged((oldValue, newValue) => {
+                    if (this.footer) {
+                        this.footer.aggregate.removed(oldValue);
+                        this.footer.aggregate.added(newValue);
+                        this.update();
+                    }
                 });
             }
         }

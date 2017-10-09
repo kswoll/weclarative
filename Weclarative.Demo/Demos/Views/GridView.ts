@@ -25,6 +25,12 @@ namespace Demos.Views {
 
             this.grid.style.width = "100%";
 
+            const ageChangedListeners = new Array<(oldValue: number, newValue: number) => void>();
+            const ageChanged = (oldValue: number, newValue: number) => {
+                for (const l of ageChangedListeners)
+                    l(oldValue, newValue);
+            }
+
             this.grid.addStringColumn({
                 title: "First Name",
                 getValue: x => x.firstName,
@@ -40,7 +46,12 @@ namespace Demos.Views {
             this.grid.addNumberColumn({
                 title: "Age",
                 getValue: x => x.age,
-                setValue: (x, value) => x.age = value,
+                setValue: (x, value) => {
+                    const oldValue = x.age;
+                    x.age = value;
+                    ageChanged(oldValue, value);
+                },
+                valueChanged: subscriber => ageChangedListeners.push(subscriber),
                 footer: x => x.footer(x.aggregates.average, ContentProviders.numbers, x => x.toFixed(1))
             });
 /*

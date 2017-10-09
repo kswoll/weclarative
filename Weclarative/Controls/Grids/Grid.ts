@@ -363,12 +363,10 @@
             return this.rows.get(item) as GridRow<T>;
         }
 
-        addColumn<TValue>(
-            type: ColumnType<TValue>,
-            options: GridColumnOptions<T, TValue>)
+        addColumn<TValue>(type: ColumnType<TValue>, options: GridColumnOptions<T, TValue>)
         {
             const column = new GridColumn<T, TValue>(this, type, options.title, options.getValue,
-                options.setValue, options.width, options.footer, options.content);
+                options.setValue, options.valueChanged, options.width, options.footer, options.content);
             this.columns.push(column);
             const headerCell = column.headerCell;
             this.headerRow.add(headerCell);
@@ -383,7 +381,6 @@
         addStringColumn(options: GridColumnOptions<T, string>)
         {
             return this.addColumn(ColumnTypes.stringColumnType, options);
-                /*title, valueProvider, undefined, width, footerProvider);*/
         }
 
         addNumberColumn(options: GridColumnOptions<T, number>)
