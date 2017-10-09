@@ -1,14 +1,14 @@
 ﻿namespace Weclarative.Views {
-    import EventHandler = Utils.EventHandler;
     import Control = Controls.Control;
+    import SimpleEventHandler = Utils.SimpleEventHandler;
 
     export class View {
         title: string;
         layoutType: LayoutType;
 
         private isInitialized: boolean;
-        private attached = new EventHandler<void>();
-        private detached = new EventHandler<void>();
+        private attached = new SimpleEventHandler();
+        private detached = new SimpleEventHandler();
         private _content: Control | null;
         private _layout: Layout;
         private _viewContext: ViewContext;

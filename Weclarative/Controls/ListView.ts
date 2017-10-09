@@ -1,6 +1,7 @@
 ﻿namespace Weclarative.Controls {
     import EventHandler = Utils.EventHandler;
     import Arrays = Utils.Arrays;
+    import SimpleEventHandler = Utils.SimpleEventHandler;
 
     export class ListView<T> extends Control {
         highlightColor = "rgb(221, 236, 247)";
@@ -13,7 +14,7 @@
         private readonly textProvider: (item: T) => string;
         private readonly list = new VerticalPanel();
 
-        private _onChanged: EventHandler<void>;
+        private _onChanged: SimpleEventHandler;
         private _selectedIndex = -1;
 
         constructor(textProvider: (item: T) => string = (x) => x.toString()) {
@@ -68,13 +69,15 @@
                     control.style.backgroundColor = this.selectedColor;
                     control.style.color = this.selectedTextColor;
                 }
-                (this.onChanged as EventHandler<void>).trigger();
+                if (this.onChanged) {
+                    this.onChanged.trigger();
+                }
             }
         }
 
         get onChanged() {
             if (this._onChanged == null) {
-                this._onChanged = new EventHandler<void>();
+                this._onChanged = new SimpleEventHandler();
             }
             return this._onChanged;
         }

@@ -22,6 +22,8 @@
         private headerCells = new Map<IGridColumn<T>, GridCell<T>>();
         private footerCells = new Map<IGridColumn<T>, GridCell<T>>();
         private batchUpdateDepth: number;
+        private currentlySortedColumn: IGridColumn<T> | null;
+        private currentSortDirectionIsDescending: boolean;
 
         private _editing: IGridEditing<T>;
         private _empty: Control | null;
@@ -45,6 +47,23 @@
             this.composition.loading.style.display = "none";
 
             this.isFooterVisible = false;
+        }
+
+        sort(column: IGridColumn<T>) {
+            let sorter = column.type.sorter;
+            if (sorter) {
+                if (this.currentlySortedColumn == column) {
+                    if (!this.currentSortDirectionIsDescending) {
+                        const ascendingSort = sorter;
+                        sorter = (a, b) => ascendingSort(b, a);
+                    }
+                    this.currentSortDirectionIsDescending = !this.currentSortDirectionIsDescending;
+                }
+                this.currentlySortedColumn = column;
+                const lockedSort = sorter;
+                this.items.sort((a, b) => lockedSort(column.getValue(a), column.getValue(b)));
+                this.resort();
+            }
         }
 
         setEditing(initialValueProvider: () => T) {
@@ -73,6 +92,11 @@
                 this._editing = value;
                 const composition = this.composition;
                 if (value == null) {
+                    (this.composition.actionHeaderCell as HTMLTableCellElement).remove();
+                    this.composition.actionHeaderCell = null;
+                    (this.composition.actionFooterCell as HTMLTableCellElement).remove();
+                    this.composition.actionFooterCell = null;
+
                     if (composition.emptyCell) {
                         composition.emptyCell.colSpan = this.columns.length;
                     }
@@ -81,6 +105,15 @@
                         row.isEditable = true;
                     }
                 } else {
+                    const actionHeaderCell = this.composition.actionHeaderCell = document.createElement("td");
+                    actionHeaderCell.style.width = "1px";
+                    this.look.styleHeaderCell(actionHeaderCell);
+                    this.headerRow.node.appendChild(actionHeaderCell);
+
+                    const actionFooterCell = this.composition.actionFooterCell = document.createElement("td");
+                    this.look.styleFooterCell(actionFooterCell);
+                    this.footerRow.node.appendChild(actionFooterCell);
+
                     if (composition.emptyCell) {
                         composition.emptyCell.colSpan = this.columns.length + 1;
                     }
@@ -205,10 +238,18 @@
         }
 
         refreshButtonStates() {
-            for (const item of this.items) {
-                this.add(item);
+            for (const row of this.rows) {
+                const deleteLink = row[1].deleteLink;
+                if (deleteLink) {
+                    deleteLink.node.style.display = this.items.length > this.minSize ? "" : "none";
+                }
             }
             this.isEmptyVisible = this.items.length == 0;
+        }
+
+        addRange(items: Array<T>) {
+            for (const item of items)
+                this.add(item);
         }
 
         add(item: T) {
@@ -308,11 +349,13 @@
             type: ColumnType<TValue>,
             title: string | Control,
             valueProvider: (item: T) => TValue,
+            valueCommitter?: (item: T, value: TValue) => void,
             width?: string,
-            footerProvider?: (aggregates: FooterProvider<TValue>) => ColumnFooter<TValue>)
+            footerProvider?: (aggregates: FooterProvider<TValue>) => ColumnFooter<TValue>,
+            contentProvider?: (item: T) => IContentProvider)
         {
-            const column = new GridColumn<T, TValue>(this, type, title, valueProvider, width, footerProvider);
-            (column as any).$grid = this;
+            const column = new GridColumn<T, TValue>(this, type, title, valueProvider, valueCommitter, width,
+                footerProvider, contentProvider);
             this.columns.push(column);
             const headerCell = column.headerCell;
             this.headerRow.add(headerCell);
@@ -330,7 +373,17 @@
             width?: string,
             footerProvider?: (aggregates: FooterProvider<string>) => ColumnFooter<string>)
         {
-            return this.addColumn(ColumnTypes.stringColumnType, title, valueProvider, width, footerProvider);
+            return this.addEditableStringColumn(title, valueProvider, undefined, width, footerProvider);
+        }
+
+        addEditableStringColumn(
+            title: string | Control,
+            valueProvider: (item: T) => string,
+            valueCommitter?: (item: T, value: string) => void,
+            width?: string,
+            footerProvider?: (aggregates: FooterProvider<string>) => ColumnFooter<string>)
+        {
+            return this.addColumn(ColumnTypes.stringColumnType, title, valueProvider, valueCommitter, width, footerProvider);
         }
 
         addNumberColumn(
@@ -339,7 +392,28 @@
             width?: string,
             footerProvider?: (aggregates: FooterProvider<number>) => ColumnFooter<number>)
         {
-            return this.addColumn(ColumnTypes.numberColumnType, title, valueProvider, width, footerProvider);
+            return this.addEditableNumberColumn(title, valueProvider, undefined, width, footerProvider);
+        }
+
+        addEditableNumberColumn(
+            title: string | Control,
+            valueProvider: (item: T) => number,
+            valueCommitter?: (item: T, value: number) => void,
+            width?: string,
+            footerProvider?: (aggregates: FooterProvider<number>) => ColumnFooter<number>)
+        {
+            return this.addColumn(ColumnTypes.numberColumnType, title, valueProvider, valueCommitter, width, footerProvider);
+        }
+
+        addControlColumn(
+            title: string | Control,
+            controlProvider: (item: T) => Control,
+            width?: string,
+            footerProvider?: (aggregates: FooterProvider<void>) => ColumnFooter<void>)
+        {
+            return this.addColumn(
+                ColumnTypes.controlColumnType, title, item => undefined, undefined, width, footerProvider,
+                item => new ContentProvider(() => controlProvider(item), () => { }));
         }
 
         removeColumn<TValue>(column: GridColumn<T, TValue>) {

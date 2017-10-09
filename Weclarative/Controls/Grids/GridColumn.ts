@@ -1,7 +1,5 @@
 ﻿namespace Weclarative.Controls.Grids {
     export class GridColumn<TItem, TValue> implements IGridColumn<TItem> {
-        readonly editor: IGridEditor<TItem>;
-
         headerCell = new GridCell<TItem>(this);
         footerCell = new GridCell<TItem>(this);
 
@@ -9,11 +7,13 @@
 
         public constructor(
             readonly grid: Grid<TItem>,
-            private readonly type: ColumnType<TValue>,
+            readonly type: ColumnType<TValue>,
             title: string | Control,
             private readonly valueProvider: (item: TItem) => TValue,
+            private readonly valueCommitter?: (item: TItem, value: TValue) => void,
             width?: string,
-            footerProvider?: (aggregates: FooterProvider<TValue>) => ColumnFooter<TValue>)
+            footerProvider?: (aggregates: FooterProvider<TValue>) => ColumnFooter<TValue>,
+            private readonly contentProvider?: (item: TItem) => IContentProvider)
         {
             if (typeof(title) == "string") {
                 this.headerCell.content = new TextBlock(title);
@@ -31,24 +31,37 @@
 
             this.width = width || null;
 
-            const sorter = type.sorter;
-            if (sorter) {
+            if (type.sorter) {
                 this.grid.look.styleHeaderCellForSorting(this.headerCell);
 
-                this.headerCell.onClick.add(() => {
-                    grid.items.sort((a, b) => sorter(valueProvider(a), valueProvider(b)));
-                    grid.resort();
+                this.headerCell.onClick.add(e => this.grid.sort(this));
+                this.headerCell.onMouseDown.add(e => {
+                    if (e.detail > 1)
+                        e.preventDefault();
                 });
             }
         }
 
-        createCell(item: TItem): ContentGridCell<TItem> {
-            const content = this.type.contentProvider.createContent();
-            const value = this.valueProvider(item);
-            this.type.contentProvider.updateContent(content, value);
+        get isEditable() {
+            return this.valueCommitter != undefined;
+        }
 
-            const cell = new ContentGridCell<TItem>(this, item);
+        getValue(item: TItem) {
+            return this.valueProvider(item);
+        }
+        setValue(item: TItem, value: TValue) {
+            if (!this.valueCommitter)
+                throw new Error("Cannot edit value of this column as a committer has not been provided");
+            this.valueCommitter(item, value);
+        }
+
+        createCell(item: TItem): ContentGridCell<TItem> {
+            const contentProvider = this.contentProvider ? this.contentProvider(item) : this.type.contentProvider;
+            const content = contentProvider.createContent();
+
+            const cell = new ContentGridCell<TItem>(this, item, contentProvider);
             cell.content = content;
+            cell.update();
             return cell;
         }
 
@@ -60,13 +73,15 @@
         }
 
         private updateFooter() {
-            if (this.footer)
-                this.footer.contentProvider.updateContent(this.footerCell.content as Control, this.footer.aggregate.value);
+            if (this.footer) {
+                const value = this.footer.converter(this.footer.aggregate.value);
+                this.footer.contentProvider.updateContent(this.footerCell.content as Control, value);
+            }
         }
 
         rowAdded(item: TItem) {
             if (this.footer) {
-                const value = this.valueProvider(item);
+                const value = this.getValue(item);
                 this.footer.aggregate.added(value);
                 if (!this.grid.isBatchUpdateEnabled)
                     this.updateFooter();
@@ -75,7 +90,7 @@
 
         rowRemoved(item: TItem) {
             if (this.footer) {
-                const value = this.valueProvider(item);
+                const value = this.getValue(item);
                 this.footer.aggregate.removed(value);
                 if (!this.grid.isBatchUpdateEnabled)
                     this.updateFooter();

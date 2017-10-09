@@ -5,7 +5,6 @@
     export class GridRow<T> extends Control {
         private readonly cells = new Array<GridCell<T>>();
         private readonly row: HTMLTableRowElement;
-        private readonly editors = new Map<IGridColumn<T>, Control>();
         private readonly callMouseEntered = () => this.mouseEntered();
         private readonly callMouseExited = () => this.mouseExited();
 
@@ -90,10 +89,10 @@
                     this.onMouseExited.remove(this.callMouseExited);
                 } else {
                     if (this.actionsCell == null) {
-                        const actionsCell = document.createElement("td");
-                        const actionsDiv = document.createElement("div");
-                        this.actionsCell = actionsCell;
-                        this.actionsDiv = actionsDiv;
+                        const actionsCell = this.actionsCell = document.createElement("td");
+                        const actionsDiv = this.actionsDiv = document.createElement("div");
+                        actionsDiv.style.whiteSpace = "nowrap";
+                        actionsDiv.style.paddingRight = "5px";
                         actionsCell.appendChild(actionsDiv);
 
                         const editLink = this._editLink = new Link(new Icon(IconType.Edit));
@@ -111,10 +110,14 @@
                         editLink.style.color = "lightgray";
                         saveLink.style.paddingLeft = "10px";
                         saveLink.style.color = "lightgray";
+                        saveLink.style.display = "none";
                         cancelLink.style.paddingLeft = "10px";
                         cancelLink.style.color = "lightgray";
+                        cancelLink.style.display = "none";
                         deleteLink.style.paddingLeft = "10px";
                         deleteLink.style.color = "lightgray";
+                        if (this.grid.items.length < this.grid.minSize)
+                            deleteLink.style.display = "none";
                         addLink.style.paddingLeft = "10px";
                         addLink.style.color = "lightgray";
 
@@ -131,6 +134,8 @@
                             row.edit();
                         });
 
+                        actionsDiv.appendChild(saveLink.node);
+                        actionsDiv.appendChild(cancelLink.node);
                         actionsDiv.appendChild(editLink.node);
                         actionsDiv.appendChild(deleteLink.node);
                         actionsDiv.appendChild(addLink.node);
@@ -160,18 +165,9 @@
         }
 
         private resetRow() {
-            this.editors.clear();
-            this.clear();
-            const actionsDiv = this.actionsDiv as HTMLElement;
-            Elements.clear(actionsDiv);
-            actionsDiv.appendChild((this.editLink as Link).node);
-            actionsDiv.appendChild((this.deleteLink as Link).node);
-            actionsDiv.appendChild((this.addLink as Link).node);
-
-            for (const column of this.grid.columns) {
-                const cell = column.createCell(this.item as T);
-                this.add(cell);
-            }
+            (this.cancelLink as Link).style.display = "none";
+            (this.saveLink as Link).style.display = "none";
+            (this.editLink as Link).style.display = "";
         }
 
         private clear() {
@@ -182,50 +178,34 @@
         }
 
         private edit() {
-            this.clear();
+            (this.saveLink as Link).style.display = "";
+            (this.cancelLink as Link).style.display = "";
+            (this.editLink as Link).style.display = "none";
 
-            const actionsDiv = this.actionsDiv as HTMLElement;
-            actionsDiv.appendChild((this.saveLink as Link).node);
-            actionsDiv.appendChild((this.cancelLink as Link).node);
-
-            let firstEditor: Control | null = null;
-            for (let i = 0; i < this.grid.columns.length; i++) {
-                const column = this.grid.columns[i];
-                let cell: GridCell<T>;
-                if (column.editor == null) {
-                    cell = column.createCell(this.item as T);
-                    this.editors.delete(column);
-                } else {
-                    const editor = column.editor.createEditor(
-                        this.item as T,
-                        () => {
-                            const nextEditors = this.grid.columns.map(x => this.editors.get(x)).filter(x => x).map(x => x as Control);
-                            if (nextEditors.length > 0) {
-                                const nextEditor = nextEditors[0];
-                                nextEditor.focus();
-                            } else {
-                                this.save();
-                            }
-                        });
-                    this.editors.set(column, editor);
-                    cell = new GridCell(column);
-                    cell.content = editor;
-
-                    if (firstEditor == null) {
-                        firstEditor = editor;
-                    }
+            for (const cell of this.cells) {
+                if (cell instanceof ContentGridCell)
+                {
+                    cell.edit();
                 }
-                this.add(cell);
-                if (firstEditor)
-                    firstEditor.focus();
             }
+            return;
         }
 
         private save() {
+            for (const cell of this.cells) {
+                if (cell instanceof ContentGridCell) {
+                    cell.commit();
+                }
+            }
             this.resetRow();
         }
 
         private cancel() {
+            for (const cell of this.cells) {
+                if (cell instanceof ContentGridCell) {
+                    cell.cancel();
+                }
+            }
             this.resetRow();
         }
     }

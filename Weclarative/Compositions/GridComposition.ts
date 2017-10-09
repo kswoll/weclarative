@@ -17,5 +17,7 @@
         emptyRow: HTMLTableRowElement | null;
         emptyCell: HTMLTableCellElement | null;
         loadingCell: HTMLTableCellElement | null;
+        actionHeaderCell: HTMLTableCellElement | null;
+        actionFooterCell: HTMLTableCellElement | null;
     }
 }

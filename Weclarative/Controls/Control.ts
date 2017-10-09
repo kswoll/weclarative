@@ -4,6 +4,7 @@
     import Elements = Utils.Elements;
     import Look = Looks.Look;
     import DefaultLook = Looks.DefaultLook;
+    import SimpleEventHandler = Utils.SimpleEventHandler;
 
     export class Control<TLook extends Look = Look> {
         private static mouseTrackingEngine = new MouseTrackingEngine();
@@ -23,6 +24,7 @@
         private _attachedToDom: EventHandler<void> | null;
         private _detachedFromDom: EventHandler<void> | null;
         private _onClick: EventHandler<MouseEvent> | null;
+        private _onDoubleClick: EventHandler<MouseEvent> | null;
         private _onMouseEntered: EventHandler<Event> | null;
         private _onMouseExited: EventHandler<Event> | null;
         private _onMouseUp: EventHandler<MouseEvent> | null;
@@ -76,16 +78,16 @@
             return this.node.style;
         }
 
-        get attachedToDom(): EventHandler<void> {
+        get attachedToDom(): SimpleEventHandler {
             if (this._attachedToDom == null)
-                this._attachedToDom = new EventHandler<void>();
-            return this._attachedToDom as EventHandler<void>;
+                this._attachedToDom = new SimpleEventHandler();
+            return this._attachedToDom as SimpleEventHandler;
         }
 
-        get detachedFromDom(): EventHandler<void> {
+        get detachedFromDom(): SimpleEventHandler {
             if (this._detachedFromDom == null)
-                this._detachedFromDom = new EventHandler<void>();
-            return this._detachedFromDom as EventHandler<void>;
+                this._detachedFromDom = new SimpleEventHandler();
+            return this._detachedFromDom as SimpleEventHandler;
         }
 
         get view(): Views.View {
@@ -114,6 +116,18 @@
 
         private onJsClick(evt: MouseEvent) {
             (this._onClick as EventHandler<MouseEvent>).trigger(evt);
+        }
+
+        get onDoubleClick(): IEventHandler<MouseEvent> {
+            if (this._onDoubleClick == null) {
+                this._onDoubleClick = new EventHandler<MouseEvent>();
+                this.node.addEventListener("dblclick", evt => this.onJsDoubleClick(evt));
+            }
+            return this._onDoubleClick as IEventHandler<MouseEvent>;
+        }
+
+        private onJsDoubleClick(evt: MouseEvent) {
+            (this._onDoubleClick as EventHandler<MouseEvent>).trigger(evt);
         }
 
         get onMouseEntered(): IEventHandler<Event> {

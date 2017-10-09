@@ -2,15 +2,12 @@
     export class FooterProvider<TValue> {
         aggregates = new ColumnAggregates<TValue>();
 
-        simple(aggregate: IColumnAggregate<TValue>, contentProvider: IContentProvider) {
-            return new ColumnFooter(aggregate, contentProvider, x => x);
-        }
-
-        complex<TResult>(
+        footer(
             aggregate: IColumnAggregate<TValue>,
             contentProvider: IContentProvider,
-            converter: (value: TValue) => TResult)
+            converter?: (value: TValue) => any)
         {
+            converter = converter || ((x: TValue) => x);
             return new ColumnFooter(aggregate, contentProvider, converter);
         }
     }

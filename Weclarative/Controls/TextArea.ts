@@ -1,10 +1,10 @@
 ﻿namespace Weclarative.Controls {
-    import EventHandler = Utils.EventHandler;
+    import SimpleEventHandler = Utils.SimpleEventHandler;
 
     export class TextArea extends Control {
         private readonly element: HTMLTextAreaElement;
 
-        private _onChanged: EventHandler<void>;
+        private _onChanged: SimpleEventHandler;
 
         constructor(text?: string) {
             super("textarea");
@@ -30,8 +30,8 @@
         }
 
         get onChanged() {
-            if (this._onChanged == null)
-                this._onChanged = new EventHandler<void>();
+            if (this._onChanged)
+                this._onChanged = new SimpleEventHandler();
             return this._onChanged;
         }
 

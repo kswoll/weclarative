@@ -4,8 +4,8 @@
     import Layout = Views.Layout;
     import RouteEngine = Routes.RouteEngine;
     import HtmlControl = Controls.HtmlControl;
-    import EventHandler = Utils.EventHandler;
     import Strings = Utils.Strings;
+    import SimpleEventHandler = Utils.SimpleEventHandler;
 
     /**
      * The top-level application responsible for driving the rest of the behavior of your entire application.  In
@@ -16,7 +16,7 @@
     export abstract class MvcApplication {
         static instance: MvcApplication;
 
-        onBottomBounced = new EventHandler<void>();
+        onBottomBounced = new SimpleEventHandler();
         routeTree: RouteTree;
 
         private currentPath: string;

@@ -1,12 +1,13 @@
 ﻿namespace Weclarative.Controls {
-    import EventHandler = Utils.EventHandler;
+    import SimpleEventHandler = Utils.SimpleEventHandler;
+    import Composition = Compositions.Composition;
 
-    export class TextBox extends Control {
-        private _onChanged: EventHandler<void>;
+    export class TextBox extends CompositeControl {
+        private _onChanged: SimpleEventHandler;
         private inputElement: HTMLInputElement;
 
         constructor() {
-            super("input");
+            super(new Composition(), "input");
 
             this.node.setAttribute("type", "text");
             this.node.addEventListener("change", evt => this.onJsChanged(evt));
@@ -53,13 +54,13 @@
 
         get onChanged() {
             if (!this._onChanged)
-                this._onChanged = new EventHandler<void>();
+                this._onChanged = new SimpleEventHandler();
             return this._onChanged;
         }
 
         private onJsChanged(evt: Event) {
             if (this._onChanged)
-                (this._onChanged as EventHandler<void>).trigger();
+                this._onChanged.trigger();
         }
 
         get text() {

@@ -1,6 +1,6 @@
 ﻿namespace Weclarative.Controls {
     import IEventHandler = Utils.IEventHandler;
-    import EventHandler = Utils.EventHandler;
+    import SimpleEventHandler = Utils.SimpleEventHandler;
 
     export class ListBox<T> extends Control {
         private readonly items = new Array<T>();
@@ -8,7 +8,7 @@
         private readonly valueProvider: (item: T) => string;
         private readonly selectElement: HTMLSelectElement;
 
-        private _onChanged: EventHandler<void> | null;
+        private _onChanged: SimpleEventHandler | null;
 
         constructor(textProvider?: (item: T) => string, valueProvider?: (item: T) => string) {
             super("select");
@@ -23,7 +23,7 @@
 
         get onChanged(): IEventHandler<void> {
             if (!this._onChanged)
-                this._onChanged = new EventHandler<void>();
+                this._onChanged = new SimpleEventHandler();
             return this._onChanged;
         }
 
@@ -62,7 +62,7 @@
 
         onJsChanged(evt: Event) {
             if (this._onChanged)
-                (this._onChanged as EventHandler<void>).trigger();
+                this._onChanged.trigger();
         }
 
         get isMultiselect() {

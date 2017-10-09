@@ -1,8 +1,8 @@
 ﻿namespace Weclarative.Controls {
-    import EventHandler = Utils.EventHandler;
+    import SimpleEventHandler = Utils.SimpleEventHandler;
 
     export class CheckBox extends Control {
-        private _onChanged: EventHandler<void>;
+        private _onChanged: SimpleEventHandler;
 
         private label: HTMLElement;
         private checkbox: HTMLInputElement;
@@ -31,7 +31,7 @@
 
         get onChanged() {
             if (!this._onChanged)
-                this._onChanged = new EventHandler<void>();
+                this._onChanged = new SimpleEventHandler();
             return this._onChanged;
         }
 

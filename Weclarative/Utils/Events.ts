@@ -1,11 +1,11 @@
 ﻿namespace Weclarative.Utils {
     export interface IEventHandler<T> {
-        add(handler: { (data?: T): void }): void;
-        remove(handler: { (data?: T): void }): void;
+        add(handler: { (data: T): void }): void;
+        remove(handler: { (data: T): void }): void;
     }
 
     export class EventHandler<T> implements IEventHandler<T> {
-        private handlers: { (data?: T): void; }[] = [];
+        private handlers: { (data: T): void; }[] = [];
 
         add(handler: { (data: T): void }) {
             this.handlers.push(handler);
@@ -15,8 +15,14 @@
             this.handlers = this.handlers.filter(x => x != handler);
         }
 
-        trigger(data?: T) {
+        trigger(data: T) {
             this.handlers.slice(0).forEach(x => x(data));
+        }
+    }
+
+    export class SimpleEventHandler extends EventHandler<void> {
+        trigger() {
+            super.trigger(undefined);
         }
     }
 

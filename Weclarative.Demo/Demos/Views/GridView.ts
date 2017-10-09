@@ -9,6 +9,8 @@ namespace Demos.Views {
     import IconSize = Weclarative.Controls.IconSize;
     import Button = Weclarative.Controls.Button;
     import ContentProviders = Weclarative.Controls.Grids.ContentProviders;
+    import Link = Weclarative.Controls.Link;
+    import GridEditing = Weclarative.Controls.Grids.GridEditing;
 
     export class GridView extends BaseView {
         private grid = new Grid<TestRow>();
@@ -24,9 +26,18 @@ namespace Demos.Views {
 
             this.grid.style.width = "100%";
 
-            this.grid.addStringColumn("First Name", x => x.firstName, "25%",
-                x => x.simple(x.aggregates.count, ContentProviders.numbers));
-            this.grid.addStringColumn("Last Name", x => x.lastName);
+            this.grid.addEditableStringColumn("First Name", x => x.firstName, (x, value) => x.firstName = value, "25%",
+                x => x.footer(x.aggregates.count, ContentProviders.numbers));
+            this.grid.addEditableStringColumn("Last Name", x => x.lastName, (x, value) => x.lastName = value);
+            this.grid.addEditableNumberColumn("Age", x => x.age, (x, value) => x.age = value, undefined,
+                x => x.footer(x.aggregates.average, ContentProviders.numbers, x => x.toFixed(1)));
+/*
+            this.grid.addControlColumn(
+                "",
+                () => {
+                    return new Link(new Icon(IconType.Edit));
+                });
+*/
             this.grid.isFooterVisible = true;
             this.grid.showMoreButton.onClick.add(() => alert("You clicked on the button!"));
 
@@ -36,6 +47,7 @@ namespace Demos.Views {
             loading.style.padding = "20px";
             this.grid.loading = new CenteredPanel(loading);
 
+            this.grid.editing = new GridEditing<TestRow>(() => new TestRow("", "", 0));
             this.grid.empty = new TextBlock("No items! Perhaps you should add some, hmm?");
 
             const settingsPanel = new NameValuePanel();
@@ -76,15 +88,15 @@ namespace Demos.Views {
         }
 
         populate() {
-            this.grid.add(new TestRow("Kirk", "Woll"));
-            this.grid.add(new TestRow("Andrew", "Simpkins"));
-            this.grid.add(new TestRow("Carl", "Woll"));
-            this.grid.add(new TestRow("Lara", "Robinette"));
+            this.grid.add(new TestRow("Kirk", "Woll", 39));
+            this.grid.add(new TestRow("Andrew", "Simpkins", 39));
+            this.grid.add(new TestRow("Carl", "Woll", 56));
+            this.grid.add(new TestRow("Lara", "Robinette", 49));
         }
     }
 
     class TestRow {
-        constructor(readonly firstName: string, readonly lastName: string) {
+        constructor(public firstName: string, public lastName: string, public age: number) {
         }
     }
 }

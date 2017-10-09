@@ -11,7 +11,7 @@
             this.node.setAttribute("href", "javascript:void(0);");
             this.node.style.display = "inline-block";
 
-            if (content as string) {
+            if (typeof(content) == "string") {
                 this.text = content as string;
             } else if (content instanceof Control) {
                 this.add(content);
