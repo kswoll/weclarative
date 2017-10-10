@@ -105,7 +105,7 @@
                     this._addLink = null;
 
                     if (composition.emptyCell) {
-                        composition.emptyCell.colSpan = this.columns.length;
+                        composition.emptyCell.colSpan = this.effectiveColSpan();
                     }
                     for (const item of this.items) {
                         const row = this.rows.get(item) as GridRow<T>;
@@ -132,14 +132,12 @@
                     this.look.styleFooterCell(actionFooterCell);
                     this.footerRow.node.appendChild(actionFooterCell);
 
-                    if (composition.emptyCell) {
-                        composition.emptyCell.colSpan = this.columns.length + 1;
-                    }
                     for (const item of this.items) {
                         const row = this.rows.get(item) as GridRow<T>;
                         row.isEditable = true;
                     }
                 }
+                this.updateColSpan();
             }
         }
 
@@ -158,7 +156,7 @@
                     this.composition.showMoreRow = showMoreRow;
                     this.composition.showMoreCell = showMoreCell;
                     this.look.styleShowMoreCell(showMoreCell);
-                    showMoreCell.colSpan = this.columns.length;
+                    showMoreCell.colSpan = this.effectiveColSpan();
                     showMoreRow.appendChild(showMoreCell);
                     showMoreCell.appendChild(this.showMoreButton.node);
                     this.composition.tfoot.appendChild(showMoreRow);
@@ -181,7 +179,7 @@
                 if (this.composition.loadingCell == null) {
                     const loadingCell = document.createElement("td");
                     this.composition.loadingCell = loadingCell;
-                    loadingCell.colSpan = this.columns.length;
+                    loadingCell.colSpan = this.effectiveColSpan();
                     loadingCell.style.padding = "3px";
                     this.composition.loadingRow.appendChild(loadingCell);
                 }
@@ -229,7 +227,7 @@
                     const emptyCell = document.createElement("td");
                     this.look.styleCell(emptyCell);
                     this.composition.emptyCell = emptyCell;
-                    emptyCell.colSpan = this.columns.length;
+                    emptyCell.colSpan = this.effectiveColSpan();
                     this.look.styleEmptyCell(emptyCell);
                     (this.composition.emptyRow as HTMLElement).appendChild(emptyCell);
                 }
@@ -408,14 +406,22 @@
             this.updateColSpan();
         }
 
+        private effectiveColSpan() {
+            let columns = this.columns.length;
+            if (this.editing)
+                columns++;
+            return columns;
+        }
+
         private updateColSpan() {
             const composition = this.composition;
+            const columns = this.effectiveColSpan();
             if (composition.emptyCell)
-                composition.emptyCell.colSpan = this.columns.length;
+                composition.emptyCell.colSpan = columns;
             if (composition.loadingCell)
-                composition.loadingCell.colSpan = this.columns.length;
+                composition.loadingCell.colSpan = columns;
             if (composition.showMoreCell)
-                composition.showMoreCell.colSpan = this.columns.length;
+                composition.showMoreCell.colSpan = columns;
         }
     }
 

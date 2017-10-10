@@ -15,5 +15,6 @@
         static Tab = 9;
         static Enter = 13;
         static Escape = 27;
+        static Backspace = 8;
     }
 }

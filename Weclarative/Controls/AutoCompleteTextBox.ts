@@ -152,7 +152,7 @@
             itemWidget.appendChild(document.createTextNode(this.textProvider(item)));
 
             const itemCell = document.createElement("td");
-            itemCell.style.paddingLeft = "2px";
+            itemCell.style.paddingLeft = "4px";
             itemCell.appendChild(itemWidget);
             Utils.Elements.insertBefore(itemCell, this.contentNodeCell);
 
@@ -201,6 +201,10 @@
                     event.stopImmediatePropagation();
                     event.preventDefault();
                     break;
+                case KeyCode.Backspace:
+                    if (this.contentNode.selectionStart == 0 && this.contentNode.selectionEnd == 0 && this.selectedItems.length > 0)
+                        this.removeSelectedItem(this.selectedItems[this.selectedItems.length - 1]);
+                    break;
             }
         }
 
@@ -220,6 +224,7 @@
                 case KeyCode.Ctrl:
                 case KeyCode.Alt:
                 case KeyCode.Shift:
+                case KeyCode.Backspace:
                     return;
             }
 
