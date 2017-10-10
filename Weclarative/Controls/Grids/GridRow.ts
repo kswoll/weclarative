@@ -94,7 +94,7 @@
                             deleteLink.style.display = "none";
 
                         editLink.onClick.add(() => this.edit());
-                        saveLink.onClick.add(() => this.save());
+                        saveLink.onClick.add(() => this.commit());
                         cancelLink.onClick.add(() => this.cancel());
                         deleteLink.onClick.add(() => {
                             this.grid.remove(this.item as T);
@@ -131,6 +131,7 @@
             (this.cancelLink as Link).style.display = "none";
             (this.saveLink as Link).style.display = "none";
             (this.editLink as Link).style.display = "";
+            (this.deleteLink as Link).style.display = "";
         }
 
         private clear() {
@@ -140,10 +141,11 @@
             }
         }
 
-        public edit() {
+        edit() {
             (this.saveLink as Link).style.display = "";
             (this.cancelLink as Link).style.display = "";
             (this.editLink as Link).style.display = "none";
+            (this.deleteLink as Link).style.display = "none";
 
             for (const cell of this.cells) {
                 if (cell instanceof ContentGridCell)
@@ -154,7 +156,7 @@
             return;
         }
 
-        private save() {
+        commit() {
             for (const cell of this.cells) {
                 if (cell instanceof ContentGridCell) {
                     cell.commit();
@@ -163,7 +165,7 @@
             this.resetRow();
         }
 
-        private cancel() {
+        cancel() {
             for (const cell of this.cells) {
                 if (cell instanceof ContentGridCell) {
                     cell.cancel();

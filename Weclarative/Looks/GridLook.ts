@@ -110,5 +110,9 @@
             cell.style.fontSize = "80%";
             cell.style.padding = "4px";
         }
+
+        styleCellForEditing(cell: HTMLElement) {
+            cell.style.padding = "2px";
+        }
     }
 }

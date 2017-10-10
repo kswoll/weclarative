@@ -11,7 +11,7 @@
             title: string | Control,
             private readonly valueProvider: (item: TItem) => TValue,
             private readonly valueCommitter?: (item: TItem, value: TValue) => void,
-            private readonly valueChanged?: (subscriber: (oldValue: TValue, newValue: TValue) => void) => void,
+            valueChanged?: (subscriber: (oldValue: TValue, newValue: TValue) => void) => void,
             width?: string,
             footerProvider?: (aggregates: FooterProvider<TValue>) => ColumnFooter<TValue>,
             private readonly contentProvider?: (item: TItem) => IContentProvider)
@@ -66,11 +66,12 @@
             this.valueCommitter(item, value);
         }
 
-        createCell(item: TItem): ContentGridCell<TItem> {
+        createCell(row: GridRow<TItem>): ContentGridCell<TItem> {
+            const item = row.item as TItem;
             const contentProvider = this.contentProvider ? this.contentProvider(item) : this.type.contentProvider;
             const content = contentProvider.createContent();
 
-            const cell = new ContentGridCell<TItem>(this, item, contentProvider);
+            const cell = new ContentGridCell<TItem>(this, row, item, contentProvider);
             cell.content = content;
             cell.update();
             return cell;

@@ -100,7 +100,7 @@
     <TypeScriptCompile Include="Fixups\CSSStyleDeclarationFixups.ts" />
     <TypeScriptCompile Include="Fixups\WindowFixups.ts" />
     <TypeScriptCompile Include="LayoutType.ts" />
-    <TypeScriptCompile Include="Looks\ContentProviderTextBoxEditorLook.ts" />
+    <TypeScriptCompile Include="Looks\ContentProviderLooks.ts" />
     <TypeScriptCompile Include="Looks\GridLook.ts" />
     <TypeScriptCompile Include="Looks\DefaultLook.ts" />
     <TypeScriptCompile Include="Looks\Look.ts" />

@@ -281,7 +281,7 @@
             this.rows.set(item, row);
 
             for (const column of this.columns) {
-                const cell = column.createCell(item);
+                const cell = column.createCell(row);
                 row.add(cell);
 
                 column.rowAdded(item);

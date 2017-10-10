@@ -35,13 +35,14 @@ namespace Demos.Views {
                 title: "First Name",
                 getValue: x => x.firstName,
                 setValue: (x, value) => x.firstName = value,
-                width: "25%",
+                width: "40%",
                 footer: x => x.footer(x.aggregates.count, ContentProviders.numbers)
             });
             this.grid.addStringColumn({
                 title: "Last Name",
                 getValue: x => x.lastName,
-                setValue: (x, value) => x.lastName = value
+                setValue: (x, value) => x.lastName = value,
+                width: "40%"
             });
             this.grid.addNumberColumn({
                 title: "Age",
@@ -52,7 +53,8 @@ namespace Demos.Views {
                     ageChanged(oldValue, value);
                 },
                 valueChanged: subscriber => ageChangedListeners.push(subscriber),
-                footer: x => x.footer(x.aggregates.average, ContentProviders.numbers, x => x.toFixed(1))
+                width: "20%",
+                footer: x => x.footer(x.aggregates.average, ContentProviders.numbers, value => value.toFixed(1))
             });
 /*
             this.grid.addControlColumn(

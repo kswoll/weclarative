@@ -46,7 +46,7 @@
         "Looks/Look.ts",
         "Looks/GridLook.ts",
         "Looks/TitledPanelLook.ts",
-        "Looks/ContentProviderTextBoxEditorLook.ts",
+        "Looks/ContentProviderLooks.ts",
         "Looks/DefaultLook.ts",
         "Controls/MouseTrackingEngine.ts",
         "Controls/Control.ts",

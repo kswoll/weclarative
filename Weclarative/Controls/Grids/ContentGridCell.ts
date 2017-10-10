@@ -5,6 +5,7 @@
 
         constructor(
             column: IGridColumn<T>,
+            readonly row: GridRow<T>,
             readonly item: T,
             readonly contentProvider: IContentProvider,
             tagName?: string)
@@ -22,7 +23,11 @@
                 this.isEditing = true;
                 this.originalContent = this.content;
                 const value = this.column.getValue(this.item);
-                this.content = this.contentProvider.createEditor(value);
+                this.content = this.contentProvider.createEditor(
+                    value,
+                    () => this.row.commit(),
+                    () => this.row.cancel());
+                this.column.grid.look.styleCellForEditing(this.node);
             }
         }
 
@@ -30,6 +35,7 @@
             this.content = this.originalContent;
             this.originalContent = null;
             this.isEditing = false;
+            this.column.grid.look.styleCell(this.node);
         }
 
         commit() {
