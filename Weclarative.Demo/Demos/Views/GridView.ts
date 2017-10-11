@@ -10,6 +10,8 @@ namespace Demos.Views {
     import Button = Weclarative.Controls.Button;
     import ContentProviders = Weclarative.Controls.Grids.ContentProviders;
     import GridEditing = Weclarative.Controls.Grids.GridEditing;
+    import AlignmentPanel = Weclarative.Controls.AlignmentPanel;
+    import MarkDown = Weclarative.Controls.MarkDown;
 
     export class GridView extends BaseView {
         private grid = new Grid<TestRow>();
@@ -99,9 +101,38 @@ namespace Demos.Views {
             const controlPanel = new TitledPanel("Settings");
             controlPanel.content = settingsPanel;
 
+            const summary = new MarkDown(`
+The \`Grid\` control represents data in a tabular format with facilities for:
+
+* Sorting
+* Editing
+* An empty state
+* Footers
+* A "show more" button
+* A loading indicator
+
+#### Sorting
+Automatic column sorting by clicking on the header is supported for basic column
+types such as strings and numbers.  It will switch between ascending and
+descending sorting as you click on the header.
+
+#### Editing
+When editing is enabled, a new column is added to the end of the grid.  In this
+column's header is a button to add new rows, and in each data row, the column
+contains buttons to edit or delete the row.  When editing is activated, these
+buttons are replaced with buttons to commit and cancel any changes that have been
+made.
+
+#### Empty State
+When the grid is empty, you may provide your own control that replaces the body
+of the grid.  Use it to provide instructions for users or otherwise describe an
+empty grid rather than displaying zero rows, which often looks unattractive.
+            `);
+
             mainPanel.add(controlPanel);
             mainPanel.add(this.grid);
             mainPanel.add(buttons);
+            mainPanel.add(summary);
 
             this.populate();
 

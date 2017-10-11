@@ -197,10 +197,12 @@
                     if (this.rows.size == 0 && this.composition.emptyRow != null)
                         this.isEmptyVisible = false;
                     this.composition.tbody.style.display = "none";
+                    this.composition.tfoot.style.display = "none";
                     this.composition.loading.style.display = "";
                     this.hasLoaded = true;
                 } else {
                     this.composition.tbody.style.display = "";
+                    this.composition.tfoot.style.display = "";
                     this.composition.loading.style.display = "none";
                     if (this.rows.size == 0 && this.composition.emptyRow != null)
                         this.isEmptyVisible = true;
