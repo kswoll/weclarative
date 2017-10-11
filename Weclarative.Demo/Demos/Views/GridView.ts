@@ -127,6 +127,23 @@ made.
 When the grid is empty, you may provide your own control that replaces the body
 of the grid.  Use it to provide instructions for users or otherwise describe an
 empty grid rather than displaying zero rows, which often looks unattractive.
+
+#### Footers
+At the bottom of the grid is an optional footer.  You can use this to display
+static information (such as string literals) or aggregate information such as
+sums, averages, etc.
+
+#### Show More
+Sometimes your grid is only showing one or more pages of data.  When the Show More
+Button is enabled, a button appears at the bottom of the grid that when clicked
+should execute code that fetches more data from the server to add in a new page
+of data to the grid.
+
+#### Loading Indicator
+You can use the loading indicator to indicate to the user that the grid has no
+content yet because you are making a request to a server, for example.  Similar
+to the empty state, it completely takes over the content of the grid, and also
+suppresses any footers.
             `);
 
             mainPanel.add(controlPanel);

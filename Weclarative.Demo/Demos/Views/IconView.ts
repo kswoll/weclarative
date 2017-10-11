@@ -8,9 +8,12 @@
     import ListBox = Weclarative.Controls.ListBox;
     import FixedPanel = Weclarative.Controls.FixedPanel;
     import TitledPanel = Weclarative.Controls.TitledPanel;
+    import IconSize = Weclarative.Controls.IconSize;
+    import CheckBox = Weclarative.Controls.CheckBox;
 
     export class IconView extends BaseView {
         private iconType: ListBox<IconType>;
+        private iconSize: ListBox<IconSize>;
 
         constructor() {
             super();
@@ -37,12 +40,26 @@ making it easy to choose the one you want.
             this.iconType.bindItems(Enums.getValues<IconType>(IconType));
             this.iconType.selectedItem = IconType.Adjust;
             this.iconType.focus();
-
             this.iconType.onChanged.add(() =>
             {
                 icon.source = this.iconType.selectedItem || IconType.None;
             });
+
+            this.iconSize = new ListBox<IconSize>(x => IconSize[x]);
+            this.iconSize.bindItems(Enums.getValues<IconSize>(IconSize));
+            this.iconSize.selectedItem = IconSize.Normal;
+            this.iconSize.onChanged.add(() => {
+                icon.size = this.iconSize.selectedItem || IconSize.Normal;
+            });
+
+            const isSpinning = new CheckBox();
+            isSpinning.onChanged.add(() => {
+                icon.isSpinning = isSpinning.isChecked;
+            });
+
             properties.addPair("Icon Type", new FixedPanel(this.iconType, "100%", "200px"));
+            properties.addPair("Icon Size", new FixedPanel(this.iconSize, "100%", "100px"));
+            properties.addPair("Is Spinning", isSpinning);
 
             mainPanel.add(new TitledPanel("Properties", properties));
 
