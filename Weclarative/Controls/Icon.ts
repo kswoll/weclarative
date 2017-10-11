@@ -1,6 +1,10 @@
 ﻿namespace Weclarative.Controls {
     import Strings = Utils.Strings;
 
+    /**
+     * A control that provides an interface to Font Awesome icons.  You can adjust the
+     * icon, its size, and whether or not it's spinning.
+     */
     export class Icon extends Control {
         private _isSpinning = false;
         private _size = IconSize.Normal;
