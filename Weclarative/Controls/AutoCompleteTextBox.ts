@@ -1,112 +1,78 @@
 ﻿namespace Weclarative.Controls {
     import Arrays = Utils.Arrays;
+    import AutoCompleteTextBoxComposition = Compositions.AutoCompleteTextBoxComposition;
+    import AutoCompleteTextBoxLook = Looks.AutoCompleteTextBoxLook;
 
-    export class AutoCompleteTextBox<T> extends Control
+    export class AutoCompleteTextBox<T> extends CompositeControl<AutoCompleteTextBoxComposition, AutoCompleteTextBoxLook>
     {
         onSearch: (text: string) => Promise<T[]>;
         throttle = 500;
         readonly loadingIcon: Icon;
         readonly selectedItems = new Array<T>();
+        readonly look = new AutoCompleteTextBoxLook();
 
         private overlay: ListView<T>;
-        private contentNode: HTMLInputElement;
-        private overlayContainer: HTMLElement;
-        private contentContainerRow: HTMLElement;
-        private contentNodeCell: HTMLElement;
         private selectedWidgets = new Map<T, HTMLElement>();
         private keyPressEvent: KeyboardEvent;
         private isResettingOverlay: boolean;
 
         constructor(private readonly textProvider: (item: T) => string = x => x.toString(), readonly multiselect = false) {
-            super();
+            super(new AutoCompleteTextBoxComposition());
 
             this.overlay = new ListView<T>(textProvider);
-            this.loadingIcon = new Icon(IconType.Spinner);
-            this.loadingIcon.isSpinning = true;
-            this.loadingIcon.style.fontSize = "75%";
-            this.loadingIcon.style.display = "none";
 
-            this.overlay.style.minWidth = "300px";
-            this.overlay.style.minHeight = "200px";
-            this.overlay.style.cursor = "default";
+            this.loadingIcon = new Icon(IconType.Spinner);
+            this.look.styleLoadingIcon(this.loadingIcon);
+
+            this.look.styleOverlay(this.overlay);
             this.overlay.onChanged.add(() => this.overlayChanged());
             this.addChild(this.overlay);
 
             this.addChild(this.loadingIcon);
 
-            const contentContainer = document.createElement("table");
-            contentContainer.style.width = "100%";
+            this.composition.contentContainer.appendChild(this.composition.contentContainerRow);
+            this.composition.contentContainerRow.appendChild(this.composition.contentNodeCell);
+            this.composition.contentNodeCell.appendChild(this.composition.contentNodeCellDiv);
 
-            this.contentContainerRow = document.createElement("tr");
-            contentContainer.appendChild(this.contentContainerRow);
+            this.composition.loadingIconCell.appendChild(this.composition.loadingIconDiv);
+            this.composition.loadingIconDiv.appendChild(this.loadingIcon.node);
+            this.composition.contentContainerRow.appendChild(this.composition.loadingIconCell);
 
-            this.contentNodeCell = document.createElement("td");
-            this.contentNodeCell.style.width = "100%";
-            this.contentContainerRow.appendChild(this.contentNodeCell);
-
-            const contentNodeCellDiv = document.createElement("div");
-            contentNodeCellDiv.style.height = "100%";
-            contentNodeCellDiv.style.width = "100%";
-            this.contentNodeCell.appendChild(contentNodeCellDiv);
-
-            const loadingIconCell = document.createElement("td");
-            const loadingIconDiv = document.createElement("div");
-            loadingIconCell.appendChild(loadingIconDiv);
-            loadingIconDiv.appendChild(this.loadingIcon.node);
-            loadingIconCell.setAttribute("align", "center");
-            loadingIconCell.style.verticalAlign = "middle";
-            loadingIconCell.style.lineHeight = ".1";
-            loadingIconCell.style.paddingRight = "2px";
-            this.contentContainerRow.appendChild(loadingIconCell);
-
-            this.contentNode = document.createElement("input");
-            this.contentNode.setAttribute("type", "text");
-            this.contentNode.style.border = "0px black solid";
-            this.contentNode.style.height = "100%";
-            this.contentNode.style.width = "100%";
-            this.contentNode.style.paddingLeft = "5px";
-            this.contentNode.style.outline = "none";
             this.onKeyDown.add(evt => this.handleKeyDown(evt));
             this.onKeyUp.add(evt => this.handleKeyUp(evt));
-            this.contentNode.addEventListener("blur", evt => this.onBlur(evt));
-            contentNodeCellDiv.appendChild(this.contentNode);
+            this.composition.contentNode.addEventListener("blur", (evt: MouseEvent) => this.onBlur(evt));
+            this.composition.contentNodeCellDiv.appendChild(this.composition.contentNode);
 
-            this.overlayContainer = document.createElement("div");
-            this.overlayContainer.style.position = "absolute";
-            this.overlayContainer.style.display = "none";
-            this.overlayContainer.appendChild(this.overlay.node);
+            this.composition.overlayContainer.appendChild(this.overlay.node);
 
             // This prevents mouse events from forcing an onblur on the input control.  Basically,
             // we prevent the mousedown from propagating to the input control and so it cannot
             // recognize the loss of focus.
-            this.overlayContainer.addEventListener(
+            this.composition.overlayContainer.addEventListener(
                 "mousedown",
-                evt => {
+                (evt: MouseEvent) => {
                     evt.stopImmediatePropagation();
                     evt.preventDefault();
                 });
 
-            const overlayAnchor = document.createElement("div");
-            overlayAnchor.style.position = "relative";
-            overlayAnchor.appendChild(this.overlayContainer);
+            this.composition.overlayAnchor.appendChild(this.composition.overlayContainer);
 
-            this.node.style.border = "1px solid #999";
-            this.node.appendChild(contentContainer);
-            this.node.appendChild(overlayAnchor);
+            this.node.appendChild(this.composition.contentContainer);
+            this.node.appendChild(this.composition.overlayAnchor);
         }
 
         get text() {
-            return this.contentNode.value;
+            return this.composition.contentNode.value;
         }
         set text(value: string) {
-            this.contentNode.value = value;
+            this.composition.contentNode.value = value;
         }
 
         get placeholder() {
-            return this.contentNode.getAttribute("placeholder") || "";
+            return this.composition.contentNode.getAttribute("placeholder") || "";
         }
         set placeholder(value: string) {
-            this.contentNode.setAttribute("placeholder", value);
+            this.composition.contentNode.setAttribute("placeholder", value);
         }
 
         get selectedItem() {
@@ -135,26 +101,19 @@
 
         addSelectedItem(item: T) {
             const itemWidget = document.createElement("div");
-            itemWidget.style.whiteSpace = "nowrap";
-            itemWidget.style.fontSize = "60%";
-            itemWidget.style.border = "1px black solid";
-            itemWidget.style.borderRadius = "5px";
-            itemWidget.style.paddingLeft = "3px";
-            itemWidget.style.paddingRight = "3px";
-            itemWidget.style.cursor = "default";
-            itemWidget.title = "Click to remove";
+            this.look.styleItemWidget(itemWidget);
             itemWidget.addEventListener(
                 "click",
-                evt => {
+                (evt: MouseEvent) => {
                     this.removeSelectedItem(item);
-                    this.contentNode.focus();
+                    this.composition.contentNode.focus();
                 });
             itemWidget.appendChild(document.createTextNode(this.textProvider(item)));
 
             const itemCell = document.createElement("td");
-            itemCell.style.paddingLeft = "4px";
+            this.look.styleItemCell(itemCell);
             itemCell.appendChild(itemWidget);
-            Utils.Elements.insertBefore(itemCell, this.contentNodeCell);
+            Utils.Elements.insertBefore(itemCell, this.composition.contentNodeCell);
 
             this.selectedWidgets.set(item, itemWidget);
             this.selectedItems.push(item);
@@ -164,15 +123,15 @@
             const itemWidget = this.selectedWidgets.get(item) as HTMLElement;
             this.selectedWidgets.delete(item);
             Arrays.remove(this.selectedItems, item);
-            this.contentContainerRow.removeChild(itemWidget.parentElement as HTMLElement);
+            this.composition.contentContainerRow.removeChild(itemWidget.parentElement as HTMLElement);
         }
 
         dropDown() {
-            this.overlayContainer.style.display = "";
+            this.composition.overlayContainer.style.display = "";
         }
 
         closeUp() {
-            this.overlayContainer.style.display = "none";
+            this.composition.overlayContainer.style.display = "none";
             this.isResettingOverlay = true;
             this.overlay.selectedItem = null;
             this.isResettingOverlay = false;
@@ -202,7 +161,7 @@
                     event.preventDefault();
                     break;
                 case KeyCode.Backspace:
-                    if (this.contentNode.selectionStart == 0 && this.contentNode.selectionEnd == 0 && this.selectedItems.length > 0)
+                    if (this.composition.contentNode.selectionStart == 0 && this.composition.contentNode.selectionEnd == 0 && this.selectedItems.length > 0)
                         this.removeSelectedItem(this.selectedItems[this.selectedItems.length - 1]);
                     break;
             }
@@ -235,7 +194,7 @@
             if (this.keyPressEvent == event) {
                 this.loadingIcon.style.display = "inherit";
                 if (this.onSearch != null) {
-                    const items = await this.onSearch(this.contentNode.value);
+                    const items = await this.onSearch(this.composition.contentNode.value);
                     this.populateItems(items);
                 }
                 this.loadingIcon.style.display = "none";

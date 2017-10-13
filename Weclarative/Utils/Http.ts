@@ -200,7 +200,7 @@
 
         async asString() {
             const response = await this.context.execute(this.contentType, this.payload);
-            return response.response as string;            
+            return response.response as string;
         }
 
         async asJson<T>() {

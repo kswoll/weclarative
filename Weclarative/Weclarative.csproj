@@ -26,6 +26,7 @@
     <Content Include="weclarative.js" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Compositions\AutoCompleteTextBoxComposition.ts" />
     <TypeScriptCompile Include="Compositions\GridComposition.ts" />
     <TypeScriptCompile Include="Controller.ts" />
     <TypeScriptCompile Include="ControllerRegistry.ts" />
@@ -100,6 +101,7 @@
     <TypeScriptCompile Include="Fixups\CSSStyleDeclarationFixups.ts" />
     <TypeScriptCompile Include="Fixups\WindowFixups.ts" />
     <TypeScriptCompile Include="LayoutType.ts" />
+    <TypeScriptCompile Include="Looks\AutoCompleteTextBoxLook.ts" />
     <TypeScriptCompile Include="Looks\ContentProviderLooks.ts" />
     <TypeScriptCompile Include="Looks\GridLook.ts" />
     <TypeScriptCompile Include="Looks\DefaultLook.ts" />

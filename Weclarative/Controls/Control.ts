@@ -244,7 +244,7 @@
             }
         }
 
-        protected addChild(child: Control)
+        protected addChild<T extends Look>(child: Control<T>)
         {
             if (child.parent == this)
                 throw new Error("The speciifed child is already present in this container");
@@ -255,7 +255,7 @@
             child.onAdded();
         }
 
-        protected removeChild(child: Control)
+        protected removeChild<T extends Look>(child: Control)
         {
             if (child.parent != this)
                 throw new Error("The specified child is not contained in this container");
