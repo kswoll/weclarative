@@ -30,6 +30,7 @@
     "Demos/Views/MarkDownView.ts",
     "Demos/Views/GridView.ts",
     "Demos/Views/SlideDownHeaderPanelView.ts",
+    "Demos/Views/AnimationsView.ts",
     "Demos/DemoController.ts",
     "App.ts"
   ],

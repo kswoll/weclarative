@@ -50,6 +50,10 @@
             const grid = new Controls.Link("Grid");
             grid.localAction = App.instance.demoController.grid;
             this.add(grid);
+
+            const animations = new Controls.Link("Animations");
+            animations.localAction = App.instance.demoController.animations;
+            this.add(animations);
         }
     }
 }

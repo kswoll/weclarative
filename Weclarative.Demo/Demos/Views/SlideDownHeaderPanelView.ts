@@ -19,14 +19,10 @@
             mainPanel.spacing = 10;
             mainPanel.style.maxWidth = "800px";
             const summary = AlignmentPanel.Left(new MarkDown(`
-The \`AutoCompleteTextBox\` control is a dropdown control that derives the potential
-items through a user-suppiled function (i.e. one that can call a backend API). This
-function is supplied the current text of the textbox which can be used to constrain
-the results returned by the API.
-
-It can be used in either single-select or multi-select mode.  If the latter, then each
-chosen item is turned into a token to represent the value that, when clicked,
-deselects the item.
+The \`SlideDownHeaderPanel\` allows you to have a header that slides down.  This can be useful to communicate
+validation failures, for example.  A good practice is to surround your main content area with this panel.  The
+\`content\` property should specify your main content, and the \`header\` property, when set, will be animated
+down from the top.
             `));
             mainPanel.add(summary);
 

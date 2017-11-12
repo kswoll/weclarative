@@ -19,6 +19,7 @@
             registrar("icon", this.icon);
             registrar("markDown", this.markDown);
             registrar("grid", this.grid);
+            registrar("animations", this.animations);
         }
 
         home() {
@@ -67,6 +68,10 @@
 
         grid() {
             return new Views.GridView();
+        }
+
+        animations() {
+            return new Views.AnimationsView();
         }
     }
 }

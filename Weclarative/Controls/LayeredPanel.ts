@@ -2,7 +2,7 @@
     import Arrays = Utils.Arrays;
 
     export class LayeredPanel extends Control {
-        private container: HTMLElement;
+        private readonly container: HTMLElement;
         private _background: Control | null;
         private layers = new Array<Control>();
         private wrappers = new Array<HTMLElement>();

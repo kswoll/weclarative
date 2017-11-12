@@ -198,6 +198,7 @@
     <TypeScriptCompile Include="App.ts" />
     <TypeScriptCompile Include="Demos\DemoColors.ts" />
     <TypeScriptCompile Include="Demos\Views\AlignmentPanelView.ts" />
+    <TypeScriptCompile Include="Demos\Views\AnimationsView.ts" />
     <TypeScriptCompile Include="Demos\Views\AutoCompleteTextBoxView.ts" />
     <TypeScriptCompile Include="Demos\Views\BaseView.ts" />
     <TypeScriptCompile Include="Demos\Views\CheckBoxView.ts" />

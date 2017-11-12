@@ -98,6 +98,7 @@
     <TypeScriptCompile Include="Controls\TitledPanel.ts" />
     <TypeScriptCompile Include="Controls\VerticalAlignment.ts" />
     <TypeScriptCompile Include="Controls\VerticalPanel.ts" />
+    <TypeScriptCompile Include="Controls\XyPanel.ts" />
     <TypeScriptCompile Include="Fixups\CSSStyleDeclarationFixups.ts" />
     <TypeScriptCompile Include="Fixups\WindowFixups.ts" />
     <TypeScriptCompile Include="LayoutType.ts" />

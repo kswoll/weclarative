@@ -116,6 +116,7 @@
         "Controls/Grids/IGridEditing.ts",
         "Controls/Grids/GridEditing.ts",
         "Controls/Grids/GridShowMoreButton.ts",
+        "Controls/XyPanel.ts",
         "Controller.ts",
         "ControllerRegistry.ts",
         "LayoutType.ts",
