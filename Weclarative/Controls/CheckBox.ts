@@ -15,8 +15,12 @@
             this.checkbox = document.createElement("input");
             this.checkbox.setAttribute("type", "checkbox");
             this.checkbox.addEventListener("change", evt => this.onJsChanged(evt));
-            this.node.appendChild(this.checkbox);
-            this.node.appendChild(this.label);
+
+            const container = document.createElement("label");
+            container.appendChild(this.checkbox);
+            container.appendChild(this.label);
+
+            this.node.appendChild(container);
 
             this.text = text;
             this.value = value;

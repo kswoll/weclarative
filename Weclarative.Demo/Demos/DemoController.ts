@@ -12,6 +12,7 @@
             registrar("alignmentPanel", this.alignmentPanel);
             registrar("horizontalPanel", this.horizontalPanel);
             registrar("verticalPanel", this.verticalPanel);
+            registrar("slideDownHeaderPanel", this.slideDownHeaderPanel);
             registrar("checkBox", this.checkBox);
             registrar("http", this.http);
             registrar("autoCompleteTextBox", this.autoCompleteTextBox);
@@ -26,6 +27,10 @@
 
         sidePanel() {
             return new Views.SidePanelView();
+        }
+
+        slideDownHeaderPanel() {
+            return new Views.SlideDownHeaderPanelView();
         }
 
         alignmentPanel() {

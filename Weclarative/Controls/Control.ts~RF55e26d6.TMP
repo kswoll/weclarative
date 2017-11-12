@@ -9,12 +9,15 @@
     export class Control<TLook extends Look = Look> {
         private static mouseTrackingEngine = new MouseTrackingEngine();
 
-        readonly node: HTMLElement;
+        get node(): HTMLElement {
+            return this.node;
+        }
 
-        associatedLabel: Control;
+        public associatedLabel: Control;
 
         private readonly children: Array<Control>;
 
+        private _node: HTMLElement;
         private _isInitialized: boolean;
         private _look: TLook;
         private _isAttachedToDom: boolean;

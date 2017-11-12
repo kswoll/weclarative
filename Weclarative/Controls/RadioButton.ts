@@ -15,8 +15,12 @@
             this.element = document.createElement("input");
             this.element.setAttribute("type", "radio");
             this.element.addEventListener("change", evt => this.onJsChanged(evt));
-            this.node.appendChild(this.element);
-            this.node.appendChild(this.label);
+
+            const container = document.createElement("label");
+            container.appendChild(this.element);
+            container.appendChild(this.label);
+
+            this.node.appendChild(container);
 
             if (group)
                 group.add(this);

@@ -29,13 +29,9 @@
     "Demos/Views/IconView.ts",
     "Demos/Views/MarkDownView.ts",
     "Demos/Views/GridView.ts",
+    "Demos/Views/SlideDownHeaderPanelView.ts",
     "Demos/DemoController.ts",
     "App.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "wwwroot",
-    "weclarative"
   ],
   "compileOnSave": true
 }

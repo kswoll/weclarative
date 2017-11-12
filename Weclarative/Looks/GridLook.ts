@@ -6,6 +6,7 @@
     import IconType = Controls.IconType;
     import GridCell = Controls.Grids.GridCell;
     import Link = Controls.Link;
+    import ContentGridCell = Controls.Grids.ContentGridCell;
 
     export class GridLook extends Look {
         install(composition: Composition) {
@@ -28,6 +29,11 @@
             cell.style.backgroundColor = "black";
             cell.style.color = "white";
             cell.style.fontWeight = "bold";
+        }
+
+        styleContentCell<T>(cell: ContentGridCell<T>) {
+            if (cell.column.type.isRightAligned)
+                cell.cellNode.align = "right";
         }
 
         styleActionHeaderCell(cell: HTMLTableCellElement) {

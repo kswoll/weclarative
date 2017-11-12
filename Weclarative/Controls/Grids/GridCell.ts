@@ -13,6 +13,10 @@
             column.grid.look.styleCell(this.node);
         }
 
+        get cellNode() {
+            return this.node as HTMLTableCellElement;
+        }
+
         get content() {
             return this._control;
         }

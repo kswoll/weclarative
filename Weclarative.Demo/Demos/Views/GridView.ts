@@ -37,14 +37,14 @@ namespace Demos.Views {
                 title: "First Name",
                 getValue: x => x.firstName,
                 setValue: (x, value) => x.firstName = value,
-                width: "40%",
+                width: "50%",
                 footer: x => x.footer(x.aggregates.count, ContentProviders.numbers)
             });
             this.grid.addStringColumn({
                 title: "Last Name",
                 getValue: x => x.lastName,
                 setValue: (x, value) => x.lastName = value,
-                width: "40%"
+                width: "50%"
             });
             this.grid.addNumberColumn({
                 title: "Age",
@@ -55,7 +55,6 @@ namespace Demos.Views {
                     ageChanged(oldValue, value);
                 },
                 valueChanged: subscriber => ageChangedListeners.push(subscriber),
-                width: "20%",
                 footer: x => x.footer(x.aggregates.average, ContentProviders.numbers, value => value.toFixed(1))
             });
 /*
@@ -114,7 +113,8 @@ The \`Grid\` control represents data in a tabular format with facilities for:
 #### Sorting
 Automatic column sorting by clicking on the header is supported for basic column
 types such as strings and numbers.  It will switch between ascending and
-descending sorting as you click on the header.
+descending sorting as you click on the header. For other data types, you can
+define your own column types which will specify how to sort.
 
 #### Editing
 When editing is enabled, a new column is added to the end of the grid.  In this

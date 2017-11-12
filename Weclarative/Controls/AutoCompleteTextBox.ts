@@ -6,7 +6,7 @@
     export class AutoCompleteTextBox<T> extends CompositeControl<AutoCompleteTextBoxComposition, AutoCompleteTextBoxLook>
     {
         onSearch: (text: string) => Promise<T[]>;
-        throttle = 500;
+        throttle = 200;
         readonly loadingIcon: Icon;
         readonly selectedItems = new Array<T>();
         readonly look = new AutoCompleteTextBoxLook();
@@ -187,7 +187,6 @@
                     return;
             }
 
-            this.loadingIcon.style.display = "inherit";
             this.keyPressEvent = event;
             if (this.throttle > 0)
                 await Utils.Promises.delay(this.throttle);

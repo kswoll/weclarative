@@ -1,6 +1,5 @@
 ﻿namespace Demos.Views {
     import AlignmentPanel = Weclarative.Controls.AlignmentPanel;
-    import Html = Weclarative.Controls.Html;
     import FixedPanel = Weclarative.Controls.FixedPanel;
     import TextBlock = Weclarative.Controls.TextBlock;
     import HorizontalAlignment = Weclarative.Controls.HorizontalAlignment;

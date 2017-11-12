@@ -23,6 +23,10 @@
             verticalPanel.localAction = App.instance.demoController.verticalPanel;
             this.add(verticalPanel);
 
+            const slideDownHeaderPanel = new Controls.Link("Slide Down Header Panel");
+            slideDownHeaderPanel.localAction = App.instance.demoController.slideDownHeaderPanel;
+            this.add(slideDownHeaderPanel);
+
             const checkBox = new Controls.Link("CheckBox");
             checkBox.localAction = App.instance.demoController.checkBox;
             this.add(checkBox);

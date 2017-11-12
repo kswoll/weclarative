@@ -11,6 +11,7 @@
             tagName?: string)
         {
             super(column, tagName);
+            column.grid.look.styleContentCell(this);
         }
 
         update() {
