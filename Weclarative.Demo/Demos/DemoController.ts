@@ -20,6 +20,7 @@
             registrar("markDown", this.markDown);
             registrar("grid", this.grid);
             registrar("animations", this.animations);
+            registrar("tablePanel", this.tablePanel);
         }
 
         home() {
@@ -72,6 +73,10 @@
 
         animations() {
             return new Views.AnimationsView();
+        }
+
+        tablePanel() {
+            return new Views.TablePanelView();
         }
     }
 }

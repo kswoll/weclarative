@@ -27,6 +27,10 @@
             slideDownHeaderPanel.localAction = App.instance.demoController.slideDownHeaderPanel;
             this.add(slideDownHeaderPanel);
 
+            const tablePanel = new Controls.Link("Table Panel");
+            tablePanel.localAction = App.instance.demoController.tablePanel;
+            this.add(tablePanel);
+
             const checkBox = new Controls.Link("CheckBox");
             checkBox.localAction = App.instance.demoController.checkBox;
             this.add(checkBox);
